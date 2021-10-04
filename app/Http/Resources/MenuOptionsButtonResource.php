@@ -16,7 +16,7 @@ class MenuOptionsButtonResource extends JsonResource
     {
         return 
         [
-            'name' => $this->name,
+            'title' => $this->name,
         ];
     }
 }

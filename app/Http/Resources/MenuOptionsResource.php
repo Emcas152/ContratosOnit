@@ -16,13 +16,20 @@ class MenuOptionsResource extends JsonResource
      */
     public function toArray($request)
     {
-        return 
-        [
-            'state' => $this->url,
-            'name' => $this->name,
-            'type' => $this->ext,
+        $result = [
+            'route' => $this->url,
+            'title' => $this->name,
             'icon' => $this->icon,
-            'children' => MenuSubOptionsResource::collection(ViewMenu::where([['opcion','=',$this->id],['role_id','=',$this->role_id]])->get()),
+            'type' => $this->ext,
         ];
+
+        $children = MenuSubOptionsResource::collection(ViewMenu::where([['opcion','=',$this->id],['role_id','=',$this->role_id]])->get());
+
+        if(count($children)){
+            $result['children'] = $children;
+        }
+
+        return $result;
+        
     }
 }

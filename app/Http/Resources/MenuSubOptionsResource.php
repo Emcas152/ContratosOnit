@@ -18,8 +18,8 @@ class MenuSubOptionsResource extends JsonResource
     {
         return 
         [
-            'state' => $this->url,
-            'name' => $this->name,
+            'route' => $this->url,
+            'title' => $this->name,
             'icon' => $this->icon,
             'type' => $this->ext,
             'permission' => MenuOptionsButtonResource::collection(ViewMenu::where([['sub_btn','=',$this->id],['role_id','=',$this->role_id]])->get()),
