@@ -21,13 +21,15 @@ class LoginResource extends JsonResource
             'fullName' => $this->name,
             'username' => $this->name,
             'email' => $this->email,
-            'role' => 'admin',
+            /* 'role' => 'admin', */
             'ability' => [
                 [
                   'action'=> "manage",
                   'subject'=> "all",
                 ]
-              ]
+                ],
+            'role' => $this->roles !== null ? $this->roles[0]['name'] : '',
+            'role_id' => $this->roles !== null ? $this->roles[0]['id'] : '',
         ];
     }
 }

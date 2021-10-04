@@ -38,6 +38,11 @@ class AuthController extends Controller
             return response(['email' => 'Verifique credenciales'], 400);
         }
 
+        if(auth()->user()->estado != 'ACT')
+        {
+            return response(['message' => 'El usuario se encuentra deshabilitado, check your details'], 401);
+        }
+
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
         //$user = User::with('roles')->find(auth()->id());

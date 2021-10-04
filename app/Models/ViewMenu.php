@@ -9,7 +9,7 @@ class ViewMenu extends Model
 {
     use HasFactory;
 
-    protected $table = 'aslan_db.view_menu';
+    protected $table = 'life_db.view_menu';
 
     public $incrementing = false;
 
