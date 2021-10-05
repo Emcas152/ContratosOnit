@@ -43,7 +43,7 @@ class CondominioController extends Controller
             DB::beginTransaction();
             $condominio = Condominio::create($request->all());
             DB::commit();
-            return response(['data'=> $condominio,'code' => 201]);
+            return response(['data'=> new CondominioResource($condominio),'code' => 201]);
 
         } catch (\Exception $e) 
         {
@@ -78,7 +78,7 @@ class CondominioController extends Controller
             $condominio = Condominio::findOrFail($request->id);
             $condominio->update($request->all());
             DB::commit();
-            return response(['data'=> $condominio,'code' => 200]);
+            return response(['data'=> new CondominioResource($condominio),'code' => 200]);
 
         } catch (\Exception $e) 
         {
@@ -103,9 +103,9 @@ class CondominioController extends Controller
             $condominio->estado = $estado->sts_final;
             $condominio->update();
             DB::commit();
-            return response(['data'=> $condominio,'code' => 200]);
+            return response(['data'=> new CondominioResource($condominio),'code' => 200]);
         }
-        catch (Throwable $e) 
+        catch (\Exception $e) 
         {
             DB::rollBack();
             return response(['data'=> $e,'code' => 500]); 

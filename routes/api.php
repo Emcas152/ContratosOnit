@@ -18,6 +18,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\VisitantesController;
 
 use App\Http\Controllers\CondominioController;
+use App\Http\Controllers\EdificioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,5 +93,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/condominium/create', [CondominioController::class, 'store'])->name('condominium.store');
     Route::put('/condominium/edit/{id}', [CondominioController::class, 'update'])->name('condominium.update');
     Route::delete('/condominium/delete/{id}', [CondominioController::class, 'destroy'])->name('condominium.destroy');
+
+    Route::post('/building', [EdificioController::class, 'index'])->name('building.index');
+    Route::post('/building/create', [EdificioController::class, 'store'])->name('building.store');
+    Route::put('/building/edit/{id}', [EdificioController::class, 'update'])->name('building.update');
+    Route::delete('/building/delete/{id}', [EdificioController::class, 'destroy'])->name('building.destroy');
 
 });

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Edificio;
+use App\Models\ViewParametros;
 
 class Condominio extends Model
 {
@@ -25,5 +26,11 @@ class Condominio extends Model
     public function edificios()
     {
         return $this->hasMany(Edificio::class,'id_condominio');
+    }
+
+    public function estadoCondominio()
+    {
+        return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
+        ->where('view_parametros.codigo_enc','=','STSGEN');
     }
 }
