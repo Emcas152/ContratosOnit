@@ -4,39 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Apartamento;
-use App\Models\Condominio;
-use App\Models\ViewParametros;
+use App\Models\Edificio;
+use App\Models\User;
 
-class Edificio extends Model
+class Apartamento extends Model
 {
     use HasFactory;
 
-    protected $table = 'edificios';
+    protected $table = 'apartamentos';
 
     protected $primaryKey = 'id';
     
     public $timestamps = false;
 
     protected $fillable = [
-        'id_condominio',
+        'id_inquilino',
+        'id_edificio',
         'nombre',
-        'descripcion',
-        'niveles',
+        'nivel',
         'estado'
     ];
 
-    public function apartamentos()
+    public function edificios()
     {
-        return $this->hasMany(Apartamento::class,'id_edificio');
+        return $this->belongsTo(Edificio::class,'id_edificio');
     }
 
-    public function condominios()
+    public function inquilinos()
     {
-        return $this->belongsTo(Condominio::class,'id_condominio');
+        return $this->belongsTo(User::class,'id_inquilino');
     }
 
-    public function estadoEdificios()
+    public function estadoApartamento()
     {
         return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
         ->where('view_parametros.codigo_enc','=','STSGEN');

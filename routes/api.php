@@ -7,10 +7,7 @@ use App\Http\Controllers\MenuAccionesController;
 use App\Http\Controllers\ParametrosDetalleController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ProyectosController;
-use App\Http\Controllers\ApartamentosController;
 use App\Http\Controllers\ParqueosController;
-use App\Http\Controllers\BodegasController;
 use App\Http\Controllers\AmenidadesController;
 
 use App\Http\Controllers\VisitasController;
@@ -19,6 +16,7 @@ use App\Http\Controllers\VisitantesController;
 
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\EdificioController;
+use App\Http\Controllers\ApartamentoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,11 +82,6 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id_user}', [UsersController::class, 'destroy'])->name('users.destroy');
 
-    Route::get('/project', [ProyectosController::class, 'index'])->name('project.index');
-    Route::get('/project/act', [ProyectosController::class, 'projectAct'])->name('project.act');
-    Route::post('/project/create', [ProyectosController::class, 'store'])->name('project.store');
-    Route::put('/project/edit/{id}', [ProyectosController::class, 'update'])->name('project.update');
-
     Route::post('/condominium', [CondominioController::class, 'index'])->name('condominium.index');
     Route::post('/condominium/create', [CondominioController::class, 'store'])->name('condominium.store');
     Route::put('/condominium/edit/{id}', [CondominioController::class, 'update'])->name('condominium.update');
@@ -98,5 +91,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/building/create', [EdificioController::class, 'store'])->name('building.store');
     Route::put('/building/edit/{id}', [EdificioController::class, 'update'])->name('building.update');
     Route::delete('/building/delete/{id}', [EdificioController::class, 'destroy'])->name('building.destroy');
+
+    Route::post('/apartment', [ApartamentoController::class, 'index'])->name('apartment.index');
+    Route::post('/apartment/create', [ApartamentoController::class, 'store'])->name('apartment.store');
+    Route::put('/apartment/edit/{id}', [ApartamentoController::class, 'update'])->name('apartment.update');
+    Route::delete('/apartment/delete/{id}', [ApartamentoController::class, 'destroy'])->name('apartment.destroy');
 
 });
