@@ -17,6 +17,8 @@ use App\Http\Controllers\VisitasController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\VisitantesController;
 
+use App\Http\Controllers\CondominioController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -86,6 +88,9 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/project/create', [ProyectosController::class, 'store'])->name('project.store');
     Route::put('/project/edit/{id}', [ProyectosController::class, 'update'])->name('project.update');
 
-    
+    Route::post('/condominium', [CondominioController::class, 'index'])->name('condominium.index');
+    Route::post('/condominium/create', [CondominioController::class, 'store'])->name('condominium.store');
+    Route::put('/condominium/edit/{id}', [CondominioController::class, 'update'])->name('condominium.update');
+    Route::delete('/condominium/delete/{id}', [CondominioController::class, 'destroy'])->name('condominium.destroy');
 
 });
