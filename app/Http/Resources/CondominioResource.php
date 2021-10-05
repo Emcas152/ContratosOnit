@@ -14,6 +14,12 @@ class CondominioResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'parqueo_visitantes' => $this->parqueo_visitantes,
+            'estado' => $this->estado,
+            'estado_descripcion' => $this->estadoCondominio !== null ? $this->estadoCondominio->descripcion_det : '',
+        ];
     }
 }
