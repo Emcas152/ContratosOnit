@@ -18,6 +18,7 @@ use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\EdificioController;
 use App\Http\Controllers\ApartamentoController;
 use App\Http\Controllers\AccesorioController;
+use App\Http\Controllers\AmenidadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,5 +103,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/accessories/create', [AccesorioController::class, 'store'])->name('accessories.store');
     Route::put('/accessories/edit/{id}', [AccesorioController::class, 'update'])->name('accessories.update');
     Route::delete('/accessories/delete/{id}', [AccesorioController::class, 'destroy'])->name('accessories.destroy');
+
+    Route::post('/amenities', [AmenidadController::class, 'index'])->name('amenities.index');
+    Route::post('/amenities/create', [AmenidadController::class, 'store'])->name('amenities.store');
+    Route::put('/amenities/edit/{id}', [AmenidadController::class, 'update'])->name('amenities.update');
+    Route::delete('/amenities/delete/{id}', [AmenidadController::class, 'destroy'])->name('amenities.destroy');
 
 });
