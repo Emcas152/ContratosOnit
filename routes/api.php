@@ -17,6 +17,7 @@ use App\Http\Controllers\VisitantesController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\EdificioController;
 use App\Http\Controllers\ApartamentoController;
+use App\Http\Controllers\AccesorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,5 +97,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/apartment/create', [ApartamentoController::class, 'store'])->name('apartment.store');
     Route::put('/apartment/edit/{id}', [ApartamentoController::class, 'update'])->name('apartment.update');
     Route::delete('/apartment/delete/{id}', [ApartamentoController::class, 'destroy'])->name('apartment.destroy');
+
+    Route::post('/accessories', [AccesorioController::class, 'index'])->name('accessories.index');
+    Route::post('/accessories/create', [AccesorioController::class, 'store'])->name('accessories.store');
+    Route::put('/accessories/edit/{id}', [AccesorioController::class, 'update'])->name('accessories.update');
+    Route::delete('/accessories/delete/{id}', [AccesorioController::class, 'destroy'])->name('accessories.destroy');
 
 });
