@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Apartamento;
 
 class Visitas extends Model
 {
@@ -30,6 +31,11 @@ class Visitas extends Model
     public function usuarioVisita()
     {
         return $this->belongsTo(User::class,'id_usuario_creo');
+    }
+
+    public function inquilino()
+    {
+        return $this->belongsTo(Apartamento::class,'id_usuario_creo', 'id_inquilino');
     }
 
     public function visitantes()

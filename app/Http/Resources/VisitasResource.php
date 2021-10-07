@@ -19,6 +19,7 @@ class VisitasResource extends JsonResource
             'id' => $this->id,
             'id_usuario_creo' => $this->id_usuario_creo,
             'nombre_creo' => $this->usuarioVisita !== null ? $this->usuarioVisita->name : '',
+            'apartamento' => $this->inquilino !== null ? $this->inquilino->nombre : '',
             'fecha_creo' => $this->fecha_creo,
             'fecha_visita' => $this->fecha_visita,
             'fecha_ingreso' => $this->fecha_ingreso,
