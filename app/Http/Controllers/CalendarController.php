@@ -18,6 +18,7 @@ class CalendarController extends Controller
      */
     public function index(Request $request)
     {
+        $usuarioId = $request->usuario_id;
         $parametros = $request->get('params');
         if($parametros != null )
         {
@@ -30,7 +31,8 @@ class CalendarController extends Controller
       
          $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
          ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
-         ->where('calendario_areas_sociales.estado','=','ACT')
+         ->where('calendario_areas_sociales.estado','=','AUT')
+         ->orWhere('calendario_areas_sociales.id_usuario', '=', $usuarioId)
          ->whereIn('amenidades.nombre', $parametros)
         ->get();
 
@@ -114,7 +116,7 @@ class CalendarController extends Controller
             $action = $request->action;
             $calendario = CalendarioAreasSociales::findOrFail($request->id);
             $estado = EstadosProcesos::where([['sts_inicial',$calendario->estado],
-                                              ['proceso',$request->action],
+                                              ['proceso', $action],
                                               ['tabla','calendario_areas_sociales']])->firstOrFail();
             $calendario->estado = $estado->sts_final;
             $calendario->update();
