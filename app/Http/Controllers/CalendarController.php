@@ -29,12 +29,14 @@ class CalendarController extends Controller
             $parametros = [];
         }
       
-         $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
-         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
-         ->where('calendario_areas_sociales.estado','=','AUT')
-         ->orWhere('calendario_areas_sociales.id_usuario', '=', $usuarioId)
-         ->whereIn('amenidades.nombre', $parametros)
-        ->get();
+        $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+        ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+        ->orWhere(function ($query) use ($usuarioId){
+          $query->where('calendario_areas_sociales.id_usuario', '=', $usuarioId)
+                ->orWhere('calendario_areas_sociales.estado','=','AUT');
+        })
+        ->whereIn('amenidades.nombre', $parametros)
+       ->get();
 
         if (!count($calendario)) 
         {
