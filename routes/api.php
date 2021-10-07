@@ -42,7 +42,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits.store');
 Route::get('/visits', [VisitasController::class, 'index'])->name('visits.index');
 Route::get('/visits/edit/{id}', [VisitasController::class, 'edit'])->name('visits.edit');
-Route::put('/visits/{id}/{state}', [VisitasController::class, 'change_state'])->name('visits.change_state');
+Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
 Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('visits.update');
 
 Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
