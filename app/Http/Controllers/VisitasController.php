@@ -20,30 +20,39 @@ class VisitasController extends Controller
     {
         $role = $request->role;
         $usuarioId = $request->usuario_id;
-        $query=trim($request->get('searchText'));
-        $paginacion = $request->get('paginate');
-        $visitasQuery = [];
-        if($role == 'admin'){
-            $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
-        } elseif ($role == 'client'){
-            $visitasQuery = Visitas::where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%']]);
+        $parametros = $request->get('params');
+        if($parametros != null )
+        {
+            $parametros = explode(",",$parametros);
+        }
+        else
+        {
+            $parametros = [];
         }
         
-        if($request->get('start') != null)
-        {
-            $fecha_inicio =  date('Y-m-d',strtotime($request->get('start')));
-            $fecha_final = date('Y-m-d',strtotime($request->get('end')));
-            $visitasQuery->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        $calendario = [];
+        
+        if($role == 'admin'){
+            $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                         ->whereIn('amenidades.nombre', $parametros)
+                        ->get();
+        } elseif ($role == 'client'){
+            $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                         ->orWhere(function ($query) use ($usuarioId){
+                           $query->where('calendario_areas_sociales.id_usuario', '=', $usuarioId)
+                                 ->orWhere('calendario_areas_sociales.estado','=','AUT');
+                         })
+                         ->whereIn('amenidades.nombre', $parametros)
+                        ->get();
         }
 
-        $visitasQuery->orderBy('id','DESC');
-        $visitas = $visitasQuery->paginate($paginacion);
-
-        if (!count($visitas)) 
+        if (!count($calendario)) 
         {
            return response(['data' => '','code'=>204]);   
         }
-        return response(['data'=> VisitasResource::collection($visitas),'per_page' => $visitas->perPage(),'total' => $visitas->total()]);  
+        return response(['data'=> CalendarResource::collection($calendario),'code' => 200]);   
     }
 
     /**
