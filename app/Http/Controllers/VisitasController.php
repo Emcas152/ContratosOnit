@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitas;
+use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
-use DB;
 use App\Http\Resources\VisitasResource;
 use Carbon\Carbon;
+use DB;
 
 class VisitasController extends Controller
 {
@@ -47,20 +48,23 @@ class VisitasController extends Controller
         //
     }
 
-    public function change_state($id,$state)
+    public function change_state(Request $request)
     {
         try 
         {
-            $mytime = Carbon::now('America/Guatemala');
+            $mytime = Carbon::now();
             DB::beginTransaction();
-
-            $visitas = Visitas::findOrFail($id);
-            $visitas->estado = $state;
-            if($state == 2)
+            $action = $request->action;
+            $visitas = Visitas::findOrFail($request->id);
+            $estado = EstadosProcesos::where([['sts_inicial',$visitas->estado],
+                                              ['proceso',$request->action],
+                                              ['tabla','visitas']])->firstOrFail();
+            $visitas->estado = $estado->sts_final;
+            if($action == 'Ingreso')
             {
                 $visitas->fecha_ingreso = $mytime->format('Y-m-d H:i:s');
             }
-            elseif($state == 3)
+            elseif($action == 'Egreso')
             {
                 $visitas->fecha_egreso = $mytime->format('Y-m-d H:i:s');
             }
