@@ -14,8 +14,7 @@ class VisitasResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-       /*  return
+        return
         [
             'id' => $this->id,
             'id_usuario_creo' => $this->id_usuario_creo,
@@ -23,12 +22,12 @@ class VisitasResource extends JsonResource
             'fecha_visita' => $this->fecha_visita,
             'fecha_ingreso' => $this->fecha_ingreso,
             'fecha_egreso' => $this->fecha_egreso,
-            'nombre_visitante' => $this->nombre_visitante,
-            'dpi_visitante' => $this->dpi_visitante,
+            'id_visitante' => $this->id_visitante,
+            'nombre_visitante' =>$this->visitantes !== null ? $this->visitantes->nombre_visita : 'null',
+            'dpi_visitante' =>$this->visitantes !== null ? $this->visitantes->dpi_visita : 'null',
             'placa_vehiculo' => $this->placa_vehiculo,
             'estado' =>  $this->estado,
-
-        ]; */
+        ]; 
     }
 
     

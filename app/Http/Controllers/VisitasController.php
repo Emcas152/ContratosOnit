@@ -18,6 +18,7 @@ class VisitasController extends Controller
     public function index(Request $request)
     { 
         $query=trim($request->get('searchText'));
+        $paginacion = $request->get('paginate');
         $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
         if($request->get('start') != null)
         {
@@ -25,15 +26,15 @@ class VisitasController extends Controller
             $fecha_final = date('Y-m-d',strtotime($request->get('end')));
             $visitasQuery->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
         }
-        
+
         $visitasQuery->orderBy('id','DESC');
-        $visitas = $visitasQuery->paginate(6);
+        $visitas = $visitasQuery->paginate($paginacion);
 
         if (!count($visitas)) 
         {
            return response(['data' => '','code'=>204]);   
         }
-        return response(['data'=> VisitasResource::collection($visitas),'per_page' => $visitas->perPage(),'total' => $visitas->total()]); 
+        return response(['data'=> VisitasResource::collection($visitas),'per_page' => $visitas->perPage(),'total' => $visitas->total()]);  
     }
 
     /**
