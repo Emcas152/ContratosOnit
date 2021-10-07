@@ -21,10 +21,15 @@ class Visitas extends Model
         'fecha_visita',
         'fecha_ingreso',
         'fecha_egreso',
-        'nombre_visitante',
-        'dpi_visitante',
+        'id_visitante',
         'placa_vehiculo',
         'estado'
     ];
+
+    public function visitantes()
+
+    {
+        return $this->belongsTo(Visitantes::class,'id_visitante');
+    }
 
 }

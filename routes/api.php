@@ -43,7 +43,7 @@ Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits
 Route::get('/visits', [VisitasController::class, 'index'])->name('visits.index');
 Route::get('/visits/edit/{id}', [VisitasController::class, 'edit'])->name('visits.edit');
 Route::put('/visits/{id}/{state}', [VisitasController::class, 'change_state'])->name('visits.change_state');
-Route::patch('/visits/{id}', [VisitasController::class, 'update'])->name('visits.update');
+Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('visits.update');
 
 Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
 Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
