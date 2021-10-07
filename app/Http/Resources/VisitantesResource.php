@@ -19,9 +19,7 @@ class VisitantesResource extends JsonResource
              'backgroundColor' => $this->Amenidades !== null ? $this->Amenidades->color : 'null', */
              'avatar' => '@/assets/images/avatars/1-small.png',
              'name' => $this->nombre_completo,
- 
-
- 
+             'id' => $this->id,
          ];
     }
 }
