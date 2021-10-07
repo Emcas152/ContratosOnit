@@ -17,10 +17,18 @@ class VisitasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    { 
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
         $query=trim($request->get('searchText'));
         $paginacion = $request->get('paginate');
-        $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
+        $visitasQuery = [];
+        if($role == 'admin'){
+            $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
+        } elseif ($role == 'client'){
+            $visitasQuery = Visitas::where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%']]);
+        }
+        
         if($request->get('start') != null)
         {
             $fecha_inicio =  date('Y-m-d',strtotime($request->get('start')));
@@ -114,18 +122,6 @@ class VisitasController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Visitas  $visitas
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $visita = Visitas::findOrFail($id);
-        return response(['data'=> $visita,'code' => 200]);
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -137,17 +133,18 @@ class VisitasController extends Controller
         try 
         {
             DB::beginTransaction();
-            $data = $request->all();
-            $data['fecha_visita'] = date('Y-m-d',strtotime($request->get('fecha_visita')));
-            $visita = Visitas::findOrFail($id);
-            $visita->update($data);
+            $visitas = Visitas::findOrFail($id);
+            $visitas->id_usuario_creo = $request->get('id_usuario_creo');
+            $visitas->fecha_visita = date('Y-m-d H:i:s',strtotime($request->get('fecha_visita')));
+            $visitas->id_visitante = $request->get('id_visitante');
+            $visitas->placa_vehiculo = $request->get('placa_vehiculo');
+            $visitas->update();
             DB::commit();
-            return response(['data'=> $visita,'code' => 200]);
-
-        } catch (Throwable $e) 
+            return response(['data'=> $visitas,'code' => 200]);
+        } catch (\Exception $e) 
         {
             DB::rollBack();
-            return response(['data'=> 'Error al actualizar Visita','code' => 500]);   
+            return response(['data'=> $e,'code' => 500]);  
         }
     }
 
