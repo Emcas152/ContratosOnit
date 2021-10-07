@@ -110,7 +110,6 @@ class CalendarController extends Controller
     {
         try 
         {
-            $mytime = Carbon::now();
             DB::beginTransaction();
             $action = $request->action;
             $calendario = CalendarioAreasSociales::findOrFail($request->id);
