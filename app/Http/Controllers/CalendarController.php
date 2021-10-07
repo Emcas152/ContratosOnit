@@ -106,6 +106,30 @@ class CalendarController extends Controller
         //
     }
 
+    public function change_state(Request $request)
+    {
+        try 
+        {
+            $mytime = Carbon::now();
+            DB::beginTransaction();
+            $action = $request->action;
+            $calendario = CalendarioAreasSociales::findOrFail($request->id);
+            $estado = EstadosProcesos::where([['sts_inicial',$visitas->estado],
+                                              ['proceso',$request->action],
+                                              ['tabla','calendario_areas_sociales']])->firstOrFail();
+            $calendario->estado = $estado->sts_final;
+            $calendario->update();
+
+            DB::commit();
+            return response(['data'=> $calendario,'code' => 200]);
+
+        } catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return response(['data'=> $e,'code' => 500]);   
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *

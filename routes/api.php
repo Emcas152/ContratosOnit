@@ -48,6 +48,7 @@ Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('vis
 Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
 Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
+Route::put('/calendar/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
 Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
  
 Route::get('/visitantes', [VisitantesController::class, 'index'])->name('visitantes.index');
