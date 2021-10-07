@@ -9,7 +9,7 @@ class ViewRolPermissions extends Model
 {
     use HasFactory;
 
-    protected $table = 'aslan_db.view_rol_permissions';
+    protected $table = 'life_db.view_rol_permissions';
 
     public $incrementing = false;
 
