@@ -113,7 +113,7 @@ class CalendarController extends Controller
             DB::beginTransaction();
             $action = $request->action;
             $calendario = CalendarioAreasSociales::findOrFail($request->id);
-            $estado = EstadosProcesos::where([['sts_inicial',$visitas->estado],
+            $estado = EstadosProcesos::where([['sts_inicial',$calendario->estado],
                                               ['proceso',$request->action],
                                               ['tabla','calendario_areas_sociales']])->firstOrFail();
             $calendario->estado = $estado->sts_final;
