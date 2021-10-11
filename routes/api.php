@@ -19,6 +19,7 @@ use App\Http\Controllers\EdificioController;
 use App\Http\Controllers\ApartamentoController;
 use App\Http\Controllers\AccesorioController;
 use App\Http\Controllers\AmenidadController;
+use App\Http\Controllers\NoticiaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,5 +110,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/amenities/create', [AmenidadController::class, 'store'])->name('amenities.store');
     Route::put('/amenities/edit/{id}', [AmenidadController::class, 'update'])->name('amenities.update');
     Route::delete('/amenities/delete/{id}', [AmenidadController::class, 'destroy'])->name('amenities.destroy');
+
+    Route::post('/news', [NoticiaController::class, 'index'])->name('news.index');
+    Route::post('/news/create', [NoticiaController::class, 'store'])->name('news.store');
+    Route::put('/news/edit/{id}', [NoticiaController::class, 'update'])->name('news.update');
+    Route::delete('/news/delete/{id}', [NoticiaController::class, 'destroy'])->name('news.destroy');
 
 });
