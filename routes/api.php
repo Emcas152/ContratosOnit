@@ -20,6 +20,7 @@ use App\Http\Controllers\ApartamentoController;
 use App\Http\Controllers\AccesorioController;
 use App\Http\Controllers\AmenidadController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\SolicitudAccesorioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,12 +40,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-
-Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits.store');
 Route::post('/visits', [VisitasController::class, 'index'])->name('visits.index');
-Route::get('/visits/edit/{id}', [VisitasController::class, 'edit'])->name('visits.edit');
-Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
+Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits.store');
 Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('visits.update');
+Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
 
 Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
 Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
@@ -115,5 +114,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/news/create', [NoticiaController::class, 'store'])->name('news.store');
     Route::put('/news/edit/{id}', [NoticiaController::class, 'update'])->name('news.update');
     Route::delete('/news/delete/{id}', [NoticiaController::class, 'destroy'])->name('news.destroy');
+
+    Route::post('/accessory-request', [SolicitudAccesorioController::class, 'index'])->name('accessory-request.index');
+    Route::post('/accessory-request/create', [SolicitudAccesorioController::class, 'store'])->name('accessory-request.store');
+    Route::put('/accessory-request/edit/{id}', [SolicitudAccesorioController::class, 'update'])->name('accessory-request.update');
+    Route::put('/accessory-request/{id}/{action}', [SolicitudAccesorioController::class, 'change_state'])->name('accessory-request.change_state');
 
 });
