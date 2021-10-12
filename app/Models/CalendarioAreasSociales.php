@@ -44,4 +44,10 @@ class CalendarioAreasSociales extends Model
     {
         return $this->belongsTo(Amenidades::class,'id_area');
     }
+
+    public function estadoCalendario()
+    {
+        return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
+        ->where('view_parametros.codigo_enc','=','STSCAL');
+    }
 }
