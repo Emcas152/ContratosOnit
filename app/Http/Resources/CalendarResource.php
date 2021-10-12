@@ -15,7 +15,6 @@ class CalendarResource extends JsonResource
     public function toArray($request)
     {
         return [
-            //'borderColor' => $this->Amenidades !== null ? $this->Amenidades->color : 'null',
             'backgroundColor' => $this->Amenidades !== null ? $this->Amenidades->color : 'null', 
             'color' => $this->Amenidades !== null ? $this->Amenidades->color : 'null', 
             'title' => $this->titulo,
@@ -30,6 +29,7 @@ class CalendarResource extends JsonResource
                 'description' => $this->descripcion,
                 'comment' => $this->comentarios,
                 'estado' => $this->estado,
+                'estado_descripcion' => $this->estadoCalendario !== null ? $this->estadoCalendario->descripcion_det : ''
             ]
         ];
     }
