@@ -6,6 +6,7 @@ use App\Models\Edificio;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\EdificioResource;
+use App\Http\Resources\EdificioSelectResource;
 use App\Http\Requests\EdificioFormRequest;
 use DB;
 
@@ -60,9 +61,15 @@ class EdificioController extends Controller
      * @param  \App\Models\Edificio  $edificio
      * @return \Illuminate\Http\Response
      */
-    public function show(Edificio $edificio)
+    public function show()
     {
-        //
+        $edificios = Edificio::all();
+
+        if (!count($edificios)) 
+        {
+           return response(['data' => '','code'=>204]);   
+        }
+        return response(['data'=> EdificioSelectResource::collection($edificios),'code' => 200]);
     }
 
     /**
