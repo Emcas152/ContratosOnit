@@ -24,6 +24,7 @@ class EdificioController extends Controller
                                         ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['niveles', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($edificioResult)) {
             return response(['data' => '','code'=>204]);  

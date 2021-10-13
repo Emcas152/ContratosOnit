@@ -43,4 +43,10 @@ class Visitas extends Model
         return $this->belongsTo(Visitantes::class,'id_visitante');
     }
 
+    public function estadoVisita()
+    {
+        return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
+        ->where('view_parametros.codigo_enc','=','STSVTA');
+    }
+
 }

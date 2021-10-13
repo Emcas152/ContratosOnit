@@ -23,6 +23,7 @@ class CondominioController extends Controller
         $condominioResult = Condominio::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['parqueo_visitantes', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($condominioResult)) {
             return response(['data' => '','code'=>204]);  

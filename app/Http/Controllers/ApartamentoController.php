@@ -23,6 +23,7 @@ class ApartamentoController extends Controller
         $apartamentoResult = Apartamento::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['nivel', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($apartamentoResult)) {
             return response(['data' => '','code'=>204]);  

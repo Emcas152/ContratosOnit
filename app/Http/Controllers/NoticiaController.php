@@ -26,6 +26,7 @@ class NoticiaController extends Controller
                                         ->orWhere([['tipo_noticia', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['prioridad', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($noticiaResult)) {
             return response(['data' => '','code'=>204]);  

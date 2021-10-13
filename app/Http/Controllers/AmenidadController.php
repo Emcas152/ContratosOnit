@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\AmenidadResource;
+use App\Http\Resources\AmenidadSelectResource;
 use App\Http\Requests\AmenidadFormRequest;
 use DB;
 
@@ -24,6 +25,7 @@ class AmenidadController extends Controller
         $amenidadResult = Amenidad::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($amenidadResult)) {
             return response(['data' => '','code'=>204]);  
@@ -59,9 +61,15 @@ class AmenidadController extends Controller
      * @param  \App\Models\Amenidad  $amenidad
      * @return \Illuminate\Http\Response
      */
-    public function show(Amenidad $amenidad)
+    public function show()
     {
-        //
+        $amenidades = Amenidad::all();
+
+        if (!count($amenidades)) 
+        {
+           return response(['data' => '','code'=>204]);   
+        }
+        return response(['data'=> AmenidadSelectResource::collection($amenidades),'code' => 200]);
     }
 
     /**
@@ -100,7 +108,7 @@ class AmenidadController extends Controller
         {
             DB::beginTransaction();
             $amenidad = Amenidad::findOrFail($request->id);
-            $estado = EstadosProcesos::where([['sts_inicial', $amenidad->estado],['tabla','accesorios']])->firstOrFail();
+            $estado = EstadosProcesos::where([['sts_inicial', $amenidad->estado],['tabla','amenidades']])->firstOrFail();
             $amenidad->estado = $estado->sts_final;
             $amenidad->update();
             DB::commit();

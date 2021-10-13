@@ -25,6 +25,7 @@ class AccesorioController extends Controller
                                         ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['categoria', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($accesorioResult)) {
             return response(['data' => '','code'=>204]);  
