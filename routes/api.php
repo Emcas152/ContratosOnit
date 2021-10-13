@@ -7,8 +7,6 @@ use App\Http\Controllers\MenuAccionesController;
 use App\Http\Controllers\ParametrosDetalleController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ParqueosController;
-use App\Http\Controllers\AmenidadesController;
 
 use App\Http\Controllers\VisitasController;
 use App\Http\Controllers\CalendarController;
@@ -40,21 +38,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::post('/visits', [VisitasController::class, 'index'])->name('visits.index');
-Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits.store');
-Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('visits.update');
-Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
-
-Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
-Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
-Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
-Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');
-Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
-
-Route::get('/amenidades', [AmenidadesController::class, 'index'])->name('amenidades.index');
-Route::get('/amenidades/name', [AmenidadesController::class, 'getName'])->name('amenidades.getName');
-
-
 Route::middleware(['auth:api'])->group(function () 
 {
     Route::post('/menu', [MenuAccionesController::class, 'index'])->name('menu.index');
@@ -80,7 +63,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::post('/users/create', [UsersController::class, 'store'])->name('users.store');
     Route::put('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
-    Route::delete('/users/delete/{id_user}', [UsersController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/users/delete/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 
     Route::post('/condominium', [CondominioController::class, 'index'])->name('condominium.index');
     Route::post('/condominium/create', [CondominioController::class, 'store'])->name('condominium.store');
@@ -103,6 +86,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/accessories/delete/{id}', [AccesorioController::class, 'destroy'])->name('accessories.destroy');
 
     Route::post('/amenities', [AmenidadController::class, 'index'])->name('amenities.index');
+    Route::post('/amenities/select', [AmenidadController::class, 'show'])->name('amenities.show');
     Route::post('/amenities/create', [AmenidadController::class, 'store'])->name('amenities.store');
     Route::put('/amenities/edit/{id}', [AmenidadController::class, 'update'])->name('amenities.update');
     Route::delete('/amenities/delete/{id}', [AmenidadController::class, 'destroy'])->name('amenities.destroy');
@@ -122,5 +106,16 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/guests/create', [VisitantesController::class, 'store'])->name('guests.store');
     Route::put('/guests/edit/{id}', [VisitantesController::class, 'update'])->name('guests.update');
     Route::delete('/guests/delete/{id}', [VisitantesController::class, 'destroy'])->name('guests.destroy');
+
+    Route::post('/visits', [VisitasController::class, 'index'])->name('visits.index');
+    Route::post('/visits/create', [VisitasController::class, 'store'])->name('visits.store');
+    Route::put('/visits/edit/{id}', [VisitasController::class, 'update'])->name('visits.update');
+    Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
+
+    Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
+    Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
+    Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');
+    Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
 
 });

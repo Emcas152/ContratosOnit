@@ -29,6 +29,7 @@ class VisitasResource extends JsonResource
             'dpi_visitante' =>$this->visitantes !== null ? $this->visitantes->dpi_visita : 'null',
             'placa_vehiculo' => $this->placa_vehiculo,
             'estado' =>  $this->estado,
+            'estado_descripcion' => $this->estadoVisita !== null ? $this->estadoVisita->descripcion_det : ''
         ]; 
     }
 

@@ -20,8 +20,8 @@ class VisitasController extends Controller
     {
         $role = $request->role;
         $usuarioId = $request->usuario_id;
-        $query=trim($request->get('searchText'));
-        $paginacion = $request->get('paginate');
+        $query=trim($request->searchText);
+        $paginacion = $request->paginate;
         $visitasQuery = [];
         if($role == 'admin'){
             $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
@@ -80,7 +80,7 @@ class VisitasController extends Controller
             $visitas->update();
 
             DB::commit();
-            return response(['data'=> $visitas,'code' => 200]);
+            return response(['data'=> new VisitasResource($visitas),'code' => 200]);
 
         } catch (\Exception $e) 
         {
@@ -102,7 +102,7 @@ class VisitasController extends Controller
             DB::beginTransaction();
             $visitas = Visitas::create($request->all());
             DB::commit();
-            return response(['data'=> $visitas,'code' => 201]);
+            return response(['data'=> new VisitasResource($visitas),'code' => 201]);
 
         } catch (\Exception $e) 
         {
@@ -141,7 +141,7 @@ class VisitasController extends Controller
             $visitas->placa_vehiculo = $request->get('placa_vehiculo');
             $visitas->update();
             DB::commit();
-            return response(['data'=> $visitas,'code' => 200]);
+            return response(['data'=> new VisitasResource($visitas),'code' => 200]);
         } catch (\Exception $e) 
         {
             DB::rollBack();

@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
-use App\Models\User;
 use App\Http\Requests\UsersFormRequest;
-use DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\EstadosProcesos;
-
+use DB;
 
 class UsersController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->orderBy('id','DESC')->get();
 
         if (!count($users)) 
         {
@@ -73,16 +72,15 @@ class UsersController extends Controller
         }
     }
 
-    public function destroy($id_user)
+    public function destroy(Request $request)
     {
         try
         {
             DB::beginTransaction();
-            $user = User::findOrFail($id_user);
+            $user = User::findOrFail($request->id);
             $estado = EstadosProcesos::where([['sts_inicial',$user->estado],['tabla','users']])->firstOrFail();
             $user->estado = $estado->sts_final;
             $user->save();
-
             DB::commit();
             return response(['data'=> new UsersResource($user),'code' => 200]);
         }

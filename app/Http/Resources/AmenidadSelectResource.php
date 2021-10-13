@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AmenidadesFormResource extends JsonResource
+class AmenidadSelectResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,9 @@ class AmenidadesFormResource extends JsonResource
     public function toArray($request)
     {
         return [
-            //'borderColor' => $this->Amenidades !== null ? $this->Amenidades->color : 'null',
             'id' => $this->id !== null ? $this->id : 'null', 
             'label' => $this->nombre !== null ? $this->nombre : 'null', 
             'color' => $this->color !== null ? $this->color : 'null', 
-            
         ];
     }
 }

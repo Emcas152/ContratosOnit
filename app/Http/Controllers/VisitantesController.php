@@ -24,6 +24,7 @@ class VisitantesController extends Controller
         $visitanteResult = Visitantes::where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($visitanteResult)) {
             return response(['data' => '','code'=>204]);  

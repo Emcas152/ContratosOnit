@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class UsersFormRequest extends FormRequest
 {
@@ -30,8 +32,6 @@ class UsersFormRequest extends FormRequest
             'email' => 'required|max:191|unique:users,email,'.$id.',id',
             'password' => 'required|max:191|confirmed',
             'role_id' => 'required',
-
-            
         ];
     }
 
@@ -48,5 +48,22 @@ class UsersFormRequest extends FormRequest
             'password.confirmed' => 'El campo :attribute no esta confirmado',
             'role_id' => 'El campo :attribute esta obligatorio',
         ];
+    }
+
+    /**
+     * Return validation errors as json response
+     *
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $response = [
+            'status' => 'failure',
+            'status_code' => 400,
+            'message' => 'Bad Request',
+            'errors' => $validator->errors(),
+        ];
+
+        throw new HttpResponseException(response()->json($response, 400));
     }
 }
