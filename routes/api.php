@@ -50,9 +50,6 @@ Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.i
 Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
 Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');
 Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
- 
-Route::get('/visitantes', [VisitantesController::class, 'index'])->name('visitantes.index');
-
 
 Route::get('/amenidades', [AmenidadesController::class, 'index'])->name('amenidades.index');
 Route::get('/amenidades/name', [AmenidadesController::class, 'getName'])->name('amenidades.getName');
@@ -119,5 +116,11 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/accessory-request/create', [SolicitudAccesorioController::class, 'store'])->name('accessory-request.store');
     Route::put('/accessory-request/edit/{id}', [SolicitudAccesorioController::class, 'update'])->name('accessory-request.update');
     Route::put('/accessory-request/{id}/{action}', [SolicitudAccesorioController::class, 'change_state'])->name('accessory-request.change_state');
+
+    Route::post('/guests', [VisitantesController::class, 'index'])->name('guests.index');
+    Route::post('/guests/select', [VisitantesController::class, 'show'])->name('guests.show');
+    Route::post('/guests/create', [VisitantesController::class, 'store'])->name('guests.store');
+    Route::put('/guests/edit/{id}', [VisitantesController::class, 'update'])->name('guests.update');
+    Route::delete('/guests/delete/{id}', [VisitantesController::class, 'destroy'])->name('guests.destroy');
 
 });
