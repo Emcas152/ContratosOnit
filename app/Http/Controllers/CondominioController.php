@@ -6,6 +6,7 @@ use App\Models\Condominio;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\CondominioResource;
+use App\Http\Resources\CondominioSelectResource;
 use App\Http\Requests\CondominioFormRequest;
 use DB;
 
@@ -59,9 +60,15 @@ class CondominioController extends Controller
      * @param  \App\Models\Condominio  $condominio
      * @return \Illuminate\Http\Response
      */
-    public function show(Condominio $condominio)
+    public function show()
     {
-        //
+        $condominios = Condominio::all();
+
+        if (!count($condominios)) 
+        {
+           return response(['data' => '','code'=>204]);   
+        }
+        return response(['data'=> CondominioSelectResource::collection($condominios),'code' => 200]);
     }
 
     /**
