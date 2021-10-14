@@ -61,6 +61,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::get('/roles/asignacion/{role}/{menu}/{estado}', [RolesController::class, 'rolesAssign'])->name('roles.rolesAssign'); 
     
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/users/select', [UsersController::class, 'show'])->name('users.show');
     Route::post('/users/create', [UsersController::class, 'store'])->name('users.store');
     Route::put('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
@@ -94,6 +95,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/amenities/delete/{id}', [AmenidadController::class, 'destroy'])->name('amenities.destroy');
 
     Route::post('/news', [NoticiaController::class, 'index'])->name('news.index');
+    Route::post('/news/{user}', [NoticiaController::class, 'show'])->name('news.show');
     Route::post('/news/create', [NoticiaController::class, 'store'])->name('news.store');
     Route::put('/news/edit/{id}', [NoticiaController::class, 'update'])->name('news.update');
     Route::delete('/news/delete/{id}', [NoticiaController::class, 'destroy'])->name('news.destroy');

@@ -22,6 +22,7 @@ class Apartamento extends Model
         'id_edificio',
         'nombre',
         'nivel',
+        'telefono',
         'estado'
     ];
 
