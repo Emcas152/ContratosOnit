@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticia;
+use App\Models\ViewNoticias;
+use App\Models\Apartamento;
 use App\Models\EstadosProcesos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -62,9 +64,22 @@ class NoticiaController extends Controller
      * @param  \App\Models\Noticia  $noticia
      * @return \Illuminate\Http\Response
      */
-    public function show(Noticia $noticia)
+    public function show(Request $request)
     {
-        //
+        $id_usuario = $request->user;
+    
+        $edificioApartamento = Apartamento::where([['id_inquilino', '=', $id_usuario]])
+                                                ->get(['id_edificio','nivel']);
+
+        $niveles = $edificioApartamento->pluck('nivel');
+        $noticias = ViewNoticias::where([['estado', '=', 'ACT']])
+                                ->whereIn('id_edificio', $edificioApartamento->pluck('id_edificio'))
+                                ->where(function($query) use($niveles) {
+                                                $query->whereIn('nivel', $niveles)
+                                                ->orWhere([['nivel', '=', 0]]);
+                                        })->orderBy('fecha_publicacion', 'DESC')->get();
+          
+        return response(['data'=> $noticias,'code' => 200]);
     }
 
     /**
