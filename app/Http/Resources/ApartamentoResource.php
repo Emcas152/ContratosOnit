@@ -21,9 +21,10 @@ class ApartamentoResource extends JsonResource
             'edificio' =>$this->edificios !== null ? $this->edificios->nombre : 'null',
             'id_inquilino' => $this->id_inquilino,
             'inquilino' => $this->inquilinos !== null ? $this->inquilinos->name : '',
-            'telefono' => $this->inquilinos !== null ? $this->inquilinos->telefono : '',
+            'telefono_inquilino' => $this->inquilinos !== null ? $this->inquilinos->telefono : '',
             'correo' => $this->inquilinos !== null ? $this->inquilinos->email : '',
             'nombre' => $this->nombre,
+            'telefono_apartamento' => $this->telefono,
             'nivel' => $this->nivel,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoApartamento !== null ? $this->estadoApartamento->descripcion_det : ''

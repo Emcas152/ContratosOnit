@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
+use App\Http\Resources\UsuarioSelectResource;
 use App\Http\Requests\UsersFormRequest;
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -22,6 +23,17 @@ class UsersController extends Controller
         }
 
         return response(['data'=> UsersResource::collection($users),'code' => 200]);
+    }
+
+    public function show(){
+
+        $users = User::all();
+
+        if (!count($users)) 
+        {
+           return response(['data' => '','code'=>204]);  
+        }
+        return response(['data'=> UsuarioSelectResource::collection($users),'code' => 200]);
     }
 
     public function store(UsersFormRequest $request)
