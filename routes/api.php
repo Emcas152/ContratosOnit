@@ -47,7 +47,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/showMenu/edit/{id}', [MenuAccionesController::class, 'update'])->name('menu.update');
     Route::get('/showMenuAction/{id}', [MenuAccionesController::class, 'showMenuAction'])->name('menu.Action');
 
-    Route::get('/parametros/{id}', [ParametrosDetalleController::class, 'index'])->name('menu.index');
+    Route::get('/parametros/{codigo}', [ParametrosDetalleController::class, 'show'])->name('menu.show');
 
     Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
     Route::post('/roles/create', [RolesController::class, 'store'])->name('roles.store');
