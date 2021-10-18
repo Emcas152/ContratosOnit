@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ParametrosDetalle;
+use App\Models\Parametros;
 use Illuminate\Http\Request;
 use App\Http\Resources\ParametrosDetalleResource;
 use App\Http\Requests\ParametrosDetalleIdFormRequest;
@@ -52,9 +53,18 @@ class ParametrosDetalleController extends Controller
      * @param  \App\Models\ParametrosDetalle  $parametrosDetalle
      * @return \Illuminate\Http\Response
      */
-    public function show(ParametrosDetalle $parametrosDetalle)
+    public function show(ParametrosDetalleIdFormRequest $request)
     {
-        //
+        $parametros = Parametros::where('codigo','=',$request->input('codigo'))
+        ->get();
+
+        $parametros_det = $parametros->first()->parametros_det;
+
+        if (!count($parametros_det)) 
+        {
+           return response(['data' => '','code'=>204]);   
+        }
+        return response(['data'=> ParametrosDetalleResource::collection($parametros_det),'code' => 200]);
     }
 
     /**

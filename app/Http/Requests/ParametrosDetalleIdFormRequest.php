@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class ParametrosDetalleIdFormRequest extends FormRequest
 {
@@ -18,28 +20,38 @@ class ParametrosDetalleIdFormRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        $this->merge(['id'=> $this->route('id')]);
+        $this->merge(['codigo'=> $this->route('codigo')]);
     }
 
     public function rules()
     {
         return [
-            'id' => 'required|numeric'
+            'codigo' => 'required|string'
         ];
     }
 
     public function messages()
     {
         return [
-            'id.required' => 'El campo :attribute es obligatorio',
-            'id.numeric' => 'El campo :attribute debe de ser numerico'
+            'codigo.required' => 'El campo :attribute es obligatorio',
         ];
     }
 
-    /**
-     * Get the validation rules that apply to the request.
+     /**
+     * Return validation errors as json response
      *
-     * @return array
+     * @param Validator $validator
      */
+    protected function failedValidation(Validator $validator)
+    {
+        $response = [
+            'status' => 'failure',
+            'status_code' => 400,
+            'message' => 'Bad Request',
+            'errors' => $validator->errors(),
+        ];
+
+        throw new HttpResponseException(response()->json($response, 400));
+    }
     
 }
