@@ -30,6 +30,7 @@ class LoginResource extends JsonResource
                 ],
             'role' => $this->roles !== null ? $this->roles[0]['name'] : '',
             'role_id' => $this->roles !== null ? $this->roles[0]['id'] : '',
+            'id_condominio' => $this->condominio !== null ? $this->condominio->id : '',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Edificio;
+use App\Models\User;
 use App\Models\ViewParametros;
 
 class Condominio extends Model
@@ -20,12 +21,18 @@ class Condominio extends Model
     protected $fillable = [
         'nombre',
         'parqueo_visitantes',
-        'estado'
+        'estado',
+        'id_usuario'
     ];
 
     public function edificios()
     {
         return $this->hasMany(Edificio::class,'id_condominio');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class,'id_usuario');
     }
 
     public function estadoCondominio()

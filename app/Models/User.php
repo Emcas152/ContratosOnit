@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Condominio;
 
 class User extends Authenticatable
 {
@@ -44,4 +45,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function condominio()
+    {
+        return $this->hasOne(Condominio::class,'id_usuario');
+    }
 }
