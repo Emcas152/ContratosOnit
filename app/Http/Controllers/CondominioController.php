@@ -19,11 +19,12 @@ class CondominioController extends Controller
      */
     public function index(Request $request)
     {
+        $usuario = trim($request->usuario_id);
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $condominioResult = Condominio::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['parqueo_visitantes', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominioResult = Condominio::where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['id_usuario', '=', $usuario]])
+                                        ->orWhere([['parqueo_visitantes', 'LIKE', '%'.$queryUrl.'%'],['id_usuario', '=', $usuario]])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_usuario', '=', $usuario]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($condominioResult)) {
