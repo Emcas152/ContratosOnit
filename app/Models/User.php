@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'telefono',
-        'path_img'
+        'path_img',
+        'id_condominio'
     ];
 
     /**

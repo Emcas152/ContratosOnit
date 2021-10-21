@@ -45,6 +45,7 @@ class UsersController extends Controller
             $newUser->name = $request->get('name');
             $newUser->password = Hash::make($request->get('password'));
             $newUser->email = $request->get('email');
+            $newUser->id_condominio = $request->id_condominio;
             $newUser->estado = 'ACT';
             $newUser->save();
             
@@ -72,6 +73,7 @@ class UsersController extends Controller
             }
             $user->name = $request->get('name');
             $user->email = $request->get('email');
+            $newUser->id_condominio = $request->id_condominio;
             $user->update();
             DB::commit();
             return response(['data'=> new UsersResource($user),'code' => 200]);
