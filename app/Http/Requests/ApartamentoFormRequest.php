@@ -25,9 +25,7 @@ class ApartamentoFormRequest extends FormRequest
      */
     public function rules()
     {
-        
         return [
-            'id_inquilino' => 'required|integer',
             'id_edificio' => 'required|integer',
             'nombre' => 'required',
             'nivel' => 'required|integer',
@@ -38,15 +36,12 @@ class ApartamentoFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_inquilino.required' => 'El campo inquilino es obligatorio',
-            'id_inquilino.integer' => 'El campo :attribute debe de ser un numero entero',
             'id_edificio.required' => 'El campo edificio es obligatorio',
             'id_edificio.integer' => 'El campo :attribute debe de ser un numero entero',
             'nombre.required' => 'El campo :attribute es obligatorio',
             'nivel.required' => 'El campo :attribute es obligatorio',
             'nivel.integer' => 'El campo :attribute debe de ser un numero entero',
             'estado.required' => 'El campo :attribute es obligatorio'
-            
         ];
     }
 
