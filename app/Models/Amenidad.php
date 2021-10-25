@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Condominio;
+use App\Models\ViewParametros;
 
 class Amenidad extends Model
 {
@@ -16,11 +18,17 @@ class Amenidad extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'id_condominio',
         'nombre',
         'descripcion',
         'color',
         'estado'
     ];
+
+    public function condominio()
+    {
+        return $this->belongsTo(Condominio::class,'id_condominio');
+    }
 
     public function colorAmenidad()
     {

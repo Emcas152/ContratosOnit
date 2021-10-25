@@ -16,6 +16,8 @@ class AmenidadResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'id_condominio' => $this->id_condominio,
+            'condominio_descripcion' => $this->condominio !== null ? $this->condominio->nombre : '',
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'color' => $this->color,

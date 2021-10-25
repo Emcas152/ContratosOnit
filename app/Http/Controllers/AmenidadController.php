@@ -22,9 +22,10 @@ class AmenidadController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $amenidadResult = Amenidad::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominio = $request->id_condominio;
+        $amenidadResult = Amenidad::where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($amenidadResult)) {
