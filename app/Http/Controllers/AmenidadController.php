@@ -62,9 +62,9 @@ class AmenidadController extends Controller
      * @param  \App\Models\Amenidad  $amenidad
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $amenidades = Amenidad::all();
+        $amenidades = Amenidad::where('id_condominio', '=', $request->id_condominio)->get();
 
         if (!count($amenidades)) 
         {

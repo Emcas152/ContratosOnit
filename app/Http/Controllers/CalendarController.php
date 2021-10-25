@@ -20,6 +20,7 @@ class CalendarController extends Controller
     {
         $role = $request->role;
         $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
         $parametros = $request->get('params');
         if($parametros != null )
         {
@@ -35,14 +36,15 @@ class CalendarController extends Controller
         if($role == 'admin'){
             $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
                          ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                         ->where('amenidades.id_condominio','=', $condominio)
                          ->whereIn('amenidades.nombre', $parametros)
                         ->get();
         } elseif ($role == 'client'){
             $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
                          ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
-                         ->orWhere(function ($query) use ($usuarioId){
-                           $query->where('calendario_areas_sociales.id_usuario', '=', $usuarioId)
-                                 ->orWhere('calendario_areas_sociales.estado','=','AUT');
+                         ->orWhere(function ($query) use ($usuarioId, $condominio){
+                           $query->where([['calendario_areas_sociales.id_usuario', '=', $usuarioId], ['amenidades.id_condominio','=', $condominio]])
+                                 ->orWhere([['calendario_areas_sociales.estado','=','AUT'],['amenidades.id_condominio','=', $condominio]]);
                          })
                          ->whereIn('amenidades.nombre', $parametros)
                         ->get();
