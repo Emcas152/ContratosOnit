@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Condominio;
+use App\Models\User;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\CondominioResource;
@@ -43,8 +44,11 @@ class CondominioController extends Controller
     {
         try 
         {
+            $user = User::findOrFail($request->id_usuario);
             DB::beginTransaction();
             $condominio = Condominio::create($request->all());
+            $user->id_condominio = $condominio->id;
+            $user->update();
             DB::commit();
             return response(['data'=> new CondominioResource($condominio),'code' => 201]);
 
