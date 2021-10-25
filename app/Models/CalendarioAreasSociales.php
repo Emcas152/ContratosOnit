@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Amenidades;
+use App\Models\Amenidad;
 use App\Models\User;
 use App\Models\Apartamento;
 
@@ -42,7 +42,7 @@ class CalendarioAreasSociales extends Model
 
     public function Amenidades()
     {
-        return $this->belongsTo(Amenidades::class,'id_area');
+        return $this->belongsTo(Amenidad::class,'id_area');
     }
 
     public function estadoCalendario()

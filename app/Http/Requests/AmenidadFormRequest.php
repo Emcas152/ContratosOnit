@@ -26,6 +26,7 @@ class AmenidadFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'id_condominio' => 'required',
             'nombre' => 'required',
             'descripcion' => 'required',
             'color' => 'required',
@@ -36,6 +37,7 @@ class AmenidadFormRequest extends FormRequest
     public function messages()
     {
         return [
+            'id_condominio.required' => 'El campo condominio es obligatorio',
             'nombre.required' => 'El campo :attribute es obligatorio',
             'descripcion.required' => 'El campo :attribute es obligatorio',
             'color.required' => 'El campo :attribute es obligatorio',
