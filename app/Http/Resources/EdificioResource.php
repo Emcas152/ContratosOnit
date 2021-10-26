@@ -23,6 +23,7 @@ class EdificioResource extends JsonResource
             'niveles' => $this->niveles,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoEdificios !== null ? $this->estadoEdificios->descripcion_det : '',
+            'amenidades' => collect($this->amenidades)->pluck('id'),
         ];
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Apartamento;
 use App\Models\Condominio;
 use App\Models\ViewParametros;
+use App\Models\Amenidad;
 
 class Edificio extends Model
 {
@@ -34,6 +35,10 @@ class Edificio extends Model
     public function condominios()
     {
         return $this->belongsTo(Condominio::class,'id_condominio');
+    }
+
+    public function amenidades(){
+        return $this->belongsToMany(Amenidad::class);
     }
 
     public function estadoEdificios()

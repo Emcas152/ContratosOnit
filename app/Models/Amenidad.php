@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Condominio;
 use App\Models\ViewParametros;
+use App\Models\Edificio;
 
 class Amenidad extends Model
 {
@@ -28,6 +29,10 @@ class Amenidad extends Model
     public function condominio()
     {
         return $this->belongsTo(Condominio::class,'id_condominio');
+    }
+
+    public function edificios(){
+        return $this->belongsToMany(Edificio::class);
     }
 
     public function colorAmenidad()
