@@ -49,7 +49,8 @@ Route::middleware(['auth:api'])->group(function ()
 
     Route::get('/parametros/{codigo}', [ParametrosDetalleController::class, 'show'])->name('menu.show');
 
-    Route::get('/roles', [RolesController::class, 'index'])->name('roles.index');
+    Route::post('/roles', [RolesController::class, 'index'])->name('roles.index');
+    Route::post('/roles/select', [RolesController::class, 'show'])->name('roles.show');
     Route::post('/roles/create', [RolesController::class, 'store'])->name('roles.store');
     Route::put('/roles/edit/{id}', [RolesController::class, 'update'])->name('roles.update');
     Route::delete('/roles/delete/{id}', [RolesController::class, 'destroy'])->name('roles.destroy');
@@ -96,7 +97,7 @@ Route::middleware(['auth:api'])->group(function ()
 
     Route::post('/news', [NoticiaController::class, 'index'])->name('news.index');
     Route::post('/news/{user}', [NoticiaController::class, 'show'])->name('news.show');
-    Route::post('/news/create', [NoticiaController::class, 'store'])->name('news.store');
+    Route::post('/news/create/add', [NoticiaController::class, 'store'])->name('news.store');
     Route::put('/news/edit/{id}', [NoticiaController::class, 'update'])->name('news.update');
     Route::delete('/news/delete/{id}', [NoticiaController::class, 'destroy'])->name('news.destroy');
 
