@@ -79,18 +79,15 @@ class RolesController extends Controller
      * @param  \App\Models\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        try 
-        {
-            $rol_data = Roles::select('id','name','estado')->findOrFail($id);
-            
-            return response(['data'=> $rol_data,'code' => 200]);
+        $roles = Roles::get(['id','name']);
 
-        } catch (Throwable $e) 
+        if (!count($roles)) 
         {
-            return response(['data'=> 'Error al encontrar registro','code' => 500]);   
+           return response(['data' => '','code'=>204]);   
         }
+        return response(['data'=> $roles,'code' => 200]);
     }
 
     /**
