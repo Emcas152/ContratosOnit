@@ -43,8 +43,12 @@ class EdificioController extends Controller
     {
         try 
         {
+            $amenidades = $request->amenidades;
             DB::beginTransaction();
             $edificio = Edificio::create($request->all());
+            foreach ($amenidades as $amenidad) {
+                $edificio->amenidades()->attach($amenidad);
+            }
             DB::commit();
             return response(['data'=> new EdificioResource($edificio),'code' => 201]);
 
@@ -83,9 +87,14 @@ class EdificioController extends Controller
     {
         try 
         {
+            $amenidades = $request->amenidades;
             DB::beginTransaction();
             $edificio = Edificio::findOrFail($request->id);
             $edificio->update($request->all());
+            $edificio->amenidades()->wherePivot('edificio_id', $edificio->id)->detach();
+            foreach ($amenidades as $amenidad) {
+                $edificio->amenidades()->attach($amenidad);
+            }
             DB::commit();
             return response(['data'=> new EdificioResource($edificio),'code' => 200]);
 
