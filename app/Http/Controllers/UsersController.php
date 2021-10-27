@@ -14,19 +14,27 @@ use DB;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('roles')->orderBy('id','DESC')->get();
+        $queryUrl = trim($request->searchText);
+        $pagination = $request->paginate;
+        $condominio = $request->id_condominio;
+        $users = User::where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                        ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                        ->orWhere([['telefono', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                        ->orderBy('id','DESC')
+                        ->with('roles')
+                        ->paginate($pagination);
 
         if (!count($users)) 
         {
            return response(['data' => '','code'=>204]);  
         }
 
-        return response(['data'=> UsersResource::collection($users),'code' => 200]);
+        return response(['data'=> UsersResource::collection($users),'per_page' => $users->perPage(),'total' => $users->total(), 'code' => 200]);
     }
 
-    public function show(){
+    public function show(Request $request){
 
         $users = User::all();
 
@@ -63,7 +71,7 @@ class UsersController extends Controller
             $accessToken = $newUser->createToken('authToken')->accessToken;
 
             DB::commit();
-            return response(['data'=> $newUser, 'access_token' => $accessToken,'code' => 201]);
+            return response(['data'=> new UsersResource($newUser), 'access_token' => $accessToken,'code' => 201]);
 
         } catch (\Exception $e) 
         {

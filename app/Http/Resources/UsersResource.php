@@ -27,6 +27,8 @@ class UsersResource extends JsonResource
             'password' => $this->password,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoUsuario !== null ? $this->estadoUsuario->descripcion_det : '',
+            'id_apartamento' => $this->apartamentos!== null? $this->apartamentos->id : '' ,
+            'id_edificio' => $this->apartamentos!== null? $this->apartamentos->id_edificio : '' ,
         ];
     }
 }
