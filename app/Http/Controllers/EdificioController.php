@@ -21,10 +21,11 @@ class EdificioController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $edificioResult = Edificio::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['niveles', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominio = $request->id_condominio;
+        $edificioResult = Edificio::where([['nombre', 'LIKE', '%'.$queryUrl.'%'], ['id_condominio', '=', $condominio]])
+                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%'], ['id_condominio', '=', $condominio]])
+                                        ->orWhere([['niveles', 'LIKE', '%'.$queryUrl.'%'], ['id_condominio', '=', $condominio]])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'], ['id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($edificioResult)) {
@@ -65,9 +66,10 @@ class EdificioController extends Controller
      * @param  \App\Models\Edificio  $edificio
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $edificios = Edificio::all();
+        $condominio = $request->id_condominio;
+        $edificios = Edificio::where('id_condominio', '=', $condominio)->get();
 
         if (!count($edificios)) 
         {
