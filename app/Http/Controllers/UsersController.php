@@ -46,6 +46,7 @@ class UsersController extends Controller
             $newUser->password = Hash::make($request->get('password'));
             $newUser->email = $request->get('email');
             $newUser->id_condominio = $request->id_condominio;
+            $newUser->telefono = $request->telefono;
             $newUser->estado = 'ACT';
             $newUser->save();
             

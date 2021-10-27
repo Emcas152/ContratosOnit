@@ -59,9 +59,15 @@ class ApartamentoController extends Controller
      * @param  \App\Models\Apartamentos  $apartamentos
      * @return \Illuminate\Http\Response
      */
-    public function show(Apartamentos $apartamentos)
+    public function show(Request  $request)
     {
-        //
+        $edificio = $request->id_edificio;
+        $apartamentoResult = Apartamento::where([['id_edificio', '=', $edificio]])
+                                        ->orderBy('nombre','ASC');
+        if (!count($apartamentoResult)) {
+            return response(['data' => '','code'=>204]);  
+        }
+        return response(['data'=> ApartamentoResource::collection($apartamentoResult), 'code' => 200]);
     }
 
     /**

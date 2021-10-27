@@ -80,6 +80,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/building/delete/{id}', [EdificioController::class, 'destroy'])->name('building.destroy');
 
     Route::post('/apartment', [ApartamentoController::class, 'index'])->name('apartment.index');
+    Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('apartment.show');
     Route::post('/apartment/create', [ApartamentoController::class, 'store'])->name('apartment.store');
     Route::put('/apartment/edit/{id}', [ApartamentoController::class, 'update'])->name('apartment.update');
     Route::delete('/apartment/delete/{id}', [ApartamentoController::class, 'destroy'])->name('apartment.destroy');

@@ -25,6 +25,8 @@ class UsersResource extends JsonResource
             'role_id' => $this->roles[0]->id,
             'role_name' => $this->roles[0]->name,
             'password' => $this->password,
+            'estado' => $this->estado,
+            'estado_descripcion' => $this->estadoUsuario !== null ? $this->estadoUsuario->descripcion_det : '',
         ];
     }
 }
