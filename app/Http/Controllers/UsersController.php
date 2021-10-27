@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Apartamento;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
@@ -49,6 +50,14 @@ class UsersController extends Controller
             $newUser->telefono = $request->telefono;
             $newUser->estado = 'ACT';
             $newUser->save();
+
+            $apartamento = [];
+
+            if(trim($request->id_apartamento) != ''){
+                $apartamento = Apartamento::findOrfail($request->id_apartamento);
+                $apartamento->id_inquilino = $newUser->id;
+                $apartamento->update();
+            }
             
             $newUser->assignRole(User::getStoredRole($request->get('role_id'))->name);
             $accessToken = $newUser->createToken('authToken')->accessToken;
@@ -77,6 +86,20 @@ class UsersController extends Controller
             $user->id_condominio = $request->id_condominio;
             $user->telefono = $request->telefono;
             $user->update();
+
+            $apartamento = [];
+            $apartamento = Apartamento::where('id_inquilino','=',$user->id)->first();
+            
+            if (trim($request->id_apartamento) == '') 
+            {
+                $apartamento->id_inquilino = null;
+                $apartamento->update();
+            } else if(trim($request->id_apartamento) != '' && $apartamento->id != $request->id_apartamento) {
+                $apartamentoCambio = Apartamento::findOrfail($request->id_apartamento);
+                $apartamentoCambio->id_inquilino = $user->id;
+                $apartamentoCambio->update();
+            }
+            
             DB::commit();
             return response(['data'=> new UsersResource($user),'code' => 200]);
             
