@@ -27,6 +27,8 @@ class VisitasController extends Controller
             $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
         } elseif ($role == 'client'){
             $visitasQuery = Visitas::where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%']]);
+        } elseif ($role == 'seguridad'){
+            $visitasQuery = Visitas::where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%']]);
         }
 
         if($request->get('start') != null)

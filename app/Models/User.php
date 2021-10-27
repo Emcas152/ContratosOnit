@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'telefono',
         'path_img',
+        'estado',
         'id_condominio'
     ];
 
@@ -50,5 +51,11 @@ class User extends Authenticatable
     public function condominio()
     {
         return $this->hasOne(Condominio::class,'id_usuario');
+    }
+
+    public function estadoUsuario()
+    {
+        return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
+        ->where('view_parametros.codigo_enc','=','STSGEN');
     }
 }
