@@ -105,22 +105,32 @@ class NoticiaController extends Controller
                                                 ->get(['id_edificio','nivel']);
 
             $niveles = $edificioApartamento->pluck('nivel');
-            $noticias = ViewNoticias::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio]])
-                                    ->where(function($query) use($queryUrl, $edificioApartamento) {
-                                        $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['usuario_creo', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['titulo', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['tipo_noticia_descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['prioridad_descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->whereIn('id_edificio', $edificioApartamento->pluck('id_edificio'));
-                                    })->where(function($query) use($niveles) {
-                                                    $query->whereIn('nivel', $niveles)
-                                                    ->orWhere([['nivel', '=', 0]]);
-                                            })->orderBy('fecha_publicacion', 'DESC')
-                                            ->paginate($pagination);
+            $noticiasPropias = ViewNoticias::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio]])
+                                ->where(function($query) use($queryUrl) {
+                                    $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['usuario_creo', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['titulo', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['nombre', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['tipo_noticia_descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['prioridad_descripcion', 'LIKE', '%'.$queryUrl.'%']]);
+                                })->whereIn('id_edificio', $edificioApartamento->pluck('id_edificio'))
+                                ->where(function($query) use($niveles) {
+                                                $query->whereIn('nivel', $niveles)
+                                                ->orWhere([['nivel', '=', 0]]);
+                                        });
+            
+            $noticias = ViewNoticias::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio],['id_edificio','<', 1]])
+                                ->where(function($query) use($queryUrl) {
+                                    $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['usuario_creo', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['titulo', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['nombre', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['tipo_noticia_descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['prioridad_descripcion', 'LIKE', '%'.$queryUrl.'%']]);
+                                })->union($noticiasPropias)
+                                ->orderBy('fecha_publicacion', 'DESC')
+                                        ->paginate($pagination);                                    
         }
-        //$noticiasCollection = collect($noticias->toArray());
         
         if (!count($noticias)) {
             return response(['data' => '','code'=>204]);  
