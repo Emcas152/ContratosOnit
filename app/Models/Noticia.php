@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Edificio;
+use App\Models\Condominio;
 
 class Noticia extends Model
 {
@@ -29,6 +31,14 @@ class Noticia extends Model
     public function usuarioNoticia()
     {
         return $this->belongsTo(User::class,'id_usuario_creo');
+    }
+
+    public function edificios(){
+        return $this->belongsToMany(Edificio::class, 'noticia_difucion', 'id_noticia', 'id_edificio');
+    }
+
+    public function condominios(){
+        return $this->belongsToMany(Condominio::class, 'noticia_difucion', 'id_noticia', 'id_condominio');
     }
 
     public function tipoNoticia()

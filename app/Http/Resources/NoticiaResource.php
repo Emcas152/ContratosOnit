@@ -27,7 +27,8 @@ class NoticiaResource extends JsonResource
             'prioridad_descripcion' => $this->prioridadNoticia !== null ? $this->prioridadNoticia->descripcion_det : '',
             'fecha_publicacion' => $this->fecha_publicacion,
             'estado' => $this->estado,
-            'estado_descripcion' => $this->estadoNoticia !== null ? $this->estadoNoticia->descripcion_det : ''
+            'estado_descripcion' => $this->estadoNoticia !== null ? $this->estadoNoticia->descripcion_det : '',
+            'edificios' => collect($this->edificios)->pluck('id'),
         ];
     }
 }

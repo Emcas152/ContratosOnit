@@ -73,7 +73,7 @@ class UsersController extends Controller
             }
             $user->name = $request->get('name');
             $user->email = $request->get('email');
-            $newUser->id_condominio = $request->id_condominio;
+            $user->id_condominio = $request->id_condominio;
             $user->update();
             DB::commit();
             return response(['data'=> new UsersResource($user),'code' => 200]);

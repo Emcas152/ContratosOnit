@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\NoticiaResource;
 use App\Http\Requests\NoticiaFormRequest;
+use Carbon\Carbon;
 use DB;
 
 class NoticiaController extends Controller
@@ -23,11 +24,14 @@ class NoticiaController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $noticiaResult = Noticia::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['tipo_noticia', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['prioridad', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominio = $request->id_condominio;
+        $noticiaResult = Noticia::join('users','users.id','noticias.id_usuario_creo')
+                                    ->select('noticias.id', 'noticias.id_usuario_creo', 'noticias.nombre', 'noticias.descripcion', 'noticias.tipo_noticia', 'noticias.prioridad', 'noticias.fecha_publicacion', 'noticias.estado')
+                                        ->where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['tipo_noticia', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['prioridad', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['noticias.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($noticiaResult)) {
@@ -46,8 +50,19 @@ class NoticiaController extends Controller
     {
         try 
         {
+            $edificios = $request->edificios;
+            $data = $request->all();
+            $data['fecha_publicacion'] = Carbon::now();
             DB::beginTransaction();
-            $noticia = Noticia::create($request->all());
+            $noticia = Noticia::create($data);
+            if(count($edificios)){
+                foreach ($edificios as $edificio) {
+                    $noticia->edificios()->attach($edificio, ['id_condominio' => $request->id_condominio]);
+                }
+            } else {
+                $noticia->condominios()->attach($request->id_condominio);
+            }
+
             DB::commit();
             return response(['data'=> new NoticiaResource($noticia),'code' => 201]);
 
@@ -91,15 +106,15 @@ class NoticiaController extends Controller
 
             $niveles = $edificioApartamento->pluck('nivel');
             $noticias = ViewNoticias::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio]])
-                                    ->where(function($query) use($queryUrl) {
+                                    ->where(function($query) use($queryUrl, $edificioApartamento) {
                                         $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['usuario_creo', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['titulo', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['nombre', 'LIKE', '%'.$queryUrl.'%']])
                                         ->orWhere([['tipo_noticia_descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['prioridad_descripcion', 'LIKE', '%'.$queryUrl.'%']]);
-                                    })->whereIn('id_edificio', $edificioApartamento->pluck('id_edificio'))
-                                    ->where(function($query) use($niveles) {
+                                        ->orWhere([['prioridad_descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->whereIn('id_edificio', $edificioApartamento->pluck('id_edificio'));
+                                    })->where(function($query) use($niveles) {
                                                     $query->whereIn('nivel', $niveles)
                                                     ->orWhere([['nivel', '=', 0]]);
                                             })->orderBy('fecha_publicacion', 'DESC')
@@ -125,9 +140,18 @@ class NoticiaController extends Controller
     {
         try 
         {
+            $edificios = $request->edificios;
             DB::beginTransaction();
             $noticia = Noticia::findOrFail($request->id);
             $noticia->update($request->all());
+            $noticia->condominios()->wherePivot('id_condominio', $request->id_condominio)->detach();
+            if(count($edificios)){
+                foreach ($edificios as $edificio) {
+                    $noticia->edificios()->attach($edificio, ['id_condominio' => $request->id_condominio]);
+                }
+            } else {
+                $noticia->condominios()->attach($request->id_condominio);
+            }
             DB::commit();
             return response(['data'=> new NoticiaResource($noticia),'code' => 200]);
 
