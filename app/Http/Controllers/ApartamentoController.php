@@ -63,7 +63,7 @@ class ApartamentoController extends Controller
     {
         $edificio = $request->id_edificio;
         $apartamentoResult = Apartamento::where([['id_edificio', '=', $edificio]])
-                                        ->orderBy('nombre','ASC');
+                                        ->orderBy('nombre','ASC')->get();
         if (!count($apartamentoResult)) {
             return response(['data' => '','code'=>204]);  
         }
