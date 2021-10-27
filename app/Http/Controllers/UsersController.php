@@ -74,6 +74,7 @@ class UsersController extends Controller
             $user->name = $request->get('name');
             $user->email = $request->get('email');
             $user->id_condominio = $request->id_condominio;
+            $user->telefono = $request->telefono;
             $user->update();
             DB::commit();
             return response(['data'=> new UsersResource($user),'code' => 200]);

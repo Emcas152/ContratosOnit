@@ -20,6 +20,7 @@ class Condominio extends Model
 
     protected $fillable = [
         'nombre',
+        'parqueo_general',
         'parqueo_visitantes',
         'estado',
         'id_usuario'

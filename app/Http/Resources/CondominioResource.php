@@ -17,6 +17,7 @@ class CondominioResource extends JsonResource
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
+            'parqueo_general' => $this->parqueo_general,
             'parqueo_visitantes' => $this->parqueo_visitantes,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoCondominio !== null ? $this->estadoCondominio->descripcion_det : '',

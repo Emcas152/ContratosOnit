@@ -27,6 +27,7 @@ class CondominioFormRequest extends FormRequest
     {
         return [
             'nombre' => 'required',
+            'parqueo_general' => 'required|integer',
             'parqueo_visitantes' => 'required|integer',
             'estado' => 'required',
             'id_usuario' => 'required|integer'
@@ -37,6 +38,8 @@ class CondominioFormRequest extends FormRequest
     {
         return [
             'nombre.required' => 'El campo :attribute es obligatorio',
+            'parqueo_general.required' => 'El campo parqueo general es obligatorio',
+            'parqueo_general.integer' => 'El campo parqueo general debe de ser un numero entero',
             'parqueo_visitantes.required' => 'El campo :attribute es obligatorio',
             'parqueo_visitantes.integer' => 'El campo parqueo visitantes debe de ser un numero entero',
             'estado.required' => 'El campo :attribute es obligatorio',
