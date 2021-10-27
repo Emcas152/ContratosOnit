@@ -32,7 +32,6 @@ class NoticiaFormRequest extends FormRequest
             'descripcion' => 'required',
             'tipo_noticia' => 'required',
             'prioridad' => 'required',
-            'fecha_publicacion' => 'required',
             'estado' => 'required'
         ];
     }
@@ -47,7 +46,6 @@ class NoticiaFormRequest extends FormRequest
             'tipo_noticia.required' => 'El campo :attribute es obligatorio',
             'prioridad.required' => 'El campo :attribute es obligatorio',
             'estado.required' => 'El campo :attribute es obligatorio'
-            
         ];
     }
 
