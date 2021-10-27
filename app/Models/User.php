@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Condominio;
+use App\Models\Apartamento;
 
 class User extends Authenticatable
 {
@@ -51,6 +52,11 @@ class User extends Authenticatable
     public function condominio()
     {
         return $this->hasOne(Condominio::class,'id_usuario');
+    }
+
+    public function apartamentos()
+    {
+        return $this->hasOne(Apartamento::class,'id_inquilino');
     }
 
     public function estadoUsuario()

@@ -61,7 +61,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::get('/roles/show/{id}', [RolesController::class, 'show'])->name('roles.show');
     Route::get('/roles/asignacion/{role}/{menu}/{estado}', [RolesController::class, 'rolesAssign'])->name('roles.rolesAssign'); 
     
-    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::post('/users', [UsersController::class, 'index'])->name('users.index');
     Route::post('/users/select', [UsersController::class, 'show'])->name('users.show');
     Route::post('/users/create', [UsersController::class, 'store'])->name('users.store');
     Route::put('/users/edit/{id}', [UsersController::class, 'update'])->name('users.update');
