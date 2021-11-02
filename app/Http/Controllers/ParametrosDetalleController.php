@@ -21,7 +21,7 @@ class ParametrosDetalleController extends Controller
         ->get();
         if (!count($parametros)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> ParametrosDetalleResource::collection($parametros),'code' => 200]);
     }
@@ -62,7 +62,7 @@ class ParametrosDetalleController extends Controller
 
         if (!count($parametros_det)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> ParametrosDetalleResource::collection($parametros_det),'code' => 200]);
     }

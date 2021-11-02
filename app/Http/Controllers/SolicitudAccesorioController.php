@@ -34,7 +34,7 @@ class SolicitudAccesorioController extends Controller
         $solicitudes = $solicitudAccesorioResult->paginate($pagination);
 
         if (!count($solicitudes)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> SolicitudAccesorioResource::collection($solicitudes),'per_page' => $solicitudes->perPage(),'total' => $solicitudes->total()]);
     }

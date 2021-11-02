@@ -28,7 +28,7 @@ class AccesorioController extends Controller
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($accesorioResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> AccesorioResource::collection($accesorioResult),'per_page' => $accesorioResult->perPage(),'total' => $accesorioResult->total()]); 
     }

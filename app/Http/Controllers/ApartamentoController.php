@@ -20,13 +20,16 @@ class ApartamentoController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $apartamentoResult = Apartamento::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['nivel', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominio = $request->id_condominio;
+        $apartamentoResult = Apartamento::join('edificios','edificios.id','apartamentos.id_edificio')
+                                        ->select('apartamentos.*')
+                                        ->where([['apartamentos.nombre', 'LIKE', '%'.$queryUrl.'%'],['edificios.id_condominio','=', $condominio]])
+                                        ->orWhere([['nivel', 'LIKE', '%'.$queryUrl.'%'],['edificios.id_condominio','=', $condominio]])
+                                        ->orWhere([['apartamentos.estado', 'LIKE', '%'.$queryUrl.'%'],['edificios.id_condominio','=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($apartamentoResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> ApartamentoResource::collection($apartamentoResult),'per_page' => $apartamentoResult->perPage(),'total' => $apartamentoResult->total()]);
     }
@@ -65,7 +68,7 @@ class ApartamentoController extends Controller
         $apartamentoResult = Apartamento::where([['id_edificio', '=', $edificio]])
                                         ->orderBy('nombre','ASC')->get();
         if (!count($apartamentoResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> ApartamentoResource::collection($apartamentoResult), 'code' => 200]);
     }

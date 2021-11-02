@@ -29,7 +29,7 @@ class AmenidadController extends Controller
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($amenidadResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> AmenidadResource::collection($amenidadResult),'per_page' => $amenidadResult->perPage(),'total' => $amenidadResult->total()]); 
     }
@@ -68,7 +68,7 @@ class AmenidadController extends Controller
 
         if (!count($amenidades)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> AmenidadSelectResource::collection($amenidades),'code' => 200]);
     }

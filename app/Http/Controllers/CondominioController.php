@@ -29,7 +29,7 @@ class CondominioController extends Controller
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($condominioResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> CondominioResource::collection($condominioResult),'per_page' => $condominioResult->perPage(),'total' => $condominioResult->total()]); 
     }
@@ -71,7 +71,7 @@ class CondominioController extends Controller
 
         if (!count($condominios)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> CondominioSelectResource::collection($condominios),'code' => 200]);
     }
