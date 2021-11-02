@@ -29,7 +29,7 @@ class EdificioController extends Controller
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($edificioResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> EdificioResource::collection($edificioResult),'per_page' => $edificioResult->perPage(),'total' => $edificioResult->total()]); 
     }
@@ -73,7 +73,7 @@ class EdificioController extends Controller
 
         if (!count($edificios)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> EdificioSelectResource::collection($edificios),'code' => 200]);
     }

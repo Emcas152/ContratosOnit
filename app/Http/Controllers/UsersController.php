@@ -28,7 +28,7 @@ class UsersController extends Controller
 
         if (!count($users)) 
         {
-           return response(['data' => '','code'=>204]);  
+           return response(['data' => [],'code'=>204]);  
         }
 
         return response(['data'=> UsersResource::collection($users),'per_page' => $users->perPage(),'total' => $users->total(), 'code' => 200]);
@@ -40,7 +40,7 @@ class UsersController extends Controller
 
         if (!count($users)) 
         {
-           return response(['data' => '','code'=>204]);  
+           return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> UsuarioSelectResource::collection($users),'code' => 200]);
     }

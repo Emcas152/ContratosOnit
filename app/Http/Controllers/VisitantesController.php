@@ -21,15 +21,41 @@ class VisitantesController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $visitanteResult = Visitantes::where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $role = $request->role;
+        $usuario = $request->id_usuario;
+        $condominio = $request->id_condominio;
+
+        $visitantes = [];
+
+        if($role == 'admin'){
+        $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                                        ->select('visitantes.*')
+                                        ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
-        if (!count($visitanteResult)) {
-            return response(['data' => '','code'=>204]);  
+        }elseif($role == 'client'){
+            $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                                        ->select('visitantes.*')
+                                        ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
+                                        ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
+                                        ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
+                                        ->orderBy('id','DESC')
+                                        ->paginate($pagination);
+        }elseif($role == 'seguridad'){
+            $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                                        ->select('visitantes.*')
+                                        ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orderBy('id','DESC')
+                                        ->paginate($pagination);
         }
-        return response(['data'=> VisitantesResource::collection($visitanteResult),'per_page' => $visitanteResult->perPage(),'total' => $visitanteResult->total()]);
+        if (!count($visitantes)) {
+            return response(['data' => [],'code'=>204]);  
+        }
+        return response(['data'=> VisitantesResource::collection($visitantes),'per_page' => $visitantes->perPage(),'total' => $visitantes->total()]);
     }
 
     /**
@@ -60,13 +86,34 @@ class VisitantesController extends Controller
      * @param  \App\Models\Visitantes  $visitantes
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Request $request)
     {
-        $visitantes = Visitantes::all();
+        $role = $request->role;
+        $usuario = $request->id_usuario;
+        $condominio = $request->id_condominio;
+
+        $visitantes = [];
+        
+        if($role == 'admin'){
+            $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                        ->select('visitantes.*')
+                        ->where([['users.id_condominio', '=', $condominio]])
+                        ->get();
+        }elseif($role == 'client'){
+            $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                        ->select('visitantes.*')
+                        ->where([['visitantes.estado', '=', 'ACT'],['users.id_condominio', '=', $condominio], ['users.id', '=', $usuario]])
+                        ->get();
+        }elseif($role == 'seguridad'){
+            $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
+                        ->select('visitantes.*')
+                        ->where([['visitantes.estado', '=', 'ACT'],['users.id_condominio', '=', $condominio]])
+                        ->get();
+        }
 
         if (!count($visitantes)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> VisitantesSelectResource::collection($visitantes),'code' => 200]);
     }

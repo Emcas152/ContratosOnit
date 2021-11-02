@@ -31,7 +31,7 @@ class RolesController extends Controller
             $roles = Roles::all();
             if (!count($roles)) 
             {
-            return response(['data' => '','code'=>204]);
+            return response(['data' => [],'code'=>204]);
             }
             return response(['data'=> RolesResource::collection($roles),'code' => 200]);
         }
@@ -85,7 +85,7 @@ class RolesController extends Controller
 
         if (!count($roles)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> $roles,'code' => 200]);
     }

@@ -20,15 +20,22 @@ class VisitasController extends Controller
     {
         $role = $request->role;
         $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
         $query=trim($request->searchText);
         $paginacion = $request->paginate;
         $visitasQuery = [];
         if($role == 'admin'){
-            $visitasQuery = Visitas::where([ ['placa_vehiculo','LIKE','%'.$query.'%']]);
+            $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                    ->select('visitas.*')
+                                    ->where([ ['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
         } elseif ($role == 'client'){
-            $visitasQuery = Visitas::where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%']]);
+            $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                    ->select('visitas.*')
+                                    ->where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
         } elseif ($role == 'seguridad'){
-            $visitasQuery = Visitas::where([['placa_vehiculo','LIKE','%'.$query.'%']]);
+            $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                    ->select('visitas.*')
+                                    ->where([['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
         }
 
         if($request->get('start') != null)
@@ -44,7 +51,7 @@ class VisitasController extends Controller
 
         if (!count($visitas)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> VisitasResource::collection($visitas),'per_page' => $visitas->perPage(),'total' => $visitas->total()]);  
     }

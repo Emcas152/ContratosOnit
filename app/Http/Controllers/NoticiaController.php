@@ -35,7 +35,7 @@ class NoticiaController extends Controller
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($noticiaResult)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> NoticiaResource::collection($noticiaResult),'per_page' => $noticiaResult->perPage(),'total' => $noticiaResult->total()]);
     }
@@ -133,7 +133,7 @@ class NoticiaController extends Controller
         }
         
         if (!count($noticias)) {
-            return response(['data' => '','code'=>204]);  
+            return response(['data' => [],'code'=>204]);  
         }
 
         return response(['data'=> $noticias,'per_page' => $noticias->perPage(),'total' => $noticias->total(),'code' => 200]);

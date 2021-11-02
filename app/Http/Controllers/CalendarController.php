@@ -52,7 +52,7 @@ class CalendarController extends Controller
 
         if (!count($calendario)) 
         {
-           return response(['data' => '','code'=>204]);   
+           return response(['data' => [],'code'=>204]);   
         }
         return response(['data'=> CalendarResource::collection($calendario),'code' => 200]); 
       

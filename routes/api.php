@@ -20,6 +20,8 @@ use App\Http\Controllers\AmenidadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\SolicitudAccesorioController;
 
+use App\Http\Controllers\ViewInquilinoController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -123,5 +125,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
     Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');
     Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+
+    Route::post('/tenants', [ViewInquilinoController::class, 'show'])->name('tenants.show');
 
 });
