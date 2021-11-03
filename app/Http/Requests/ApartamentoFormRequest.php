@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class ApartamentoFormRequest extends FormRequest
 {
@@ -25,9 +26,15 @@ class ApartamentoFormRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('id');
         return [
             'id_edificio' => 'required|integer',
-            'nombre' => 'required',
+            'nombre' => [
+                'required',
+                 Rule::unique('apartamentos')->where(function ($query) {
+                     $query->where([['nombre', $this->nombre],['id_edificio', $this->id_edificio]]);
+                 })->ignore($id)
+                ],
             'nivel' => 'required|integer',
             'estado' => 'required'
         ];
@@ -39,6 +46,7 @@ class ApartamentoFormRequest extends FormRequest
             'id_edificio.required' => 'El campo edificio es obligatorio',
             'id_edificio.integer' => 'El campo :attribute debe de ser un numero entero',
             'nombre.required' => 'El campo :attribute es obligatorio',
+            'nombre.unique' => 'El nombre del apartamento ya existe en este edificio',
             'nivel.required' => 'El campo :attribute es obligatorio',
             'nivel.integer' => 'El campo :attribute debe de ser un numero entero',
             'estado.required' => 'El campo :attribute es obligatorio'

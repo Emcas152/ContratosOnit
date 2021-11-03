@@ -6,6 +6,7 @@ use App\Models\CalendarioAreasSociales;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\CalendarResource;
+use App\Http\Requests\CalendarFormRequest;
 use DB;
 
 
@@ -74,10 +75,21 @@ class CalendarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CalendarFormRequest $request)
     {
         try 
         {
+            $fechaInicio = $request->start;
+            $fechaFinal = $request->end;
+            $extend = $request->get('extendedProps');
+            $calendar = DB::select("select * from `calendario_areas_sociales` 
+                        where (`id_area` = ".$extend['calendar'].") 
+                        and (STR_TO_DATE('$fechaInicio','%Y-%m-%d %H:%i') between fecha_reserva and fecha_finaliza_reserva 
+                        or STR_TO_DATE('$fechaFinal','%Y-%m-%d %H:%i') between fecha_reserva and fecha_finaliza_reserva)");
+            if (count($calendar)) 
+            {
+                return response(['errors' => 'La amenidad ya se encuentra reservada','code'=>204], 400);   
+            }
             DB::beginTransaction();
             $extend = $request->get('extendedProps');
             $calendario = new CalendarioAreasSociales;
@@ -152,12 +164,22 @@ class CalendarController extends Controller
      * @param  \App\Models\CalendarioAreasSociales  $calendarioAreasSociales
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CalendarFormRequest $request, $id)
     {
         try 
         {
-            DB::beginTransaction();
+            $fechaInicio = $request->start;
+            $fechaFinal = $request->end;
             $extend = $request->get('extendedProps');
+            $calendar = DB::select("select * from `calendario_areas_sociales` 
+                        where (`id_area` = ".$extend['calendar']." and `id` <> $id) 
+                        and (STR_TO_DATE('$fechaInicio','%Y-%m-%d %H:%i') between fecha_reserva and fecha_finaliza_reserva 
+                        or STR_TO_DATE('$fechaFinal','%Y-%m-%d %H:%i') between fecha_reserva and fecha_finaliza_reserva)");
+            if (count($calendar)) 
+            {
+                return response(['errors' => 'La amenidad ya se encuentra reservada','code'=>204], 400);   
+            }
+            DB::beginTransaction();
             $calendario = CalendarioAreasSociales::findOrFail($id);
             $calendario->titulo = $request->get('title');
             $calendario->id_area = $extend['calendar'];
