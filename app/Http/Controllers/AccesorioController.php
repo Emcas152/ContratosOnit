@@ -21,10 +21,11 @@ class AccesorioController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $accesorioResult = Accesorio::where([['nombre', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['categoria', 'LIKE', '%'.$queryUrl.'%']])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%']])
+        $condominio = $request->id_condominio;
+        $accesorioResult = Accesorio::where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['categoria', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($accesorioResult)) {
@@ -61,9 +62,15 @@ class AccesorioController extends Controller
      * @param  \App\Models\Accesorio  $accesorio
      * @return \Illuminate\Http\Response
      */
-    public function show(Accesorio $accesorio)
+    public function show(Request $request)
     {
-        //
+        $accesorios = Accesorio::where('id_condominio', '=', $request->id_condominio)->get(['id','nombre']);
+
+        if (!count($accesorios)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> $accesorios,'code' => 200]);
     }
 
     /**

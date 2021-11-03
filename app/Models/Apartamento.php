@@ -39,6 +39,6 @@ class Apartamento extends Model
     public function estadoApartamento()
     {
         return $this->belongsTo(ViewParametros::class,'estado','codigo_det')
-        ->where('view_parametros.codigo_enc','=','STSGEN');
+        ->where('view_parametros.codigo_enc','=','STSAPT');
     }
 }

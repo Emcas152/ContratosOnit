@@ -88,6 +88,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/apartment/delete/{id}', [ApartamentoController::class, 'destroy'])->name('apartment.destroy');
 
     Route::post('/accessories', [AccesorioController::class, 'index'])->name('accessories.index');
+    Route::post('/accessories/select', [AccesorioController::class, 'show'])->name('accessories.show');
     Route::post('/accessories/create', [AccesorioController::class, 'store'])->name('accessories.store');
     Route::put('/accessories/edit/{id}', [AccesorioController::class, 'update'])->name('accessories.update');
     Route::delete('/accessories/delete/{id}', [AccesorioController::class, 'destroy'])->name('accessories.destroy');

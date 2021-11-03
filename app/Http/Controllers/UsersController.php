@@ -95,16 +95,26 @@ class UsersController extends Controller
             $user->telefono = $request->telefono;
             $user->update();
 
+            $userRole = User::join('model_has_roles','model_has_roles.model_id','users.id')
+            ->select('users.*','model_has_roles.role_id')
+            ->findOrFail($user->id);
+
+            $userRole->removeRole(User::getStoredRole($userRole->role_id)->name);
+
+            $userRole->assignRole(User::getStoredRole($request->role_id)->name);
+
             $apartamento = [];
             $apartamento = Apartamento::where('id_inquilino','=',$user->id)->first();
             
             if (trim($request->id_apartamento) == '' && $apartamento != null) 
             {
                 $apartamento->id_inquilino = null;
+                $apartamento->estado = 'ACT';
                 $apartamento->update();
             } else if(trim($request->id_apartamento) != '') {
                 $apartamentoCambio = Apartamento::findOrfail($request->id_apartamento);
                 $apartamentoCambio->id_inquilino = $user->id;
+                $apartamentoCambio->estado = 'RSV';
                 $apartamentoCambio->update();
             }
             

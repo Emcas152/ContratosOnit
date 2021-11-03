@@ -26,6 +26,7 @@ class AccesorioFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'id_condominio' => 'required|integer',
             'nombre' => 'required',
             'descripcion' => 'required',
             'categoria' => 'required',
@@ -36,6 +37,8 @@ class AccesorioFormRequest extends FormRequest
     public function messages()
     {
         return [
+            'id_condominio.required' => 'El campo condominio es obligatorio',
+            'id_condominio.integer' => 'El campo condominio debe de ser un numero entero',
             'nombre.required' => 'El campo :attribute es obligatorio',
             'descripcion.required' => 'El campo :attribute es obligatorio',
             'categoria.required' => 'El campo :attribute es obligatorio',
