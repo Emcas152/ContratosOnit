@@ -29,7 +29,7 @@ class SolicitudAccesorioFormRequest extends FormRequest
             'id_accesorio' => 'required|integer',
             'id_usuario_solicito' => 'required|integer',
             'id_usuario_creo' => 'required|integer',
-            'id_autorizo' => 'required|integer',
+            'id_autorizo' => 'integer',
             'fecha_solicitud' => 'required',
             'estado' => 'required'
         ];
@@ -44,7 +44,6 @@ class SolicitudAccesorioFormRequest extends FormRequest
             'id_usuario_solicito.integer' => 'El campo solicito debe de ser un numero entero',
             'id_usuario_creo.required' => 'El campo usuario creo es obligatorio',
             'id_usuario_creo.integer' => 'El campo usuario creo debe de ser un numero entero',
-            'id_autorizo.required' => 'El campo autorizo es obligatorio',
             'id_autorizo.integer' => 'El campo autorizo debe de ser un numero entero',
             'fecha_solicitud.required' => 'El campo :attribute es obligatorio',
             'estado.required' => 'El campo :attribute es obligatorio'

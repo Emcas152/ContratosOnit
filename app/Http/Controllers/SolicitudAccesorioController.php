@@ -81,6 +81,7 @@ class SolicitudAccesorioController extends Controller
             $solicitudAccesorio->estado = $estado->sts_final;
             if($action == 'Entregado')
             {
+                $solicitudAccesorio->id_autorizo = $request->id_autorizo;
                 $solicitudAccesorio->fecha_prestamo = $mytime->format('Y-m-d H:i:s');
             }
             elseif($action == 'Devuelto' || $action == 'MalEstado')
