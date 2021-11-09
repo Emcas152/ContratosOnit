@@ -6,6 +6,7 @@ use App\Models\Amenidad;
 use App\Http\Controllers\Controller;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\AmenidadResource;
 use App\Http\Resources\AmenidadSelectResource;
 use App\Http\Requests\AmenidadFormRequest;
@@ -44,8 +45,20 @@ class AmenidadController extends Controller
     {
         try 
         {
+            $data = $request->all();
             DB::beginTransaction();
-            $amenidad = Amenidad::create($request->all());
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                ]);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->storeAs('/public', $imageName);
+                $url = Storage::url($imageName);
+                $data['image'] = $url;
+            } else {
+                $data['image'] = '/storage/amenidad.png';
+            }
+            $amenidad = Amenidad::create($data);
             DB::commit();
             return response(['data'=> new AmenidadResource($amenidad),'code' => 201]);
 
@@ -84,9 +97,20 @@ class AmenidadController extends Controller
     {
         try 
         {
+            $data = $request->all();
             DB::beginTransaction();
             $amenidad = Amenidad::findOrFail($request->id);
-            $amenidad->update($request->all());
+            $data['image'] = $amenidad->image;
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                ]);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->storeAs('/public', $imageName);
+                $url = Storage::url($imageName);
+                $data['image'] = $url;
+            }
+            $amenidad->update($data);
             DB::commit();
             return response(['data'=> new AmenidadResource($amenidad), 'code' => 200]);
 

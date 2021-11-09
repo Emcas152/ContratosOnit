@@ -96,7 +96,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/amenities', [AmenidadController::class, 'index'])->name('amenities.index');
     Route::post('/amenities/select', [AmenidadController::class, 'show'])->name('amenities.show');
     Route::post('/amenities/create', [AmenidadController::class, 'store'])->name('amenities.store');
-    Route::put('/amenities/edit/{id}', [AmenidadController::class, 'update'])->name('amenities.update');
+    Route::post('/amenities/edit/{id}', [AmenidadController::class, 'update'])->name('amenities.update');
     Route::delete('/amenities/delete/{id}', [AmenidadController::class, 'destroy'])->name('amenities.destroy');
 
     Route::post('/news', [NoticiaController::class, 'index'])->name('news.index');
