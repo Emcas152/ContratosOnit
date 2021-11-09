@@ -90,8 +90,8 @@ class CalendarController extends Controller
             {
                 return response(['errors' => 'La amenidad ya se encuentra reservada','code'=>204], 400);   
             }
+            $invitados = $extend['guests'];
             DB::beginTransaction();
-            $extend = $request->get('extendedProps');
             $calendario = new CalendarioAreasSociales;
             $calendario->titulo = $request->get('title');
             $calendario->id_area = $extend['calendar'];
@@ -102,6 +102,9 @@ class CalendarController extends Controller
             $calendario->fecha_finaliza_reserva = date('Y-m-d H:i:s',strtotime($request->get('end')));
             $calendario->save();
 
+            foreach ($invitados as $invitado) {
+                $calendario->invitados()->attach($invitado);
+            }
             DB::commit();
             return response(['data'=> new CalendarResource($calendario),'code' => 201]);
 
@@ -179,6 +182,7 @@ class CalendarController extends Controller
             {
                 return response(['errors' => 'La amenidad ya se encuentra reservada','code'=>204], 400);   
             }
+            $invitados = $extend['guests'];
             DB::beginTransaction();
             $calendario = CalendarioAreasSociales::findOrFail($id);
             $calendario->titulo = $request->get('title');
@@ -188,7 +192,10 @@ class CalendarController extends Controller
             $calendario->fecha_reserva = date('Y-m-d H:i:s',strtotime($request->get('start')));
             $calendario->fecha_finaliza_reserva = date('Y-m-d H:i:s',strtotime($request->get('end')));
             $calendario->update();
-
+            $calendario->invitados()->wherePivot('id_calendario', $calendario->id)->detach();
+            foreach ($invitados as $invitado) {
+                $calendario->invitados()->attach($invitado);
+            }
             DB::commit();
             return response(['data'=> new CalendarResource($calendario),'code' => 201]);
 
