@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Amenidad;
 use App\Models\User;
 use App\Models\Apartamento;
+use App\Models\Visitantes;
 
 class CalendarioAreasSociales extends Model
 {
@@ -43,6 +44,10 @@ class CalendarioAreasSociales extends Model
     public function Amenidades()
     {
         return $this->belongsTo(Amenidad::class,'id_area');
+    }
+
+    public function invitados(){
+        return $this->belongsToMany(Visitantes::class, 'calendario_invitados', 'id_calendario', 'id_invitado');
     }
 
     public function estadoCalendario()
