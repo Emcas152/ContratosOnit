@@ -22,11 +22,19 @@ class CalendarSocialController extends Controller
         $usuarioId = $request->usuario_id;
         $condominio = $request->id_condominio;
         
-        $calendario = [];
-        
         $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                        ->distinct()
+                        ->join('view_eventos_amenidades', function($join)
+                         {
+                            $join->on('view_eventos_amenidades.id', '=', 'calendario_areas_sociales.id');
+                            $join->on('view_eventos_amenidades.rank_fecha', '<', DB::raw("3"));
+                         })
                         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
-                        ->where([['calendario_areas_sociales.id_usuario', '=', $usuarioId], ['amenidades.id_condominio','=', $condominio]])
+                        ->orWhere(function ($query) use ($usuarioId, $condominio){
+                            $query->where([['calendario_areas_sociales.id_usuario', '=', $usuarioId], ['amenidades.id_condominio','=', $condominio]])
+                                  ->orWhere([['calendario_areas_sociales.estado','=','AUT'],['amenidades.id_condominio','=', $condominio]]);
+                        })
+                        ->orderBy('calendario_areas_sociales.id_area', 'ASC')
                         ->get();
 
         if (!count($calendario)) 
