@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Visitas;
+use App\Models\Amenidad;
+use App\Models\SolicitudAccesorio;
+use App\Models\CalendarioAreasSociales;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+use DB;
+
+class DashboardController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function visitsInput(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $visitasIngreso = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                ->select('visitas.*')
+                                ->where([['visitas.estado','=','ING'],['users.id_condominio', '=', $condominio]]);
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $visitasIngreso->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $visitasIngreso->where([[DB::raw('CAST(visitas.fecha_visita AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+        $resultado = $visitasIngreso->count();
+
+        return response(['data'=> $resultado,'code' => 200]); 
+    }
+
+    public function visitsActive(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $visitasActivas = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                ->select('visitas.*')
+                                ->where([['visitas.estado','=','ACT'],['users.id_condominio', '=', $condominio]]);
+        if($fechaInicio != null) 
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $visitasActivas->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $visitasActivas->where([[DB::raw('CAST(visitas.fecha_visita AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+        $resultado = $visitasActivas->count();
+
+        return response(['data'=> $resultado,'code' => 200]); 
+    }
+
+    public function amenitiesAuthorize(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $amenidadesAutorizadas = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                                    ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                                    ->where([['amenidades.id_condominio','=', $condominio], ['calendario_areas_sociales.estado', '=', 'AUT']]);
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $amenidadesAutorizadas->whereBetween(DB::raw("CAST(calendario_areas_sociales.fecha_reserva AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $amenidadesAutorizadas->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+        $resultado = $amenidadesAutorizadas->count();
+
+        return response(['data'=> $resultado,'code' => 200]); 
+    }
+
+    public function amenitiesAvailable(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $amenidadesAutorizadas = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                                    ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                                    ->where([['amenidades.id_condominio','=', $condominio], ['calendario_areas_sociales.estado', '=', 'AUT']]);
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $amenidadesAutorizadas->whereBetween(DB::raw("CAST(calendario_areas_sociales.fecha_reserva AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $amenidadesAutorizadas->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+
+        $amenidadesReservadas = $amenidadesAutorizadas->pluck('id_area');
+        
+        $resultado = $amenidadesDisponiples = Amenidad::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio]])
+                                    ->whereNotIn('id', $amenidadesReservadas)->count();
+
+        return response(['data'=> $resultado,'code' => 200]);
+    }
+
+    public function amenitiesMaintenance(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $amenidadesAutorizadas = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                                    ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                                    ->where([['amenidades.id_condominio','=', $condominio], ['calendario_areas_sociales.estado', '=', 'AUT']]);
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $amenidadesAutorizadas->whereBetween(DB::raw("CAST(calendario_areas_sociales.fecha_reserva AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $amenidadesAutorizadas->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+
+        $amenidadesReservadas = $amenidadesAutorizadas->pluck('id_area');
+        
+        $resultado = $amenidadesMantenimiento = Amenidad::where([['estado', '=', 'ANU'],['id_condominio', '=', $condominio]])
+                                    ->whereNotIn('id', $amenidadesReservadas)->count();
+
+        return response(['data'=> $resultado,'code' => 200]);
+    }
+
+
+    public function accessoryRequest(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $accesoriosPrestados = SolicitudAccesorio::join('accesorios','accesorios.id','solicitudes.id_accesorio')
+                                    ->select('solicitudes.id_accesorio','solicitudes.estado')
+                                    ->where([['accesorios.id_condominio','=', $condominio], ['solicitudes.estado', '=', 'ENTG']]);
+
+        $resultado = $accesoriosPrestados->distinct()->count();
+
+        return response(['data'=> $resultado,'code' => 200]);
+    }
+}
