@@ -21,6 +21,7 @@ use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\SolicitudAccesorioController;
 
 use App\Http\Controllers\ViewInquilinoController;
+use App\Http\Controllers\CalendarSocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +127,12 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
     Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');
     Route::delete('/calendar/delete/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+
+    Route::post('/calendar-social', [CalendarSocialController::class, 'index'])->name('calendar-social.index');
+    Route::post('/calendar-social/create', [CalendarSocialController::class, 'store'])->name('calendar-social.store');
+    Route::put('/calendar-social/edit/{id}', [CalendarSocialController::class, 'update'])->name('calendar-social.update');
+    Route::put('/calendar-social/{id}/{action}', [CalendarSocialController::class, 'change_state'])->name('calendar-social.change_state');
+    Route::delete('/calendar-social/delete/{id}', [CalendarSocialController::class, 'destroy'])->name('calendar-social.destroy');
 
     Route::post('/tenants', [ViewInquilinoController::class, 'show'])->name('tenants.show');
 
