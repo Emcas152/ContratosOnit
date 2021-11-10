@@ -22,6 +22,7 @@ use App\Http\Controllers\SolicitudAccesorioController;
 
 use App\Http\Controllers\ViewInquilinoController;
 use App\Http\Controllers\CalendarSocialController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,5 +136,12 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/calendar-social/delete/{id}', [CalendarSocialController::class, 'destroy'])->name('calendar-social.destroy');
 
     Route::post('/tenants', [ViewInquilinoController::class, 'show'])->name('tenants.show');
+
+    Route::post('/dashboard/visits-input', [DashboardController::class, 'visitsInput'])->name('dashboard.visitsInput');
+    Route::post('/dashboard/visits-active', [DashboardController::class, 'visitsActive'])->name('dashboard.visitsActive');
+    Route::post('/dashboard/amenities-authorize', [DashboardController::class, 'amenitiesAuthorize'])->name('dashboard.amenitiesAuthorize');
+    Route::post('/dashboard/amenities-available', [DashboardController::class, 'amenitiesAvailable'])->name('dashboard.amenitiesAvailable');
+    Route::post('/dashboard/amenities-maintenance', [DashboardController::class, 'amenitiesMaintenance'])->name('dashboard.amenitiesMaintenance');
+    Route::post('/dashboard/accessory-request', [DashboardController::class, 'accessoryRequest'])->name('dashboard.accessoryRequest');
 
 });
