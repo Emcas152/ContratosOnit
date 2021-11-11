@@ -163,4 +163,92 @@ class DashboardController extends Controller
 
         return response(['data'=> $resultado,'code' => 200]);
     }
+
+    public function visitsWeek(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        /* Ingresos */
+        $visitasIngreso = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                ->select('visitas.*')
+                                ->where([['visitas.estado','=','FNZ'],['users.id_condominio', '=', $condominio]])
+                                ->whereNotNull('visitas.fecha_ingreso');
+        
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $visitasIngreso->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $fecha_inicio =  Carbon::yesterday()->format('Y-m-d');
+            $fecha_final = Carbon::today()->subDays(8)->format('Y-m-d');
+            $visitasIngreso->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_final, $fecha_inicio]);
+        }
+        $resultado = $visitasIngreso->count();
+
+        $data[] = [
+            'icon' => 'CircleIcon',
+            'iconColor' => "text-info",
+            'result' => $resultado,
+            'text' => "Ingresos"
+        ];
+
+        /* Finalizados */
+        $visitasFinalizadas = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                ->select('visitas.*')
+                                ->where([['visitas.estado','=','FNZ'],['users.id_condominio', '=', $condominio]])
+                                ->whereNotNull('visitas.fecha_ingreso')
+                                ->whereNotNull('visitas.fecha_egreso');
+        
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $visitasFinalizadas->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $fecha_inicio =  Carbon::yesterday()->format('Y-m-d');
+            $fecha_final = Carbon::today()->subDays(8)->format('Y-m-d');
+            $visitasFinalizadas->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_final, $fecha_inicio]);
+        }
+        $resultado2 = $visitasFinalizadas->count();
+
+        $data[] = [
+            'icon' => 'CircleIcon',
+            'iconColor' => "text-danger",
+            'result' => $resultado2,
+            'text' => "Finalizadas"
+        ];
+
+        /* Pendientes */
+        $visitasPendientes = Visitas::join('users','users.id','visitas.id_usuario_creo')
+                                ->select('visitas.*')
+                                ->where([['visitas.estado','=','ACT'],['users.id_condominio', '=', $condominio]])
+                                ->whereNull('visitas.fecha_ingreso')
+                                ->whereNull('visitas.fecha_egreso');
+        
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $visitasPendientes->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $fecha_inicio =  Carbon::yesterday()->format('Y-m-d');
+            $fecha_final = Carbon::today()->subDays(8)->format('Y-m-d');
+            $visitasPendientes->whereBetween(DB::raw("CAST(visitas.fecha_visita AS DATE)"),[$fecha_final, $fecha_inicio]);
+        }
+        $resultado3 = $visitasPendientes->count();
+
+        $data[] = [
+            'icon' => 'CircleIcon',
+            'iconColor' => "text-warning",
+            'result' => $resultado3,
+            'text' => "Pendientes"
+        ];
+
+        return response(['data'=> $data,'code' => 200]); 
+    }
 }
