@@ -144,5 +144,6 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/dashboard/amenities-maintenance', [DashboardController::class, 'amenitiesMaintenance'])->name('dashboard.amenitiesMaintenance');
     Route::post('/dashboard/accessory-request', [DashboardController::class, 'accessoryRequest'])->name('dashboard.accessoryRequest');
     Route::post('/dashboard/visits-week', [DashboardController::class, 'visitsWeek'])->name('dashboard.visitsWeek');
+    Route::post('/dashboard/amenities-authorize-maintenance', [DashboardController::class, 'amenitiesAuthorizeMaintenance'])->name('dashboard.amenitiesAuthorizeMaintenance');
 
 });
