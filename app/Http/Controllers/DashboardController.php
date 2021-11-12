@@ -251,4 +251,47 @@ class DashboardController extends Controller
 
         return response(['data'=> $data,'code' => 200]); 
     }
+
+
+    public function amenitiesAuthorizeMaintenance(Request $request)
+    {
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $fechaInicio = $request->start;
+        $fechaFinal = $request->end;
+
+        $amenidadesAutorizadas = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                                    ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color',DB::raw('COUNT(*) as cantidad'))
+                                    ->where([['amenidades.id_condominio','=', $condominio], ['calendario_areas_sociales.estado', '=', 'AUT']]);
+        if($fechaInicio != null)
+        {
+            $fecha_inicio =  date('Y-m-d',strtotime($fechaInicio));
+            $fecha_final = date('Y-m-d',strtotime($fechaFinal));
+            $amenidadesAutorizadas->whereBetween(DB::raw("CAST(calendario_areas_sociales.fecha_reserva AS DATE)"),[$fecha_inicio,$fecha_final]);
+        } else {
+            $amenidadesAutorizadas->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')]]);
+        }
+        $amenidadesAutorizadas->groupBy('calendario_areas_sociales.id_area');
+        $amenidadesAutorizadas->orderBy('amenidades.nombre');
+
+        $valoresSerie = $amenidadesAutorizadas->pluck('cantidad');
+        $valoresNegativos = [];
+        foreach ($valoresSerie as $key => $value) {
+            $valoresNegativos[] = rand(0, 2);
+        }
+        $categorias = $amenidadesAutorizadas->pluck('amenidades.nombre');
+
+        $data[] = [
+            'name' => "Reservas",
+            'data' => $valoresSerie
+        ];
+
+        $data[] = [
+            'name' => "Mantenimientos",
+            'data' => $valoresNegativos
+        ];
+
+        return response(['data'=> ['series' => $data, 'categories' => $categorias],'code' => 200]); 
+    }
 }
