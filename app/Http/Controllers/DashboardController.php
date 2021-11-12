@@ -278,7 +278,7 @@ class DashboardController extends Controller
         $valoresSerie = $amenidadesAutorizadas->pluck('cantidad');
         $valoresNegativos = [];
         foreach ($valoresSerie as $key => $value) {
-            $valoresNegativos[] = rand(0, 2);
+            $valoresNegativos[] = -1 * rand(0, 2);
         }
         $categorias = $amenidadesAutorizadas->pluck('amenidades.nombre');
 
