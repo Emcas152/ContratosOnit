@@ -39,9 +39,11 @@ class VisitasController extends Controller
                                     ->where([['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
         }
 
-        if($estado == 'ACT')
+        $visitasQuery->whereIn('visitas.estado',$estado);
+        
+        if($estado != null)
         {
-            $visitasQuery->where('visitas.estado','!=','FNZ');
+
         }
         elseif($estado == 'FNZ')
         {
