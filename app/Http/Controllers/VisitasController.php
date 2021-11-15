@@ -45,7 +45,7 @@ class VisitasController extends Controller
         }
         elseif($estado == 'FNZ')
         {
-            $visitasQuery->where('visitas.estado','==','FNZ');
+            $visitasQuery->where('visitas.estado','=','FNZ');
         }
 
         if($request->get('start') != null)
