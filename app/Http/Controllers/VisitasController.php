@@ -41,15 +41,6 @@ class VisitasController extends Controller
 
         $visitasQuery->whereIn('visitas.estado',$estado);
         
-        if($estado != null)
-        {
-
-        }
-        elseif($estado == 'FNZ')
-        {
-            $visitasQuery->where('visitas.estado','=','FNZ');
-        }
-
         if($request->get('start') != null)
          {
            $fecha_inicio =  date('Y-m-d',strtotime($request->get('start')));
