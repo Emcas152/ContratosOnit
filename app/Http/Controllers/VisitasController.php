@@ -21,6 +21,7 @@ class VisitasController extends Controller
         $role = $request->role;
         $usuarioId = $request->usuario_id;
         $condominio = $request->id_condominio;
+        $estado = $request->estado;
         $query=trim($request->searchText);
         $paginacion = $request->paginate;
         $visitasQuery = [];
@@ -36,6 +37,15 @@ class VisitasController extends Controller
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
+        }
+
+        if($estado == 'ACT')
+        {
+            $visitasQuery->where('visitas.estado','!=','FNZ');
+        }
+        elseif($estado == 'FNZ')
+        {
+            $visitasQuery->where('visitas.estado','==','FNZ');
         }
 
         if($request->get('start') != null)
