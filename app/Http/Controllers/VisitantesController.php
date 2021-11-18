@@ -22,7 +22,7 @@ class VisitantesController extends Controller
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
         $role = $request->role;
-        $usuario = $request->id_usuario;
+        $usuario = $request->usuario_id;
         $condominio = $request->id_condominio;
 
         $visitantes = [];
@@ -89,7 +89,7 @@ class VisitantesController extends Controller
     public function show(Request $request)
     {
         $role = $request->role;
-        $usuario = $request->id_usuario;
+        $usuario = $request->usuario_id;
         $condominio = $request->id_condominio;
 
         $visitantes = [];
