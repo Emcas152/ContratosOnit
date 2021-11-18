@@ -28,6 +28,7 @@ class SolicitudAccesorioResource extends JsonResource
             'usuario_autorizo_descripcion' => $this->usuarioAutorizo !== null ? $this->usuarioAutorizo->name : '',
             'fecha_solicitud' => $this->fecha_solicitud,
             'fecha_prestamo' => $this->fecha_prestamo,
+            'fecha_devolucion' => $this->fecha_devolucion,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoSolicitud !== null ? $this->estadoSolicitud->descripcion_det : ''
         ];

@@ -25,6 +25,7 @@ class SolicitudAccesorio extends Model
         'id_autorizo',
         'fecha_solicitud',
         'fecha_prestamo',
+        'fecha_devolucion',
         'estado'
     ];
 
