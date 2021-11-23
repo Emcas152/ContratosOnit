@@ -23,6 +23,7 @@ use App\Http\Controllers\SolicitudAccesorioController;
 use App\Http\Controllers\ViewInquilinoController;
 use App\Http\Controllers\CalendarSocialController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmpleadoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -146,4 +147,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/dashboard/visits-week', [DashboardController::class, 'visitsWeek'])->name('dashboard.visitsWeek');
     Route::post('/dashboard/amenities-authorize-maintenance', [DashboardController::class, 'amenitiesAuthorizeMaintenance'])->name('dashboard.amenitiesAuthorizeMaintenance');
 
+    Route::post('/employees', [EmpleadoController::class, 'index'])->name('employees.index');
+    Route::post('/employees/list', [EmpleadoController::class, 'show'])->name('employees.show');
+    Route::post('/employees/create', [EmpleadoController::class, 'store'])->name('employees.store');
+    /* Route::put('/employees/edit/{id}', [EmpleadoController::class, 'update'])->name('employees.update');*/
+    Route::delete('/employees/delete/{id}', [EmpleadoController::class, 'destroy'])->name('employees.destroy');
+    
 });

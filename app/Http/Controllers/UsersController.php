@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Roles;
 use App\Models\Apartamento;
+use App\Models\ViewParametros;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\UsersResource;
@@ -16,14 +18,20 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
+        $except = ViewParametros::where([['codigo_enc', '=', 'ROLEMP']])->pluck('codigo_det');
+        $exceptRoles = Roles::whereIn('name', $except)->pluck('id');
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
         $condominio = $request->id_condominio;
-        $users = User::where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                        ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                        ->orWhere([['telefono', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+        $users = User::join('model_has_roles','model_has_roles.model_id','users.id')
+                        ->select('users.*')
+                        ->whereNotIn('model_has_roles.role_id', $exceptRoles)
+                        ->where(function($query) use($queryUrl,$condominio) {
+                            $query->where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                            ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                            ->orWhere([['telefono', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]]);
+                        })
                         ->orderBy('id','DESC')
-                        ->with('roles')
                         ->paginate($pagination);
 
         if (!count($users)) 
