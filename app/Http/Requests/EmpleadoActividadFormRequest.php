@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class EmpleadosFormUpdateRequest extends FormRequest
+class EmpleadoActividadFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,29 +25,20 @@ class EmpleadosFormUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->get('id_usuario');
 
         return [
-            'name' => 'required|max:191|unique:users,name,'.$id.',id',
-            'email' => 'required|max:191|unique:users,email,'.$id.',id',
-            'puesto' => 'required',
-            'rol' => 'required',
-            'estado' => 'required',
+            'id_empleado' => 'required',
+            'nombre' => 'required',
+            'descripcion' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'El campo :attribute es obligatorio',
-            'name.unique' => 'El campo :attribute ya se encuentra existente',
-            'name.max' => 'El campo :attribute no debe de exceder los 191 caracteres',
-            'email.required' => 'El campo :attribute es obligatorio',
-            'email.unique' => 'El campo :attribute ya se encuentra existente',
-            'email.max' => 'El campo :attribute no debe de exceder los 191 caracteres',
-            'rol.required' => 'El campo :attribute esta obligatorio',
-            'puesto.required' => 'El campo :attribute esta obligatorio',
-            'estado.required' => 'El campo :attribute esta obligatorio',
+            'id_empleado.required' => 'El campo Empleado es obligatorio',
+            'nombre.required' => 'El campo :attribute esta obligatorio',
+            'descripcion.required' => 'El campo :attribute esta obligatorio',
         ];
     }
 

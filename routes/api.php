@@ -24,6 +24,8 @@ use App\Http\Controllers\ViewInquilinoController;
 use App\Http\Controllers\CalendarSocialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\EmpleadoHorarioController;
+use App\Http\Controllers\EmpleadoActividadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,5 +155,13 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/employees/{id}', [EmpleadoController::class, 'showById'])->name('employees.showById');
     Route::post('/employees/edit/{id}', [EmpleadoController::class, 'update'])->name('employees.update');
     Route::delete('/employees/delete/{id}', [EmpleadoController::class, 'destroy'])->name('employees.destroy');
+
+    Route::post('/schedule-employee/create', [EmpleadoHorarioController::class, 'store'])->name('schedule-employee.store');
+    Route::post('/schedule-employee/{id_empleado}', [EmpleadoHorarioController::class, 'index'])->name('schedule-employee.index');
+    Route::delete('/schedule-employee/delete/{id}', [EmpleadoHorarioController::class, 'destroy'])->name('schedule-employee.destroy');
+
+    Route::post('/task-employee/create', [EmpleadoActividadController::class, 'store'])->name('task-employee.store');
+    Route::post('/task-employee/{id_empleado}', [EmpleadoActividadController::class, 'index'])->name('task-employee.index');
+    Route::delete('/task-employee/delete/{id}', [EmpleadoActividadController::class, 'destroy'])->name('task-employee.destroy');
     
 });

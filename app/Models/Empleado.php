@@ -27,6 +27,14 @@ class Empleado extends Model
         return $this->belongsTo(User::class,'id_usuario');
     }
 
+    public function horariosEmpleado(){
+        return $this->hasMany(EmpleadoHorario::class, 'id_empleado');
+    }
+
+    public function actividadesEmpleado(){
+        return $this->hasMany(EmpleadoActividad::class, 'id_empleado');
+    }
+
     public function puestoEmpleado()
     {
         return $this->belongsTo(ViewParametros::class,'puesto','codigo_det')
