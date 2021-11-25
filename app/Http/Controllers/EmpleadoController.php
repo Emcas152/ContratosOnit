@@ -8,12 +8,32 @@ use App\Models\EstadosProcesos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\EmpleadosResource;
 use App\Http\Requests\EmpleadosFormCreateRequest;
+use App\Http\Requests\EmpleadosFormUpdateRequest;
 use DB;
 
 class EmpleadoController extends Controller
 {
+    private function getB64Image($base64_image){  
+        // Obtener el String base-64 de los datos         
+        $image_service_str = substr($base64_image, strpos($base64_image, ",")+1);
+        // Decodificar ese string y devolver los datos de la imagen        
+        $image = base64_decode($image_service_str);   
+        // Retornamos el string decodificado
+        return $image;
+    }
+
+    private function getB64Extension($base64_image, $full=null){  
+        // Obtener mediante una expresión regular la extensión imagen y guardarla
+        // en la variable "img_extension"        
+        preg_match("/^data:image\/(.*);base64/i",$base64_image, $img_extension);   
+        // Dependiendo si se pide la extensión completa o no retornar el arreglo con
+        // los datos de la extensión en la posición 0 - 1
+        return ($full) ?  $img_extension[0] : $img_extension[1];  
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -87,6 +107,26 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
+    public function showById(Request $request)
+    {
+        $condominio = $request->id_condominio;
+        $empleado = Empleado::join('users','users.id','empleados.id_usuario')
+                                    ->select('empleados.*')
+                                    ->where([['users.id_condominio', '=', $condominio],['empleados.id', '=', $request->id]])
+                                    ->get();
+        
+        if (!count($empleado)) {
+            return response(['data' => [],'code'=>204]);  
+        }
+        return response(['data'=> EmpleadosResource::collection($empleado)]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Empleado  $empleado
+     * @return \Illuminate\Http\Response
+     */
     public function show(Request $request)
     {
         $queryUrl = trim($request->searchText);
@@ -114,9 +154,53 @@ class EmpleadoController extends Controller
      * @param  \App\Models\Empleado  $empleado
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleado $empleado)
+    public function update(EmpleadosFormUpdateRequest $request)
     {
-        //
+        try 
+        {
+            DB::beginTransaction();
+            $empleado = Empleado::findOrFail($request->id);
+            $oldRole = $empleado->rol;
+            $empleado->rol = $request->rol;
+            $empleado->puesto = $request->puesto;
+            $empleado->save();
+
+
+            $user = User::findOrFail($empleado->id_usuario);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->telefono = $request->telefono;
+
+            try {
+                if (!$request->hasFile('path_img')) {
+                    $image = $this->getB64Image($request->path_img);
+                    $extension = $this->getB64Extension($request->path_img);
+                    $imageName = time().'.'.$extension;
+                    Storage::disk('public')->put($imageName, $image);
+                    $url = Storage::url($imageName);
+                    $user->path_img = $url;
+                }
+            } catch (\Throwable $th) {
+                
+            }
+
+            $user->save();
+            
+            if($oldRole !== $empleado->rol){
+                $user->removeRole($oldRole);
+                $user->assignRole($request->rol);
+            }
+
+            
+
+            DB::commit();
+            return response(['data'=> new EmpleadosResource($empleado),'code' => 201]);
+
+        } catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return response(['data'=> 'Error al crear usuario','code' => 500]);   
+        }
     }
 
     /**

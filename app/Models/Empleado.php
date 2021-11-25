@@ -18,6 +18,7 @@ class Empleado extends Model
     protected $fillable = [
         'id_usuario',
         'puesto',
+        'rol',
         'estado'
     ];
 

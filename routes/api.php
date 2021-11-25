@@ -150,7 +150,8 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/employees', [EmpleadoController::class, 'index'])->name('employees.index');
     Route::post('/employees/list', [EmpleadoController::class, 'show'])->name('employees.show');
     Route::post('/employees/create', [EmpleadoController::class, 'store'])->name('employees.store');
-    /* Route::put('/employees/edit/{id}', [EmpleadoController::class, 'update'])->name('employees.update');*/
+    Route::post('/employees/{id}', [EmpleadoController::class, 'showById'])->name('employees.showById');
+    Route::post('/employees/edit/{id}', [EmpleadoController::class, 'update'])->name('employees.update');
     Route::delete('/employees/delete/{id}', [EmpleadoController::class, 'destroy'])->name('employees.destroy');
     
 });
