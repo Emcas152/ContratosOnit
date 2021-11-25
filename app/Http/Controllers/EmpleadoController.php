@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\EmpleadosResource;
+use App\Http\Resources\EmpleadosListResource;
 use App\Http\Requests\EmpleadosFormCreateRequest;
 use App\Http\Requests\EmpleadosFormUpdateRequest;
 use DB;
@@ -97,7 +98,7 @@ class EmpleadoController extends Controller
         } catch (\Exception $e) 
         {
             DB::rollBack();
-            return response(['data'=> 'Error al crear usuario','code' => 500]);   
+            return response(['data'=> 'Error al crear Empleado','code' => 500]);   
         }
     }
 
@@ -144,7 +145,7 @@ class EmpleadoController extends Controller
         if (!count($empleados)) {
             return response(['data' => [],'code'=>204]);  
         }
-        return response(['data'=> EmpleadosResource::collection($empleados),'per_page' => $empleados->perPage(),'total' => $empleados->total()]);
+        return response(['data'=> EmpleadosListResource::collection($empleados),'per_page' => $empleados->perPage(),'total' => $empleados->total()]);
     }
 
     /**
@@ -199,7 +200,7 @@ class EmpleadoController extends Controller
         } catch (\Exception $e) 
         {
             DB::rollBack();
-            return response(['data'=> 'Error al crear usuario','code' => 500]);   
+            return response(['data'=> 'Error al actualizar Empleado','code' => 500]);   
         }
     }
 

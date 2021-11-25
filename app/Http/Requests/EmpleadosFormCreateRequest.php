@@ -48,9 +48,9 @@ class EmpleadosFormCreateRequest extends FormRequest
             'email.max' => 'El campo :attribute no debe de exceder los 191 caracteres',
             'password.required' => 'El campo :attribute es obligatorio',
             'password.confirmed' => 'El campo :attribute no esta confirmado',
-            'rol' => 'El campo :attribute esta obligatorio',
-            'puesto' => 'El campo :attribute esta obligatorio',
-            'estado' => 'El campo :attribute esta obligatorio',
+            'rol.required' => 'El campo :attribute esta obligatorio',
+            'puesto.required' => 'El campo :attribute esta obligatorio',
+            'estado.required' => 'El campo :attribute esta obligatorio',
         ];
     }
 
