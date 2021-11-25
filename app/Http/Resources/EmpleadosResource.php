@@ -22,6 +22,7 @@ class EmpleadosResource extends JsonResource
             'telefono' => $this->usuario !== null ? $this->usuario->telefono : '',
             'email' => $this->usuario !== null ? $this->usuario->email : '',
             'path_img' => $this->usuario !== null ? $this->usuario->path_img : '',
+            'rol' => $this->rol,
             'puesto' => $this->puesto,
             'puesto_descripcion' => $this->puestoEmpleado !== null ? $this->puestoEmpleado->descripcion_det : '',
             'estado' => $this->estado,
