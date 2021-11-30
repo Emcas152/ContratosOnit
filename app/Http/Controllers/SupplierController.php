@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ProveedorResource;
-use App\Http\Requests\ProveedorFormRequest;
+use App\Http\Requests\ProveedorFormCreateRequest;
+use App\Http\Requests\ProveedorFormUpdateRequest;
 use Carbon\Carbon;
 use DB;
 
@@ -53,14 +54,14 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProveedorFormRequest $request)
+    public function store(ProveedorFormCreateRequest $request)
     {
         try 
         {
             $mytime = Carbon::now();
             DB::beginTransaction();
             $newUser = new User;
-            $newUser->name = $request->nombre;
+            $newUser->name = $request->name;
             $newUser->password = Hash::make($request->password);
             $newUser->email = $request->email;
             $newUser->id_condominio = $request->id_condominio;
@@ -71,37 +72,10 @@ class SupplierController extends Controller
             $newUser->assignRole('proveedor');
             $accessToken = $newUser->createToken('authToken')->accessToken;
 
-            $imgPerfilOld = $proveedor->img_perfil;
-            if ($request->hasFile('img_perfil')) {
-                $request->validate([
-                    'img_perfil' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->img_perfil->extension();
-                $request->img_perfil->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $imgPerfilOld = $url;
-            }
-            $imgHeaderOld = $proveedor->img_header;
-            if ($request->hasFile('img_header')) {
-                $request->validate([
-                    'img_header' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->img_header->extension();
-                $request->img_header->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $imgHeaderOld = $url;
-            }
-
             $proveedor = Supplier::create([
                 'id_usuario' => $newUser->id,
                 'nombre' => $request->nombre,
-                'descripcion' => $request->descripcion,
-                'direccion' => $request->direccion,
-                'informacion_general' => $request->informacion_general,
                 'fecha_creacion' => $mytime->format('Y-m-d'),
-                'img_perfil' => $imgPerfilOld,
-                'img_header' => $imgHeaderOld,
-                'pagina_web' => $request->pagina_web,
                 'estado' => 'ACT'
             ]);
 
@@ -142,7 +116,7 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(ProveedorFormRequest $request)
+    public function update(ProveedorFormUpdateRequest $request)
     {
         try 
         {
@@ -178,7 +152,7 @@ class SupplierController extends Controller
 
 
             $user = User::findOrFail($proveedor->id_usuario);
-            $user->name = $request->nombre;
+            $user->name = $request->name;
             $user->email = $request->email;
             $user->telefono = $request->telefono;
             if($user->password != $request->password)

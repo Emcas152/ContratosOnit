@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class ProveedorFormRequest extends FormRequest
+class ProveedorFormUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,8 +30,7 @@ class ProveedorFormRequest extends FormRequest
         return [
             'name' => 'required|max:191|unique:users,name,'.$id.',id',
             'email' => 'required|max:191|unique:users,email,'.$id.',id',
-            'password' => 'required|max:191|confirmed',
-            'id_condominio' => 'required',
+            'password' => 'required|max:191',
             'descripcion' => 'required',
             'nombre' => 'required',
             'direccion' => 'required',
@@ -51,8 +50,6 @@ class ProveedorFormRequest extends FormRequest
             'email.unique' => 'El campo :attribute ya se encuentra existente',
             'email.max' => 'El campo :attribute no debe de exceder los 191 caracteres',
             'password.required' => 'El campo :attribute es obligatorio',
-            'password.confirmed' => 'El campo :attribute no esta confirmado',
-            'id_condominio.required' => 'El campo Condominio esta obligatorio',
             'descripcion.required' => 'El campo :attribute esta obligatorio',
             'nombre.required' => 'El campo :attribute esta obligatorio',
             'direccion.required' => 'El campo :attribute esta obligatorio',
