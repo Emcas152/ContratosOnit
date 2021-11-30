@@ -27,6 +27,8 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\EmpleadoHorarioController;
 use App\Http\Controllers\EmpleadoActividadController;
 
+use App\Http\Controllers\SupplierController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -163,5 +165,11 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/task-employee/create', [EmpleadoActividadController::class, 'store'])->name('task-employee.store');
     Route::post('/task-employee/{id_empleado}', [EmpleadoActividadController::class, 'index'])->name('task-employee.index');
     Route::delete('/task-employee/delete/{id}', [EmpleadoActividadController::class, 'destroy'])->name('task-employee.destroy');
-    
+
+    Route::post('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+    Route::post('/suppliers/create', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::post('/suppliers/{usuario_id}', [SupplierController::class, 'show'])->name('suppliers.show');
+    Route::post('/suppliers/edit/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::post('/suppliers/{id}/{action}', [SupplierController::class, 'change_state'])->name('suppliers.change_state');
+
 });
