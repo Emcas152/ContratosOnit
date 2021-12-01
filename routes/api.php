@@ -28,6 +28,7 @@ use App\Http\Controllers\EmpleadoHorarioController;
 use App\Http\Controllers\EmpleadoActividadController;
 
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserInvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,5 +172,9 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/suppliers/{usuario_id}', [SupplierController::class, 'show'])->name('suppliers.show');
     Route::post('/suppliers/edit/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
     Route::post('/suppliers/{id}/{action}', [SupplierController::class, 'change_state'])->name('suppliers.change_state');
+
+    Route::post('/user-invoice', [UserInvoiceController::class, 'index'])->name('user-invoice.index');
+    Route::post('/user-invoice/{id}', [UserInvoiceController::class, 'show'])->name('user-invoice.show');
+    Route::post('/user-invoice/edit/{id}', [UserInvoiceController::class, 'update'])->name('user-invoice.update');
 
 });
