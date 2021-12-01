@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserInvoice;
 use App\Models\Roles;
 use App\Models\Apartamento;
 use App\Models\ViewParametros;
@@ -77,6 +78,14 @@ class UsersController extends Controller
             
             $newUser->assignRole(User::getStoredRole($request->get('role_id'))->name);
             $accessToken = $newUser->createToken('authToken')->accessToken;
+
+            if (User::getStoredRole($request->get('role_id'))->name == 'client') {
+                UserInvoice::create([
+                    'id_usuario' => $newUser->id,
+                    'nit' => 'C/F',
+                    'estado' => 'ACT'
+                ]);
+            }
 
             DB::commit();
             return response(['data'=> new UsersResource($newUser), 'access_token' => $accessToken,'code' => 201]);

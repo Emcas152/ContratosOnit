@@ -184,18 +184,15 @@ class EmpleadoController extends Controller
             } catch (\Throwable $th) {
                 
             }
-
             $user->save();
             
             if($oldRole !== $empleado->rol){
                 $user->removeRole($oldRole);
                 $user->assignRole($request->rol);
             }
-
             
-
             DB::commit();
-            return response(['data'=> new EmpleadosResource($empleado),'code' => 201]);
+            return response(['data'=> new EmpleadosResource($empleado),'code' => 200]);
 
         } catch (\Exception $e) 
         {
