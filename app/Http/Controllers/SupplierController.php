@@ -16,6 +16,24 @@ use DB;
 
 class SupplierController extends Controller
 {
+    private function getB64Image($base64_image){  
+        // Obtener el String base-64 de los datos         
+        $image_service_str = substr($base64_image, strpos($base64_image, ",")+1);
+        // Decodificar ese string y devolver los datos de la imagen        
+        $image = base64_decode($image_service_str);   
+        // Retornamos el string decodificado
+        return $image;
+    }
+
+    private function getB64Extension($base64_image, $full=null){  
+        // Obtener mediante una expresión regular la extensión imagen y guardarla
+        // en la variable "img_extension"        
+        preg_match("/^data:image\/(.*);base64/i",$base64_image, $img_extension);   
+        // Dependiendo si se pide la extensión completa o no retornar el arreglo con
+        // los datos de la extensión en la posición 0 - 1
+        return ($full) ?  $img_extension[0] : $img_extension[1];  
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -127,29 +145,33 @@ class SupplierController extends Controller
             $proveedor->direccion = $request->direccion;
             $proveedor->informacion_general = $request->informacion_general;
             $proveedor->pagina_web = $request->pagina_web;
-            $proveedor->puesto = $request->puesto;
-            $imgPerfilOld = $proveedor->img_perfil;
-            if ($request->hasFile('img_perfil')) {
-                $request->validate([
-                    'img_perfil' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->img_perfil->extension();
-                $request->img_perfil->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $proveedor->img_perfil = $url;
+            $pathPerfilOld = $proveedor->path_perfil;
+            try {
+                if (!$request->hasFile('path_perfil')) {
+                    $image = $this->getB64Image($request->path_perfil);
+                    $extension = $this->getB64Extension($request->path_perfil);
+                    $imageName = time().'.'.$extension;
+                    Storage::disk('public')->put($imageName, $image);
+                    $url = Storage::url($imageName);
+                    $proveedor->path_perfil = $url;
+                }
+            } catch (\Throwable $th) {
+                
             }
-            $imgHeaderOld = $proveedor->img_header;
-            if ($request->hasFile('img_header')) {
-                $request->validate([
-                    'img_header' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->img_header->extension();
-                $request->img_header->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $proveedor->img_header = $url;
+            $pathHeaderOld = $proveedor->path_header;
+            try {
+                if (!$request->hasFile('path_header')) {
+                    $image = $this->getB64Image($request->path_header);
+                    $extension = $this->getB64Extension($request->path_header);
+                    $imageName = time().'.'.$extension;
+                    Storage::disk('public')->put($imageName, $image);
+                    $url = Storage::url($imageName);
+                    $proveedor->path_header = $url;
+                }
+            } catch (\Throwable $th) {
+                
             }
             $proveedor->save();
-
 
             $user = User::findOrFail($proveedor->id_usuario);
             $user->name = $request->name;

@@ -22,8 +22,8 @@ class Supplier extends Model
         'direccion',
         'informacion_general',
         'fecha_creacion',
-        'img_perfil',
-        'img_header',
+        'path_perfil',
+        'path_header',
         'pagina_web',
         'estado'
     ];
