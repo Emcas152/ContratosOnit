@@ -28,7 +28,7 @@ class CalendarResource extends JsonResource
                 'calendar' => $this->id_area,
                 'description' => $this->descripcion,
                 'comment' => $this->comentarios,
-                'guests' => collect($this->invitados)->map->only('id', 'nombre_visita'),
+                'guests' => collect($this->invitados)->map->only('id'),
                 'estado' => $this->estado,
                 'estado_descripcion' => $this->estadoCalendario !== null ? $this->estadoCalendario->descripcion_det : ''
             ]

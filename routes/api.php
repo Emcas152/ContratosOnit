@@ -48,6 +48,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+/* Se agrega fuera de la autenticacion ya que se requiere en el register page */
+Route::post('/condominium/select', [CondominioController::class, 'show'])->name('condominium.show');
+
 Route::middleware(['auth:api'])->group(function () 
 {
     Route::post('/menu', [MenuAccionesController::class, 'index'])->name('menu.index');
@@ -78,7 +81,6 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/users/delete/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
 
     Route::post('/condominium', [CondominioController::class, 'index'])->name('condominium.index');
-    Route::post('/condominium/select', [CondominioController::class, 'show'])->name('condominium.show');
     Route::post('/condominium/create', [CondominioController::class, 'store'])->name('condominium.store');
     Route::put('/condominium/edit/{id}', [CondominioController::class, 'update'])->name('condominium.update');
     Route::delete('/condominium/delete/{id}', [CondominioController::class, 'destroy'])->name('condominium.destroy');

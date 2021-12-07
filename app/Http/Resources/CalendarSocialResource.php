@@ -27,7 +27,7 @@ class CalendarSocialResource extends JsonResource
             'calendar' => $this->id_area,
             'description' => $this->descripcion,
             'comment' => $this->comentarios,
-            'invitados' => collect($this->invitados)->map->only('id', 'nombre_visita'),
+            'invitados' => collect($this->invitados)->map->only('id'),
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoCalendario !== null ? $this->estadoCalendario->descripcion_det : ''
         ];
