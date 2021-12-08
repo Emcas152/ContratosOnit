@@ -47,9 +47,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('forgot', [AuthController::class, 'forgot']);
 
 /* Se agrega fuera de la autenticacion ya que se requiere en el register page */
 Route::post('/condominium/select', [CondominioController::class, 'show'])->name('condominium.show');
+Route::post('/building/select', [EdificioController::class, 'show'])->name('building.show');
+Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('apartment.show');
 
 Route::middleware(['auth:api'])->group(function () 
 {
@@ -86,13 +89,11 @@ Route::middleware(['auth:api'])->group(function ()
     Route::delete('/condominium/delete/{id}', [CondominioController::class, 'destroy'])->name('condominium.destroy');
 
     Route::post('/building', [EdificioController::class, 'index'])->name('building.index');
-    Route::post('/building/select', [EdificioController::class, 'show'])->name('building.show');
     Route::post('/building/create', [EdificioController::class, 'store'])->name('building.store');
     Route::put('/building/edit/{id}', [EdificioController::class, 'update'])->name('building.update');
     Route::delete('/building/delete/{id}', [EdificioController::class, 'destroy'])->name('building.destroy');
 
     Route::post('/apartment', [ApartamentoController::class, 'index'])->name('apartment.index');
-    Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('apartment.show');
     Route::post('/apartment/create', [ApartamentoController::class, 'store'])->name('apartment.store');
     Route::put('/apartment/edit/{id}', [ApartamentoController::class, 'update'])->name('apartment.update');
     Route::delete('/apartment/delete/{id}', [ApartamentoController::class, 'destroy'])->name('apartment.destroy');
