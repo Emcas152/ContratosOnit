@@ -13,6 +13,8 @@ use App\Http\Resources\UsersResource;
 use App\Http\Resources\UsuarioSelectResource;
 use App\Http\Requests\UsersFormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ActivateUser;
 use DB;
 
 class UsersController extends Controller
@@ -153,6 +155,15 @@ class UsersController extends Controller
             DB::beginTransaction();
             $user = User::findOrFail($request->id);
             $estado = EstadosProcesos::where([['sts_inicial',$user->estado],['tabla','users']])->firstOrFail();
+            if ($user->estado == 'PEN') {
+                $data = [
+                    'nombre' => $user->name
+                ];
+                if ($user->email) {
+                    Mail::to($user->email)
+                            ->send(new ActivateUser($data, "Usuario Activado LIFE", ''));
+                }
+            }
             $user->estado = $estado->sts_final;
             $user->save();
             DB::commit();

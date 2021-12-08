@@ -150,7 +150,7 @@ class SupplierController extends Controller
                 if (!$request->hasFile('path_perfil')) {
                     $image = $this->getB64Image($request->path_perfil);
                     $extension = $this->getB64Extension($request->path_perfil);
-                    $imageName = time().'.'.$extension;
+                    $imageName = 'p'.time().'.'.$extension;
                     Storage::disk('public')->put($imageName, $image);
                     $url = Storage::url($imageName);
                     $proveedor->path_perfil = $url;
@@ -163,7 +163,7 @@ class SupplierController extends Controller
                 if (!$request->hasFile('path_header')) {
                     $image = $this->getB64Image($request->path_header);
                     $extension = $this->getB64Extension($request->path_header);
-                    $imageName = time().'.'.$extension;
+                    $imageName = 'h'.time().'.'.$extension;
                     Storage::disk('public')->put($imageName, $image);
                     $url = Storage::url($imageName);
                     $proveedor->path_header = $url;
