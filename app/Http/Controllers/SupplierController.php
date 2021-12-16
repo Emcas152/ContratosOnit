@@ -185,7 +185,32 @@ class SupplierController extends Controller
             $user->save();
             
             DB::commit();
-            return response(['data'=> new ProveedorResource($proveedor),'code' => 201]);
+            return response(['data'=> new ProveedorResource($proveedor),'code' => 200]);
+
+        } catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return response(['data'=> 'Error al actualizar Proveedor','code' => 500]);   
+        }
+    }
+
+    public function adminUpdate(Request $request)
+    {
+        try 
+        {
+            DB::beginTransaction();
+            $proveedor = Supplier::findOrFail($request->id);
+            $proveedor->nombre = $request->nombre;
+            $proveedor->save();
+
+            $user = User::findOrFail($proveedor->id_usuario);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->telefono = $request->telefono;
+            $user->save();
+            
+            DB::commit();
+            return response(['data'=> new ProveedorResource($proveedor),'code' => 200]);
 
         } catch (\Exception $e) 
         {
