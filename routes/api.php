@@ -175,6 +175,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/suppliers/create', [SupplierController::class, 'store'])->name('suppliers.store');
     Route::post('/suppliers/{usuario_id}', [SupplierController::class, 'show'])->name('suppliers.show');
     Route::post('/suppliers/edit/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
+    Route::post('/suppliers/admin/edit/{id}', [SupplierController::class, 'adminUpdate'])->name('suppliers.adminUpdate');
     Route::post('/suppliers/{id}/{action}', [SupplierController::class, 'change_state'])->name('suppliers.change_state');
 
     Route::post('/user-invoice', [UserInvoiceController::class, 'index'])->name('user-invoice.index');
