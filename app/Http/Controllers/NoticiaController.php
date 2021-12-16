@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Noticia;
 use App\Models\ViewNoticias;
 use App\Models\Apartamento;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\NoticiaResource;
 use App\Http\Requests\NoticiaFormRequest;
+use App\Notifications\NotificiasNotification;
 use Carbon\Carbon;
 use DB;
 
@@ -62,6 +64,12 @@ class NoticiaController extends Controller
             } else {
                 $noticia->condominios()->attach($request->id_condominio);
             }
+
+            $users = User::where('id_condominio', '=', $request->id_condominio)
+                            ->whereNotIn('id', [$request->id_usuario_creo])->each(function(User $user) use ($noticia){
+                                $user->notify(new NotificiasNotification($noticia));
+                            });
+            
 
             DB::commit();
             return response(['data'=> new NoticiaResource($noticia),'code' => 201]);
