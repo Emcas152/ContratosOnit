@@ -124,18 +124,23 @@ class UsersController extends Controller
             $userRole->assignRole(User::getStoredRole($request->role_id)->name);
 
             $apartamento = [];
-            $apartamento = Apartamento::where('id_inquilino','=',$user->id)->first();
+            $apartamento = Apartamento::where('id_inquilino','=',$user->id);
             
-            if (trim($request->id_apartamento) == '' && $apartamento != null) 
-            {
-                $apartamento->id_inquilino = null;
-                $apartamento->estado = 'ACT';
-                $apartamento->update();
-            } else if(trim($request->id_apartamento) != '') {
+            if(!count($apartamento->get()) && trim($request->id_apartamento) != ''){
                 $apartamentoCambio = Apartamento::findOrfail($request->id_apartamento);
                 $apartamentoCambio->id_inquilino = $user->id;
                 $apartamentoCambio->estado = 'RSV';
-                $apartamentoCambio->update();
+                $apartamentoCambio->save();
+            }else {
+                
+                $apartamento->update(['id_inquilino'=> null, 'estado' => 'ACT']);
+
+                if(trim($request->id_apartamento) != '') {
+                    $apartamentoCambio = Apartamento::findOrfail($request->id_apartamento);
+                    $apartamentoCambio->id_inquilino = $user->id;
+                    $apartamentoCambio->estado = 'RSV';
+                    $apartamentoCambio->save();
+                }
             }
             
             DB::commit();
