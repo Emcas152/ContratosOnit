@@ -29,6 +29,7 @@ class UsersController extends Controller
         $users = User::join('model_has_roles','model_has_roles.model_id','users.id')
                         ->select('users.*')
                         ->whereNotIn('model_has_roles.role_id', $exceptRoles)
+                        ->whereNotIn('model_has_roles.role_id', [4])
                         ->where(function($query) use($queryUrl,$condominio) {
                             $query->where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                             ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
@@ -98,11 +99,11 @@ class UsersController extends Controller
             return response(['data'=> 'Error al crear usuario','code' => 500]);   
         }
     }
-    public function update(Request $request, $id_user)
+    public function update(Request $request)
     {
         try
         {
-            $user = User::findOrFail($id_user);
+            $user = User::findOrFail($request->id);
             DB::beginTransaction();
             if($user->password != $request->get('password'))
             {

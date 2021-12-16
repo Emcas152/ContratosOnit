@@ -29,6 +29,7 @@ use App\Http\Controllers\EmpleadoActividadController;
 
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserInvoiceController;
+use App\Http\Controllers\NotificacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -179,5 +180,9 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/user-invoice', [UserInvoiceController::class, 'index'])->name('user-invoice.index');
     Route::post('/user-invoice/{id}', [UserInvoiceController::class, 'show'])->name('user-invoice.show');
     Route::post('/user-invoice/edit/{id}', [UserInvoiceController::class, 'update'])->name('user-invoice.update');
+
+    Route::post('/notifications', [NotificacionController::class, 'index'])->name('notifications.index');
+    Route::post('/markAllAsRead', [NotificacionController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::post('/markNotification', [NotificacionController::class, 'markNotification'])->name('notifications.markNotification');
 
 });
