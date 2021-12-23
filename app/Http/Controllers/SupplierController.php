@@ -178,7 +178,7 @@ class SupplierController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->telefono = $request->telefono;
-            if($user->password != $request->password)
+            if($user->password != $request->password && trim($request->password) != '')
             {
                 $user->password = Hash::make($request->password);
             }
