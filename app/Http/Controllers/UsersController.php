@@ -105,7 +105,7 @@ class UsersController extends Controller
         {
             $user = User::findOrFail($request->id);
             DB::beginTransaction();
-            if($user->password != $request->get('password'))
+            if($user->password != $request->get('password') && trim($request->password) != '')
             {
                 $user->password = Hash::make($request->get('password'));
             }

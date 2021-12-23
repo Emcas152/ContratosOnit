@@ -57,6 +57,8 @@ Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('
 
 Route::middleware(['auth:api'])->group(function () 
 {
+    Route::post('resetPassword', [AuthController::class, 'resetPassword']);
+
     Route::post('/menu', [MenuAccionesController::class, 'index'])->name('menu.index');
     Route::post('/submenu/permissions', [MenuAccionesController::class, 'MenuSubPermissions'])->name('menu.index');
 

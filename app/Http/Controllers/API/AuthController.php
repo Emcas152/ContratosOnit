@@ -77,14 +77,12 @@ class AuthController extends Controller
             return response(['email' => 'Verifique credenciales'], 400);
         }
 
-        if(auth()->user()->estado != 'ACT')
+        if(auth()->user()->estado != 'ACT' && auth()->user()->estado != 'RES')
         {
-            return response(['message' => 'El usuario se encuentra deshabilitado, check your details'], 401);
+            return response(['message' => 'El usuario se encuentra deshabilitado.'], 401);
         }
 
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
-
-        //$user = User::with('roles')->find(auth()->id());
 
         return response(['userData' => new LoginResource(auth()->user()), 'access_token' => $accessToken]);
      
@@ -95,7 +93,11 @@ class AuthController extends Controller
         try {
             DB::beginTransaction();
             $newPassword = rand();
-            $user = User::where('email', '=', $request->email)->first();
+            $user = User::where('email', '=', $request->email)->firstOrFail();
+            if($user->estado == "ANU"){
+                return response(['data' => 'No puede restablecer la contraseña. El usuario se encuentra inactivo consulte con el administrador del sistema.', 'code' => '401'], 401);
+            }
+            $user->estado = 'RES';
             $user->password = Hash::make($newPassword);
             $user->update();
             if ($user->email) {
@@ -112,5 +114,25 @@ class AuthController extends Controller
             return response(['data' => 'Error de envío'], 500);
         }
         
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $user = User::findOrfail($request->id);
+            if($user->password != $request->password && trim($request->password) != '')
+            {
+                $user->password = Hash::make($request->password);
+            }
+            $user->estado = 'ACT';
+            $user->update();
+            DB::commit();
+            return response(['data' => 'Se ha actualizado la nueva contraseña correctamente.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response(['data' => 'Error de actualizacion de contraseña.'], 500);
+        }
     }
 }
