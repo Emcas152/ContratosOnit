@@ -120,7 +120,7 @@ class UserInvoiceController extends Controller
             } catch (\Throwable $th) {
                 
             }
-            if($user->password != $request->password)
+            if($user->password != $request->password  && trim($request->password) != '')
             {
                 $user->password = Hash::make($request->password);
             }
