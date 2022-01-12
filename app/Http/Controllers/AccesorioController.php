@@ -87,6 +87,23 @@ class AccesorioController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Accesorio  $accesorio
+     * @return \Illuminate\Http\Response
+     */
+    public function byCategories(Request $request)
+    {
+        $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio],['estado', '=', 'ACT'],['categoria', '=', $request->id]])->get();
+
+        if (!count($accesorios)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> $accesorios,'code' => 200]);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
