@@ -105,6 +105,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/accessories/select', [AccesorioController::class, 'show'])->name('accessories.show');
     Route::post('/accessories/create', [AccesorioController::class, 'store'])->name('accessories.store');
     Route::post('/accessories/edit/{id}', [AccesorioController::class, 'update'])->name('accessories.update');
+    Route::post('/accessories/categories/{id}', [AccesorioController::class, 'byCategories'])->name('accessories.byCategories');
     Route::delete('/accessories/delete/{id}', [AccesorioController::class, 'destroy'])->name('accessories.destroy');
 
     Route::post('/amenities', [AmenidadController::class, 'index'])->name('amenities.index');
