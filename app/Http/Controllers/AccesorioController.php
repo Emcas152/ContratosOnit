@@ -6,6 +6,7 @@ use App\Models\Accesorio;
 use App\Http\Controllers\Controller;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\AccesorioResource;
 use App\Http\Requests\AccesorioFormRequest;
 use DB;
@@ -44,8 +45,20 @@ class AccesorioController extends Controller
     {
         try 
         {
+            $data = $request->all();
             DB::beginTransaction();
-            $accesorio = Accesorio::create($request->all());
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                ]);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->storeAs('/public', $imageName);
+                $url = Storage::url($imageName);
+                $data['image'] = $url;
+            } else {
+                $data['image'] = '/storage/amenidad.png';
+            }
+            $accesorio = Accesorio::create($data);
             DB::commit();
             return response(['data'=> new AccesorioResource($accesorio),'code' => 201]);
 
@@ -84,9 +97,20 @@ class AccesorioController extends Controller
     {
         try 
         {
+            $data = $request->all();
             DB::beginTransaction();
             $accesorio = Accesorio::findOrFail($request->id);
-            $accesorio->update($request->all());
+            $data['image'] = $accesorio->image;
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                ]);
+                $imageName = time().'.'.$request->image->extension();
+                $request->image->storeAs('/public', $imageName);
+                $url = Storage::url($imageName);
+                $data['image'] = $url;
+            }
+            $accesorio->update($data);
             DB::commit();
             return response(['data'=> new AccesorioResource($accesorio), 'code' => 200]);
 

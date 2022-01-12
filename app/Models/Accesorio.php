@@ -22,6 +22,7 @@ class Accesorio extends Model
         'nombre',
         'descripcion',
         'categoria',
+        'image',
         'estado'
     ];
 
