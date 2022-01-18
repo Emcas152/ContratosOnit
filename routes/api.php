@@ -31,6 +31,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserInvoiceController;
 use App\Http\Controllers\NotificacionController;
 
+use App\Http\Controllers\DocumentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -188,5 +189,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/notifications', [NotificacionController::class, 'index'])->name('notifications.index');
     Route::post('/markAllAsRead', [NotificacionController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
     Route::post('/markNotification', [NotificacionController::class, 'markNotification'])->name('notifications.markNotification');
+
+    Route::post('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents/create', [DocumentController::class, 'store'])->name('documents.store');
+    Route::post('/documents/edit/{id}', [DocumentController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/delete/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
 
 });
