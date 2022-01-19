@@ -77,7 +77,9 @@ class AccesorioController extends Controller
      */
     public function show(Request $request)
     {
-        $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio],['estado', '=', 'ACT']])->get(['id','nombre']);
+        $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio]])
+                                    ->whereNotIn('estado',['MSTS', 'ANU'])
+                                    ->get(['id','nombre']);
 
         if (!count($accesorios)) 
         {
@@ -94,7 +96,9 @@ class AccesorioController extends Controller
      */
     public function byCategories(Request $request)
     {
-        $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio],['estado', '=', 'ACT'],['categoria', '=', $request->id]])->get();
+        $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio],['categoria', '=', $request->id]])
+                                ->whereNotIn('estado',['MSTS', 'ANU'])
+                                ->get();
 
         if (!count($accesorios)) 
         {

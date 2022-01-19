@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Accesorio;
 use App\Models\SolicitudAccesorio;
 use App\Models\EstadosProcesos;
 use App\Http\Controllers\Controller;
@@ -50,6 +51,14 @@ class SolicitudAccesorioController extends Controller
         try 
         {
             DB::beginTransaction();
+            $fecha_solicitud = date('Y-m-d H:i:s',strtotime($request->fecha_solicitud));
+            $existeSolicitud = SolicitudAccesorio::where([['id_accesorio', '=', $request->id_accesorio], 
+                                                        ['id_usuario_solicito', '=', $request->id_usuario_solicito],
+                                                        ['fecha_solicitud', '=', $fecha_solicitud]])
+                                                        ->get();
+            if (count($existeSolicitud)) {
+                return response(['data' => [],'code'=>200, 'error' =>'Ya existe una solicitud igual'],400);
+            }
             $solicitudAccesorio = SolicitudAccesorio::create($request->all());
             DB::commit();
             return response(['data'=> new SolicitudAccesorioResource($solicitudAccesorio),'code' => 201]);
@@ -79,15 +88,23 @@ class SolicitudAccesorioController extends Controller
                                               ['proceso',$action],
                                               ['tabla','solicitudes']])->firstOrFail();
             $solicitudAccesorio->estado = $estado->sts_final;
+            $accesorio = Accesorio::findOrfail($solicitudAccesorio->id_accesorio);
             if($action == 'Entregado')
             {
                 $solicitudAccesorio->id_autorizo = $request->id_autorizo;
                 $solicitudAccesorio->fecha_prestamo = $mytime->format('Y-m-d H:i:s');
+                $accesorio->estado = $solicitudAccesorio->estado;
             }
             elseif($action == 'Devuelto' || $action == 'MalEstado')
             {
                 $solicitudAccesorio->fecha_devolucion = $mytime->format('Y-m-d H:i:s');
+                if ($action == 'Devuelto') {
+                    $accesorio->estado = 'ACT';
+                } else {
+                    $accesorio->estado = $solicitudAccesorio->estado;
+                }
             }
+            $accesorio->update();
             $solicitudAccesorio->update();
 
             DB::commit();
