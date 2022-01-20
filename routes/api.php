@@ -191,6 +191,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/markNotification', [NotificacionController::class, 'markNotification'])->name('notifications.markNotification');
 
     Route::post('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents/list/actives', [DocumentController::class, 'show'])->name('documents.show');
     Route::post('/documents/create', [DocumentController::class, 'store'])->name('documents.store');
     Route::post('/documents/edit/{id}', [DocumentController::class, 'update'])->name('documents.update');
     Route::delete('/documents/delete/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
