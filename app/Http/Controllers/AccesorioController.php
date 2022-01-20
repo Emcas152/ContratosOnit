@@ -96,9 +96,16 @@ class AccesorioController extends Controller
      */
     public function byCategories(Request $request)
     {
+        $queryUrl = trim($request->searchText);
+        $pagination = $request->paginate;
         $accesorios = Accesorio::where([['id_condominio', '=', $request->id_condominio],['categoria', '=', $request->id]])
                                 ->whereNotIn('estado',['MSTS', 'ANU'])
-                                ->get();
+                                ->where(function($query) use($queryUrl) {
+                                    $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                    ->orWhere([['nombre', 'LIKE', '%'.$queryUrl.'%']]);
+                                })
+                                ->orderBy('id','DESC')
+                                ->paginate($pagination);
 
         if (!count($accesorios)) 
         {
