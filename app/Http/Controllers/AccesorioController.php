@@ -111,7 +111,7 @@ class AccesorioController extends Controller
         {
            return response(['data' => [],'code'=>204]);   
         }
-        return response(['data'=> $accesorios,'code' => 200]);
+        return response(['data'=> AccesorioResource::collection($accesorios),'per_page' => $accesorios->perPage(),'total' => $accesorios->total()]);
     }
 
     /**
