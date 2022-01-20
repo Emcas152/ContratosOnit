@@ -85,9 +85,20 @@ class DocumentController extends Controller
      * @param  \App\Models\Document  $document
      * @return \Illuminate\Http\Response
      */
-    public function show(Document $document)
+    public function show(Request $request)
     {
-        //
+        $queryUrl = trim($request->searchText);
+        $pagination = $request->paginate;
+        $condominio = $request->id_condominio;
+        $documentoResult = Document::where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio], ['estado', '=', 'ACT']])
+                                        ->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio], ['estado', '=', 'ACT']])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio], ['estado', '=', 'ACT']])
+                                        ->orderBy('id','DESC')
+                                        ->paginate($pagination);
+        if (!count($documentoResult)) {
+            return response(['data' => [],'code'=>204]);  
+        }
+        return response(['data'=> DocumentosResource::collection($documentoResult),'per_page' => $documentoResult->perPage(),'total' => $documentoResult->total()]); 
     }
 
     /**
