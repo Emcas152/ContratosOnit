@@ -23,6 +23,8 @@ class MenuAccionesController extends Controller
     {
          $menu = ViewMenu::select('name','url','icon','id','role_id','ext')
         ->where([['nivel_json','=','0'],['role_id','=',$request->get('role_id')]])
+        ->orderBy('nivel_json','ASC')
+        ->orderBy('orden','ASC')
         ->get();
 
         return MenuOptionsResource::collection($menu);
