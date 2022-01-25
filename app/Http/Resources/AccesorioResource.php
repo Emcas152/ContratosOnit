@@ -23,6 +23,7 @@ class AccesorioResource extends JsonResource
             'categoria' => $this->categoria,
             'categoria_descripcion' => $this->categoriaAccesorio !== null ? $this->categoriaAccesorio->descripcion_det : '',
             'image' => $this->image,
+            'icon' => $this->icon,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoAccesorio !== null ? $this->estadoAccesorio->descripcion_det : '',
         ];
