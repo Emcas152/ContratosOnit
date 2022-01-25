@@ -58,6 +58,9 @@ class AccesorioController extends Controller
             } else {
                 $data['image'] = '/storage/amenidad.png';
             }
+            if(trim($request->icon) == ''){
+                $data['icon'] = 'book';
+            }
             $accesorio = Accesorio::create($data);
             DB::commit();
             return response(['data'=> new AccesorioResource($accesorio),'code' => 201]);
@@ -137,6 +140,9 @@ class AccesorioController extends Controller
                 $request->image->storeAs('/public', $imageName);
                 $url = Storage::url($imageName);
                 $data['image'] = $url;
+            }
+            if(trim($request->icon) != ''){
+                $data['icon'] = $request->icon;
             }
             $accesorio->update($data);
             DB::commit();
