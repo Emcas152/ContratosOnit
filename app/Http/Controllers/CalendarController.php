@@ -6,7 +6,9 @@ use App\Models\CalendarioAreasSociales;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\CalendarResource;
+use App\Http\Resources\CalendarSocialDashboardResource;
 use App\Http\Requests\CalendarFormRequest;
+use Carbon\Carbon;
 use DB;
 
 
@@ -121,9 +123,33 @@ class CalendarController extends Controller
      * @param  \App\Models\CalendarioAreasSociales  $calendarioAreasSociales
      * @return \Illuminate\Http\Response
      */
-    public function show(CalendarioAreasSociales $calendarioAreasSociales)
+    public function show(Request $request)
     {
-        //
+        $role = $request->role;
+        $usuarioId = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $calendario = [];
+        if($role == 'admin'){
+            $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                         ->where('amenidades.id_condominio','=', $condominio)
+                         ->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')],['calendario_areas_sociales.estado','=','AUT']])
+                        ->get();
+        } elseif ($role == 'client'){
+            $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
+                         ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
+                         ->orWhere(function ($query) use ($usuarioId, $condominio){
+                           $query->where([['calendario_areas_sociales.id_usuario', '=', $usuarioId], ['amenidades.id_condominio','=', $condominio]])
+                                 ->orWhere([['calendario_areas_sociales.estado','=','AUT'],['amenidades.id_condominio','=', $condominio]]);
+                         })
+                         ->where([[DB::raw('CAST(calendario_areas_sociales.fecha_reserva AS DATE)'),'=',Carbon::now()->format('Y-m-d')]])
+                        ->get();
+        }
+        if (!count($calendario)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> CalendarSocialDashboardResource::collection($calendario),'code' => 200]); 
     }
 
     /**

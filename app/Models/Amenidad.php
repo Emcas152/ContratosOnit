@@ -23,7 +23,7 @@ class Amenidad extends Model
         'nombre',
         'descripcion',
         'color',
-        'image',
+        'icon',
         'estado'
     ];
 

@@ -138,6 +138,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/visits/{id}/{action}', [VisitasController::class, 'change_state'])->name('visits.change_state');
 
     Route::post('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::post('/calendar/currentDay', [CalendarController::class, 'show'])->name('calendar.show');
     Route::post('/calendar/create', [CalendarController::class, 'store'])->name('calendar.store');
     Route::put('/calendar/edit/{id}', [CalendarController::class, 'update'])->name('calendar.update');
     Route::put('/calendar/{id}/{action}', [CalendarController::class, 'change_state'])->name('calendar.change_state');

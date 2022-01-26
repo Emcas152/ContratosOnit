@@ -47,16 +47,8 @@ class AmenidadController extends Controller
         {
             $data = $request->all();
             DB::beginTransaction();
-            if ($request->hasFile('image')) {
-                $request->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->image->extension();
-                $request->image->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $data['image'] = $url;
-            } else {
-                $data['image'] = '/storage/amenidad.png';
+            if(trim($request->icon) == ''){
+                $data['icon'] = 'book';
             }
             $amenidad = Amenidad::create($data);
             DB::commit();
@@ -100,15 +92,8 @@ class AmenidadController extends Controller
             $data = $request->all();
             DB::beginTransaction();
             $amenidad = Amenidad::findOrFail($request->id);
-            $data['image'] = $amenidad->image;
-            if ($request->hasFile('image')) {
-                $request->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->image->extension();
-                $request->image->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $data['image'] = $url;
+            if(trim($request->icon) != ''){
+                $data['icon'] = $request->icon;
             }
             $amenidad->update($data);
             DB::commit();
