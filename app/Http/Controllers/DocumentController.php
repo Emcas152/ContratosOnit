@@ -57,16 +57,8 @@ class DocumentController extends Controller
             } else {
                 $data['path'] = '/storage/documento.pdf';
             }
-            if ($request->hasFile('image')) {
-                $request->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->image->extension();
-                $request->image->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $data['image'] = $url;
-            } else {
-                $data['image'] = '/storage/documento.png';
+            if(trim($request->icon) == ''){
+                $data['icon'] = 'book';
             }
             $documento = Document::create($data);
             DB::commit();
@@ -125,15 +117,8 @@ class DocumentController extends Controller
                 $url = Storage::url($documentName);
                 $data['path'] = $url;
             }
-            $data['image'] = $documento->image;
-            if ($request->hasFile('image')) {
-                $request->validate([
-                    'image' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
-                ]);
-                $imageName = time().'.'.$request->image->extension();
-                $request->image->storeAs('/public', $imageName);
-                $url = Storage::url($imageName);
-                $data['image'] = $url;
+            if(trim($request->icon) != ''){
+                $data['icon'] = $request->icon;
             }
             $documento->update($data);
             DB::commit();

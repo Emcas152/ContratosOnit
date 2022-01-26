@@ -21,7 +21,7 @@ class DocumentosResource extends JsonResource
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
             'path' => $this->path,
-            'image' => $this->image,
+            'icon' => $this->icon,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoDocumento !== null ? $this->estadoDocumento->descripcion_det : '',
         ];

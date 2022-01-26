@@ -20,7 +20,7 @@ class Document extends Model
         'nombre',
         'descripcion',
         'path',
-        'image',
+        'icon',
         'estado'
     ];
 
