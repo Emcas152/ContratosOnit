@@ -22,7 +22,7 @@ class PresupuestoController extends Controller
     {
         $role = $request->role;
         $condominio = $request->id_condominio;
-        $query=trim($request->searchText);
+        $queryUrl=trim($request->searchText);
         $paginacion = $request->paginate;
         $presupuestoResult = [];
         if($role == 'admin'){
