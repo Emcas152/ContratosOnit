@@ -32,6 +32,7 @@ use App\Http\Controllers\UserInvoiceController;
 use App\Http\Controllers\NotificacionController;
 
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\PresupuestoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -196,5 +197,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/documents/create', [DocumentController::class, 'store'])->name('documents.store');
     Route::post('/documents/edit/{id}', [DocumentController::class, 'update'])->name('documents.update');
     Route::delete('/documents/delete/{id}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+
+    Route::post('/budgets', [PresupuestoController::class, 'index'])->name('budgets.index');
+    Route::post('/budgets/create', [PresupuestoController::class, 'store'])->name('budgets.store');
+    Route::post('/budgets/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
+    Route::delete('/budgets/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
 
 });
