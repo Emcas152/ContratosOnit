@@ -18,6 +18,8 @@ class PresupuestoResource extends JsonResource
             'id' => $this->id,
             'fecha_inicio' => $this->fecha_inicio,
             'fecha_vencimiento' => $this->fecha_vencimiento,
+            'id_condominio' => $this->id_condominio,
+            'condominio_descripcion' => $this->condominio !== null ? $this->condominio->nombre : '',
             'descripcion' => $this->descripcion,
             'presupuesto' => $this->presupuesto,
             'fecha_edicion' => $this->fecha_edicion,
