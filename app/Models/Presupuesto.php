@@ -18,6 +18,7 @@ class Presupuesto extends Model
     protected $fillable = [
         'fecha_inicio',
         'fecha_vencimiento',
+        'id_condominio',
         'descripcion',
         'presupuesto',
         'fecha_edicion',
@@ -28,6 +29,11 @@ class Presupuesto extends Model
     public function detallePresupuesto()
     {
         return $this->hasMany(DetallePresupuesto::class,'id_encabezado');
+    }
+
+    public function condominio()
+    {
+        return $this->belongsTo(Condominio::class,'id_condominio');
     }
 
     public function usuarioCreo()

@@ -28,6 +28,7 @@ class PresupuestoFormRequest extends FormRequest
         return [
             'fecha_inicio' => 'required',
             'fecha_vencimiento' => 'required',
+            'id_condominio' => 'required|integer',
             'descripcion' => 'required',
             'presupuesto' => 'required',
             'usuario_creo' => 'required|integer',
@@ -40,6 +41,8 @@ class PresupuestoFormRequest extends FormRequest
         return [
             'fecha_inicio.required' => 'El campo :attribute es obligatorio',
             'fecha_vencimiento.required' => 'El campo :attribute es obligatorio',
+            'id_condominio.required' => 'El campo condominio creo es obligatorio',
+            'id_condominio.integer' => 'El campo condominio creo debe de ser un numero entero',
             'descripcion.required' => 'El campo :attribute es obligatorio',
             'presupuesto.required' => 'El campo :attribute es obligatorio',
             'usuario_creo.required' => 'El campo usuario creo es obligatorio',
