@@ -33,6 +33,7 @@ use App\Http\Controllers\NotificacionController;
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PresupuestoController;
+use App\Http\Controllers\DetallePresupuestoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -202,5 +203,9 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/budgets/create', [PresupuestoController::class, 'store'])->name('budgets.store');
     Route::post('/budgets/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
     Route::delete('/budgets/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
+
+    Route::post('/budgets-detail', [DetallePresupuestoController::class, 'index'])->name('budgets-detail.index');
+    Route::post('/budgets-detail/create', [DetallePresupuestoController::class, 'store'])->name('budgets-detail.store');
+    Route::post('/budgets-detail/edit/{id}', [DetallePresupuestoController::class, 'update'])->name('budgets-detail.update');
 
 });
