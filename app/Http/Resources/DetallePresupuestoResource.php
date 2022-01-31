@@ -20,6 +20,9 @@ class DetallePresupuestoResource extends JsonResource
             'subcategoria' => $this->subcategoria,
             'subcategoria_descripcion' => $this->subcategoriaPresupuesto !== null ? $this->subcategoriaPresupuesto->descripcion_det : '',
             'subtotal' => $this->subtotal,
+            'categoria' => $this->categoria,
+            'categoria_descripcion' => $this->categoriaPresupuesto !== null ? $this->categoriaPresupuesto->descripcion_det : '',
+            'descripcion' => $this->descripcion,
         ];
     }
 }

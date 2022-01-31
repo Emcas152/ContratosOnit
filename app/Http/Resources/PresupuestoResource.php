@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\DetallePresupuestoResource;
 
 class PresupuestoResource extends JsonResource
 {
@@ -27,6 +28,7 @@ class PresupuestoResource extends JsonResource
             'nombre_creo' => $this->usuarioCreo !== null ? $this->usuarioCreo->name : '',
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoPresupuesto !== null ? $this->estadoPresupuesto->descripcion_det : '',
+            'p_detalle' => DetallePresupuestoResource::collection($this->detallePresupuesto)
         ];
     }
 }
