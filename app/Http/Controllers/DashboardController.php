@@ -7,6 +7,7 @@ use App\Models\Amenidad;
 use App\Models\SolicitudAccesorio;
 use App\Models\CalendarioAreasSociales;
 use App\Models\ViewPresupuestoEjecucion;
+use App\Models\ViewDetallePresupuesto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -303,5 +304,16 @@ class DashboardController extends Controller
             return response(['data' => [],'code'=>204]);  
         }
         return response(['data'=> ['series' => [100, $presupuesto[0]['porcentaje']*1], 'values' => [$presupuesto[0]['monto_presupuesto']*1,$presupuesto[0]['monto_ejecutado']*1]],'code' => 200]); 
+    }
+
+    public function presupuestoDetalle(Request $request)
+    {
+        $presupuestoDetalle = ViewDetallePresupuesto::where([['id_condominio','=',$request->id_condominio],['anio', '=', $request->year]])
+        ->get();
+        if (!count($presupuestoDetalle)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> $presupuestoDetalle,'code' => 200]);
     }
 }
