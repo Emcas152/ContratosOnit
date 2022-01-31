@@ -64,7 +64,7 @@ class PresupuestoController extends Controller
             $presupuesto = Presupuesto::create($request->all());
             foreach ($detalles as $detalle) {
                 $detallePresupuesto = new DetallePresupuesto;
-                $detallePresupuesto->id_encabezado = $detalle->id_encabezado;
+                $detallePresupuesto->id_encabezado = $presupuesto->id;
                 $detallePresupuesto->subcategoria = $detalle->subcategoria[0]['codigo'];
                 $detallePresupuesto->subtotal = $detalle->subtotal;
                 $detallePresupuesto->categoria = $detalle->categoria;
@@ -104,12 +104,23 @@ class PresupuestoController extends Controller
         try 
         {
             DB::beginTransaction();
+            $detalles = $request->p_detalle;
             $presupuesto = Presupuesto::findOrFail($request->id);
             $presupuesto->fecha_inicio = date('Y-m-d H:i:s',strtotime($request->fecha_inicio));
             $presupuesto->fecha_vencimiento = date('Y-m-d H:i:s',strtotime($request->fecha_vencimiento));
             $presupuesto->descripcion = $request->descripcion;
             $presupuesto->presupuesto = $request->presupuesto;
             $presupuesto->update();
+            DetallePresupuesto::where('id_encabezado','=', $presupuesto->id)->delete();
+            foreach ($detalles as $detalle) {
+                $detallePresupuesto = new DetallePresupuesto;
+                $detallePresupuesto->id_encabezado = $presupuesto->id;
+                $detallePresupuesto->subcategoria = $detalle->subcategoria[0]['codigo'];
+                $detallePresupuesto->subtotal = $detalle->subtotal;
+                $detallePresupuesto->categoria = $detalle->categoria;
+                $detallePresupuesto->descripcion = $detalle->descripcion;
+                $detallePresupuesto->save();
+            }
             DB::commit();
             return response(['data'=> new PresupuestoResource($presupuesto),'code' => 200]);
         } catch (\Exception $e) 
