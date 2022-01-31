@@ -65,10 +65,10 @@ class PresupuestoController extends Controller
             foreach ($detalles as $detalle) {
                 $detallePresupuesto = new DetallePresupuesto;
                 $detallePresupuesto->id_encabezado = $presupuesto->id;
-                $detallePresupuesto->subcategoria = $detalle->subcategoria[0]['codigo'];
-                $detallePresupuesto->subtotal = $detalle->subtotal;
-                $detallePresupuesto->categoria = $detalle->categoria;
-                $detallePresupuesto->descripcion = $detalle->descripcion;
+                $detallePresupuesto->subcategoria = $detalle['subcategoria']['codigo'];
+                $detallePresupuesto->subtotal = $detalle['subtotal'];
+                $detallePresupuesto->categoria = $detalle['categoria'];
+                $detallePresupuesto->descripcion = $detalle['descripcion'];
                 $detallePresupuesto->save();
             }
             DB::commit();
@@ -115,10 +115,10 @@ class PresupuestoController extends Controller
             foreach ($detalles as $detalle) {
                 $detallePresupuesto = new DetallePresupuesto;
                 $detallePresupuesto->id_encabezado = $presupuesto->id;
-                $detallePresupuesto->subcategoria = $detalle->subcategoria[0]['codigo'];
-                $detallePresupuesto->subtotal = $detalle->subtotal;
-                $detallePresupuesto->categoria = $detalle->categoria;
-                $detallePresupuesto->descripcion = $detalle->descripcion;
+                $detallePresupuesto->subcategoria = $detalle['subcategoria']['codigo'];
+                $detallePresupuesto->subtotal = $detalle['subtotal'];
+                $detallePresupuesto->categoria = $detalle['categoria'];
+                $detallePresupuesto->descripcion = $detalle['descripcion'];
                 $detallePresupuesto->save();
             }
             DB::commit();
