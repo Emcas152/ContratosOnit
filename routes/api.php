@@ -162,6 +162,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/dashboard/accessory-request', [DashboardController::class, 'accessoryRequest'])->name('dashboard.accessoryRequest');
     Route::post('/dashboard/visits-week', [DashboardController::class, 'visitsWeek'])->name('dashboard.visitsWeek');
     Route::post('/dashboard/amenities-authorize-maintenance', [DashboardController::class, 'amenitiesAuthorizeMaintenance'])->name('dashboard.amenitiesAuthorizeMaintenance');
+    Route::post('/dashboard/execution-budget', [DashboardController::class, 'presupuestoEjecucion'])->name('dashboard.presupuestoEjecucion');
 
     Route::post('/employees', [EmpleadoController::class, 'index'])->name('employees.index');
     Route::post('/employees/list', [EmpleadoController::class, 'show'])->name('employees.show');
