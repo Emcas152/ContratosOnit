@@ -19,6 +19,8 @@ class DetallePresupuesto extends Model
         'id_encabezado',
         'subcategoria',
         'subtotal',
+        'categoria',
+        'descripcion'
     ];
 
     public function presupuesto()
@@ -29,5 +31,10 @@ class DetallePresupuesto extends Model
     public function subcategoriaPresupuesto()
     {
         return $this->belongsTo(ViewCategoriaSubcategorias::class,'subcategoria','codigo_det');
+    }
+
+    public function categoriaPresupuesto()
+    {
+        return $this->belongsTo(ViewParametros::class,'categoria','codigo_enc');
     }
 }
