@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presupuesto;
 use App\Models\EstadosProcesos;
+use App\Models\DetallePresupuesto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\PresupuestoResource;
@@ -59,7 +60,17 @@ class PresupuestoController extends Controller
         try 
         {
             DB::beginTransaction();
+            $detalles = $request->p_detalle;
             $presupuesto = Presupuesto::create($request->all());
+            foreach ($detalles as $detalle) {
+                $detallePresupuesto = new DetallePresupuesto;
+                $detallePresupuesto->id_encabezado = $detalle->id_encabezado;
+                $detallePresupuesto->subcategoria = $detalle->subcategoria[0]['codigo'];
+                $detallePresupuesto->subtotal = $detalle->subtotal;
+                $detallePresupuesto->categoria = $detalle->categoria;
+                $detallePresupuesto->descripcion = $detalle->descripcion;
+                $detallePresupuesto->save();
+            }
             DB::commit();
             return response(['data'=> new PresupuestoResource($presupuesto),'code' => 201]);
 
