@@ -57,6 +57,7 @@ class SupplierController extends Controller
                                     ->orWhere([['proveedores.informacion_general', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.fecha_creacion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.pagina_web', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                    ->orWhere([['proveedores.categoria', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orderBy('proveedores.id','DESC')
                                     ->paginate($pagination);
@@ -146,6 +147,7 @@ class SupplierController extends Controller
             $proveedor->direccion = $request->direccion;
             $proveedor->informacion_general = $request->informacion_general;
             $proveedor->pagina_web = $request->pagina_web;
+            $proveedor->categoria = $request->categoria;
             $pathPerfilOld = $proveedor->path_perfil;
             try {
                 if (!$request->hasFile('path_perfil')) {
