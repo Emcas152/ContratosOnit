@@ -35,6 +35,7 @@ class ProveedorFormUpdateRequest extends FormRequest
             'direccion' => 'required',
             'informacion_general' => 'required',
             'pagina_web' => 'required',
+            'categoria' => 'required',
             'estado' => 'required',
         ];
     }
@@ -53,6 +54,7 @@ class ProveedorFormUpdateRequest extends FormRequest
             'direccion.required' => 'El campo :attribute esta obligatorio',
             'informacion_general.required' => 'El campo :attribute esta obligatorio',
             'pagina_web.required' => 'El campo Pagina Web esta obligatorio',
+            'categoria.required' => 'El campo :attribute esta obligatorio',
             'estado.required' => 'El campo :attribute esta obligatorio',
         ];
     }

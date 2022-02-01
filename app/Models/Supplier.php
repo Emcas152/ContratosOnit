@@ -25,12 +25,19 @@ class Supplier extends Model
         'path_perfil',
         'path_header',
         'pagina_web',
+        'categoria',
         'estado'
     ];
 
     public function usuario()
     {
         return $this->belongsTo(User::class,'id_usuario');
+    }
+
+    public function catogoriaProveedor()
+    {
+        return $this->belongsTo(ViewParametros::class,'categoria','codigo_det')
+        ->where('view_parametros.codigo_enc','=','CATPRO');
     }
 
     public function estadoProveedor()
