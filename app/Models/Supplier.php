@@ -34,7 +34,7 @@ class Supplier extends Model
         return $this->belongsTo(User::class,'id_usuario');
     }
 
-    public function catogoriaProveedor()
+    public function categoriaProveedor()
     {
         return $this->belongsTo(ViewParametros::class,'categoria','codigo_det')
         ->where('view_parametros.codigo_enc','=','CATPRO');
