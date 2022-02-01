@@ -87,9 +87,18 @@ class PresupuestoController extends Controller
      * @param  \App\Models\Presupuesto  $presupuesto
      * @return \Illuminate\Http\Response
      */
-    public function show(Presupuesto $presupuesto)
+    public function show(Request $request)
     {
-        //
+        $role = $request->role;
+        $condominio = $request->id_condominio;
+        $presupuestoResult = [];
+        $presupuestoResult = Presupuesto::where([['id_condominio', '=', $condominio],['id', '=', $request->id]]);
+
+        if (!count($presupuestoResult)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> PresupuestoResource::collection($presupuestoResult), 'code'=>200]);
     }
 
     /**
