@@ -203,6 +203,7 @@ Route::middleware(['auth:api'])->group(function ()
 
     Route::post('/budgets', [PresupuestoController::class, 'index'])->name('budgets.index');
     Route::post('/budgets/create', [PresupuestoController::class, 'store'])->name('budgets.store');
+    Route::post('/budgets/{id}', [PresupuestoController::class, 'show'])->name('budgets.show');
     Route::post('/budgets/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
     Route::delete('/budgets/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
 
