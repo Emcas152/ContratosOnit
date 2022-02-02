@@ -92,7 +92,7 @@ class PresupuestoController extends Controller
         $role = $request->role;
         $condominio = $request->id_condominio;
         $presupuestoResult = [];
-        $presupuestoResult = Presupuesto::where([['id_condominio', '=', $condominio],['id', '=', $request->id]]);
+        $presupuestoResult = Presupuesto::where([['id_condominio', '=', $condominio],['id', '=', $request->id]])->get();
 
         if (!count($presupuestoResult)) 
         {
