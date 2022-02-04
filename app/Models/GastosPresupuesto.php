@@ -20,6 +20,7 @@ class GastosPresupuesto extends Model
         'descripcion',
         'numero_factura',
         'serie_factura',
+        'proveedor',
         'total',
         'path_imagen',
         'estado'

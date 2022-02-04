@@ -26,6 +26,7 @@ class GastosPresupuestoController extends Controller
         $gastoResult = GastosPresupuesto::where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orWhere([['numero_factura', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orWhere([['serie_factura', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                                        ->orWhere([['proveedor', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orWhere([['total', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')

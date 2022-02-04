@@ -34,6 +34,7 @@ use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\DetallePresupuestoController;
+use App\Http\Controllers\GastosPresupuestoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -212,9 +213,9 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/budgets-detail/create', [DetallePresupuestoController::class, 'store'])->name('budgets-detail.store');
     Route::post('/budgets-detail/edit/{id}', [DetallePresupuestoController::class, 'update'])->name('budgets-detail.update');
 
-    Route::post('/budgets-expenses', [PresupuestoController::class, 'index'])->name('budgets.index');
-    Route::post('/budgets-expenses/create', [PresupuestoController::class, 'store'])->name('budgets.store');
-    Route::post('/budgets-expenses/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
-    Route::delete('/budgets-expenses/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
+    Route::post('/budgets-expenses', [GastosPresupuestoController::class, 'index'])->name('budgets-expenses.index');
+    Route::post('/budgets-expenses/create', [GastosPresupuestoController::class, 'store'])->name('budgets-expenses.store');
+    Route::post('/budgets-expenses/edit/{id}', [GastosPresupuestoController::class, 'update'])->name('budgets-expenses.update');
+    Route::delete('/budgets-expenses/delete/{id}', [GastosPresupuestoController::class, 'destroy'])->name('budgets-expenses.destroy');
 
 });

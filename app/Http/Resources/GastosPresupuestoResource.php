@@ -21,6 +21,7 @@ class GastosPresupuestoResource extends JsonResource
             'descripcion' => $this->descripcion,
             'numero_factura' => $this->numero_factura,
             'serie_factura' => $this->serie_factura,
+            'proveedor' => $this->proveedor,
             'path_imagen' => $this->path_imagen,
             'total' => $this->total,
             'estado' => $this->estado,
