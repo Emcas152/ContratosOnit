@@ -203,6 +203,7 @@ Route::middleware(['auth:api'])->group(function ()
 
     Route::post('/budgets', [PresupuestoController::class, 'index'])->name('budgets.index');
     Route::post('/budgets/create', [PresupuestoController::class, 'store'])->name('budgets.store');
+    Route::post('/budgets/select', [PresupuestoController::class, 'budgetById'])->name('budgets.budgetById');
     Route::post('/budgets/{id}', [PresupuestoController::class, 'show'])->name('budgets.show');
     Route::post('/budgets/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
     Route::delete('/budgets/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
@@ -210,5 +211,10 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/budgets-detail', [DetallePresupuestoController::class, 'index'])->name('budgets-detail.index');
     Route::post('/budgets-detail/create', [DetallePresupuestoController::class, 'store'])->name('budgets-detail.store');
     Route::post('/budgets-detail/edit/{id}', [DetallePresupuestoController::class, 'update'])->name('budgets-detail.update');
+
+    Route::post('/budgets-expenses', [PresupuestoController::class, 'index'])->name('budgets.index');
+    Route::post('/budgets-expenses/create', [PresupuestoController::class, 'store'])->name('budgets.store');
+    Route::post('/budgets-expenses/edit/{id}', [PresupuestoController::class, 'update'])->name('budgets.update');
+    Route::delete('/budgets-expenses/delete/{id}', [PresupuestoController::class, 'destroy'])->name('budgets.destroy');
 
 });
