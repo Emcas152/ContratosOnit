@@ -30,6 +30,7 @@ class GastosPresupuestoFormRequest extends FormRequest
             'descripcion' => 'required',
             'numero_factura' => 'required',
             'serie_factura' => 'required',
+            'proveedor' => 'required',
             'total' => 'required',
             'estado' => 'required'
         ];
@@ -42,6 +43,7 @@ class GastosPresupuestoFormRequest extends FormRequest
             'descripcion.required' => 'El campo :attribute es obligatorio',
             'numero_factura.required' => 'El campo numero factura es obligatorio',
             'serie_factura.required' => 'El campo serie factura es obligatorio',
+            'proveedor.required' => 'El campo :attribute es obligatorio',
             'total.required' => 'El campo :attribute es obligatorio',
             'estado.required' => 'El campo :attribute es obligatorio'
         ];
