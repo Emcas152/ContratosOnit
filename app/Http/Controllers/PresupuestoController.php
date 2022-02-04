@@ -101,6 +101,19 @@ class PresupuestoController extends Controller
         return response(['data'=> PresupuestoResource::collection($presupuestoResult), 'code'=>200]);
     }
 
+    public function budgetById(Request $request)
+    {
+        $condominio = $request->id_condominio;
+        $presupuestoResult = [];
+        $presupuestoResult = Presupuesto::where([['id_condominio', '=', $condominio],['id', '=', $request->id]])->get(['id','descripcion']);
+
+        if (!count($presupuestoResult)) 
+        {
+           return response(['data' => [],'code'=>204]);   
+        }
+        return response(['data'=> $presupuestoResult, 'code'=>200]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
