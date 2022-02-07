@@ -69,6 +69,38 @@ class SupplierController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byCategory(Request $request)
+    {
+        $queryUrl = trim($request->searchText);
+        $category = trim($request->category);
+        $pagination = $request->paginate;
+        $role = $request->role;
+        $usuario = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $proveedores = Supplier::join('users','users.id','proveedores.id_usuario')
+                                    ->select('proveedores.*')
+                                    ->where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['users.telefono', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['users.name', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['proveedores.nombre', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['proveedores.direccion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['proveedores.informacion_general', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['proveedores.fecha_creacion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orWhere([['proveedores.pagina_web', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->orderBy('proveedores.id','DESC')
+                                    ->paginate($pagination);
+        
+        if (!count($proveedores)) {
+            return response(['data' => [],'code'=>204]);  
+        }
+        return response(['data'=> ProveedorResource::collection($proveedores),'per_page' => $proveedores->perPage(),'total' => $proveedores->total()]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

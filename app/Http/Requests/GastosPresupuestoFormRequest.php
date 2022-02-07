@@ -26,7 +26,7 @@ class GastosPresupuestoFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_prespuesto' => 'required',
+            'id_presupuesto' => 'required',
             'descripcion' => 'required',
             'numero_factura' => 'required',
             'serie_factura' => 'required',
@@ -39,7 +39,7 @@ class GastosPresupuestoFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_prespuesto.required' => 'El campo presupuesto es obligatorio',
+            'id_presupuesto.required' => 'El campo presupuesto es obligatorio',
             'descripcion.required' => 'El campo :attribute es obligatorio',
             'numero_factura.required' => 'El campo numero factura es obligatorio',
             'serie_factura.required' => 'El campo serie factura es obligatorio',

@@ -22,13 +22,13 @@ class GastosPresupuestoController extends Controller
     {
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
-        $condominio = $request->id_condominio;
-        $gastoResult = GastosPresupuesto::where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                                        ->orWhere([['numero_factura', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                                        ->orWhere([['serie_factura', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                                        ->orWhere([['proveedor', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                                        ->orWhere([['total', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
-                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+        $presupuesto = $request->id_presupuesto;
+        $gastoResult = GastosPresupuesto::where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
+                                        ->orWhere([['numero_factura', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
+                                        ->orWhere([['serie_factura', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
+                                        ->orWhere([['proveedor', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
+                                        ->orWhere([['total', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
+                                        ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_presupuesto', '=', $presupuesto]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         if (!count($gastoResult)) {
