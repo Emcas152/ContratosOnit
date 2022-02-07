@@ -65,7 +65,7 @@ class PresupuestoController extends Controller
             foreach ($detalles as $detalle) {
                 $detallePresupuesto = new DetallePresupuesto;
                 $detallePresupuesto->id_encabezado = $presupuesto->id;
-                $detallePresupuesto->subcategoria = $detalle['subcategoria']['codigo'];
+                $detallePresupuesto->subcategoria = $detalle['subcategoria'];
                 $detallePresupuesto->subtotal = $detalle['subtotal'];
                 $detallePresupuesto->categoria = $detalle['categoria'];
                 $detallePresupuesto->descripcion = $detalle['descripcion'];
@@ -137,7 +137,7 @@ class PresupuestoController extends Controller
             foreach ($detalles as $detalle) {
                 $detallePresupuesto = new DetallePresupuesto;
                 $detallePresupuesto->id_encabezado = $presupuesto->id;
-                $detallePresupuesto->subcategoria = $detalle['subcategoria']['codigo'];
+                $detallePresupuesto->subcategoria = $detalle['subcategoria'];
                 $detallePresupuesto->subtotal = $detalle['subtotal'];
                 $detallePresupuesto->categoria = $detalle['categoria'];
                 $detallePresupuesto->descripcion = $detalle['descripcion'];
