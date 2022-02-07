@@ -51,14 +51,14 @@ class GastosPresupuestoController extends Controller
             DB::beginTransaction();
             if ($request->hasFile('path_imagen')) {
                 $request->validate([
-                    'path_imagen' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                    'path_imagen' => 'required|mimes:pdf|max:10000',
                 ]);
                 $imageName = time().'.'.$request->path_imagen->extension();
                 $request->path_imagen->storeAs('/public', $imageName);
                 $url = Storage::url($imageName);
                 $data['path_imagen'] = $url;
             } else {
-                $data['path_imagen'] = '/storage/amenidad.png';
+                $data['path_imagen'] = '/storage/documento.pdf';
             }
             $gastoPresupuesto = GastosPresupuesto::create($data);
             DB::commit();
@@ -99,7 +99,7 @@ class GastosPresupuestoController extends Controller
             $data['path_imagen'] = $gastoPresupuesto->path_imagen;
             if ($request->hasFile('path_imagen')) {
                 $request->validate([
-                    'path_imagen' => 'image|mimes:jpeg,png,jpg,gif|max:1024',
+                    'path_imagen' => 'required|mimes:pdf|max:10000',
                 ]);
                 $imageName = time().'.'.$request->path_imagen->extension();
                 $request->path_imagen->storeAs('/public', $imageName);
