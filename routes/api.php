@@ -183,6 +183,7 @@ Route::middleware(['auth:api'])->group(function ()
 
     Route::post('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
     Route::post('/suppliers/create', [SupplierController::class, 'store'])->name('suppliers.store');
+    Route::post('/suppliers/byCategory/{category}', [SupplierController::class, 'byCategory'])->name('suppliers.byCategory');
     Route::post('/suppliers/{usuario_id}', [SupplierController::class, 'show'])->name('suppliers.show');
     Route::post('/suppliers/edit/{id}', [SupplierController::class, 'update'])->name('suppliers.update');
     Route::post('/suppliers/admin/edit/{id}', [SupplierController::class, 'adminUpdate'])->name('suppliers.adminUpdate');
