@@ -22,6 +22,7 @@ class Visitantes extends Model
         'id_inquilino',
         'dpi_visita',
         'nombre_visita',
+        'placa_vehiculo',
         'estado'
     ];
 
