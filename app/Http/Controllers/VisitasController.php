@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitas;
+use App\Models\Visitantes;
 use App\Models\EstadosProcesos;
 use Illuminate\Http\Request;
 use App\Http\Resources\VisitasResource;
+use App\Http\Requests\VisitsFormRequest;
 use Carbon\Carbon;
 use DB;
 
@@ -107,11 +109,16 @@ class VisitasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VisitsFormRequest $request)
     {
         try 
         {
             DB::beginTransaction();
+            if($request->placa_principal == true){
+                $visitante = Visitantes::findOrfail($request->id_visitante);
+                $visitante->placa_vehiculo = $request->placa_vehiculo;
+                $visitante->update();
+            }
             $visitas = Visitas::create($request->all());
             DB::commit();
             return response(['data'=> new VisitasResource($visitas),'code' => 201]);
