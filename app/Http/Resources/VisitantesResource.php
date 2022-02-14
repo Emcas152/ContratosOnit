@@ -22,6 +22,7 @@ class VisitantesResource extends JsonResource
             'id_inquilino' => $this->id_inquilino,
             'inquilino_descripcion' => $this->usuarioInquilino !== null ? $this->usuarioInquilino->name : '',
             'apartamento' => $this->inquilinoApartamento !== null ? $this->inquilinoApartamento->nombre : '',
+            'placa_vehiculo' => $this->placa_vehiculo,
             'dpi_visita' => $this->dpi_visita,
             'nombre_visita' => $this->nombre_visita,
             'estado' => $this->estado,

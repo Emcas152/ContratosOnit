@@ -33,6 +33,7 @@ class VisitantesController extends Controller
                                         ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['visitantes.placa_vehiculo', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         }elseif($role == 'client'){
@@ -41,6 +42,7 @@ class VisitantesController extends Controller
                                         ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
                                         ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
                                         ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
+                                        ->orWhere([['visitantes.placa_vehiculo', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         }elseif($role == 'seguridad'){
@@ -49,6 +51,7 @@ class VisitantesController extends Controller
                                         ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orWhere([['nombre_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orWhere([['visitantes.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                        ->orWhere([['visitantes.placa_vehiculo', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
         }

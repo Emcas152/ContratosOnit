@@ -28,6 +28,7 @@ class VisitanteFormRequest extends FormRequest
         return [
             'id_usuario_creo' => 'required|integer',
             'id_inquilino' => 'required|integer',
+            'placa_vehiculo' => 'required',
             'dpi_visita' => 'required',
             'nombre_visita' => 'required',
             'estado' => 'required'
@@ -41,6 +42,7 @@ class VisitanteFormRequest extends FormRequest
             'id_usuario_creo.integer' => 'El campo usuario creo debe de ser un numero entero',
             'id_inquilino.required' => 'El campo inquilino es obligatorio',
             'id_inquilino.integer' => 'El campo inquilino debe de ser un numero entero',
+            'placa_vehiculo.required' => 'El campo :attribute es obligatorio',
             'nombre_visita.required' => 'El campo :attribute es obligatorio',
             'dpi_visita.required' => 'El campo :attribute es obligatorio',
             'estado.required' => 'El campo :attribute es obligatorio'
