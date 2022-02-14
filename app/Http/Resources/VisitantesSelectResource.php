@@ -16,6 +16,7 @@ class VisitantesSelectResource extends JsonResource
     {
         return [
              'avatar' => '@/assets/images/avatars/1-small.png',
+             'placa_vehiculo' => $this->placa_vehiculo,
              'nombre_visita' => $this->nombre_visita,
              'id' => $this->id,
          ];
