@@ -303,7 +303,7 @@ class DashboardController extends Controller
         if (!count($presupuesto)) {
             return response(['data' => [],'code'=>204]);  
         }
-        return response(['data'=> ['series' => [100, $presupuesto[0]['porcentaje']*1], 'values' => [$presupuesto[0]['monto_presupuesto']*1,$presupuesto[0]['monto_ejecutado']*1]],'code' => 200]); 
+        return response(['data'=> ['series' => [(100-$presupuesto[0]['porcentaje']*1), $presupuesto[0]['porcentaje']*1], 'values' => [$presupuesto[0]['monto_presupuesto']*1,$presupuesto[0]['monto_ejecutado']*1]],'code' => 200]); 
     }
 
     public function presupuestoDetalle(Request $request)
