@@ -97,7 +97,7 @@ class NoticiaController extends Controller
 
         $noticias = [];
 
-        if($role == "admin") {
+        if($role == "admin" || $role == 'superadmin') {
             $noticias = ViewNoticias::where([['estado', '=', 'ACT'],['id_condominio', '=', $condominio]])
                                     ->where(function($query) use($queryUrl) {
                                             $query->orWhere([['descripcion', 'LIKE', '%'.$queryUrl.'%']])

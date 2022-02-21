@@ -27,7 +27,7 @@ class VisitantesController extends Controller
 
         $visitantes = [];
 
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
         $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
                                         ->select('visitantes.*')
                                         ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
@@ -45,7 +45,7 @@ class VisitantesController extends Controller
                                         ->orWhere([['visitantes.placa_vehiculo', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['users.id', '=', $usuario]])
                                         ->orderBy('id','DESC')
                                         ->paginate($pagination);
-        }elseif($role == 'seguridad'){
+        }elseif($role == 'seguridad' || $role == 'recepcion' || $role == 'contabilidad'){
             $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
                                         ->select('visitantes.*')
                                         ->where([['dpi_visita', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
@@ -97,7 +97,7 @@ class VisitantesController extends Controller
 
         $visitantes = [];
         
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
             $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
                         ->select('visitantes.*')
                         ->where([['users.id_condominio', '=', $condominio]])
@@ -107,7 +107,7 @@ class VisitantesController extends Controller
                         ->select('visitantes.*')
                         ->where([['visitantes.estado', '=', 'ACT'],['users.id_condominio', '=', $condominio], ['users.id', '=', $usuario]])
                         ->get();
-        }elseif($role == 'seguridad'){
+        }elseif($role == 'seguridad' || $role == 'recepcion' || $role == 'contabilidad'){
             $visitantes = Visitantes::join('users','users.id','visitantes.id_inquilino')
                         ->select('visitantes.*')
                         ->where([['visitantes.estado', '=', 'ACT'],['users.id_condominio', '=', $condominio]])

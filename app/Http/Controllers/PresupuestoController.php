@@ -26,7 +26,7 @@ class PresupuestoController extends Controller
         $queryUrl=trim($request->searchText);
         $paginacion = $request->paginate;
         $presupuestoResult = [];
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
             $presupuestoResult = Presupuesto::where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                             ->orWhere([['presupuesto', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                                             ->orWhere([['estado', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]]);
