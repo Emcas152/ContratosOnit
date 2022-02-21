@@ -36,7 +36,7 @@ class CalendarController extends Controller
       
         $calendario = [];
         
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
             $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
                          ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
                          ->where('amenidades.id_condominio','=', $condominio)
@@ -129,7 +129,7 @@ class CalendarController extends Controller
         $usuarioId = $request->usuario_id;
         $condominio = $request->id_condominio;
         $calendario = [];
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
             $calendario = CalendarioAreasSociales::join('amenidades','amenidades.id','calendario_areas_sociales.id_area')
                          ->select('calendario_areas_sociales.*','amenidades.nombre','amenidades.color')
                          ->where('amenidades.id_condominio','=', $condominio)

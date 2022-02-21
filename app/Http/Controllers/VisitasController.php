@@ -27,7 +27,7 @@ class VisitasController extends Controller
         $query=trim($request->searchText);
         $paginacion = $request->paginate;
         $visitasQuery = [];
-        if($role == 'admin'){
+        if($role == 'admin' || $role == 'superadmin'){
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([ ['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
@@ -35,7 +35,7 @@ class VisitasController extends Controller
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
-        } elseif ($role == 'seguridad'){
+        } elseif ($role == 'seguridad' || $role == 'recepcion' || $role == 'contabilidad'){
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
