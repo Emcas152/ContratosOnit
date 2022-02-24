@@ -81,7 +81,13 @@ class RolesController extends Controller
      */
     public function show(Request $request)
     {
-        $roles = Roles::where('name', '<>', 'superadmin')->get(['id','name']);
+        $role = $request->role;
+        $roles = [];
+        if ($role == 'admin') {
+            $roles = Roles::whereIn('name', ['client'])->get(['id','name']);
+        } else if($role == 'superadmin') {
+            $roles = Roles::whereIn('name', ['admin','client'])->get(['id','name']);
+        }
 
         if (!count($roles)) 
         {
