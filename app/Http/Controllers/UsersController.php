@@ -26,10 +26,14 @@ class UsersController extends Controller
         $queryUrl = trim($request->searchText);
         $pagination = $request->paginate;
         $condominio = $request->id_condominio;
-        $users = User::join('model_has_roles','model_has_roles.model_id','users.id')
+        $exceptRoles[] = 4;
+        $role = $request->role;
+        if ($role == 'admin') {
+            $exceptRoles[] = 6;
+            $exceptRoles[] = 1;
+            $users = User::join('model_has_roles','model_has_roles.model_id','users.id')
                         ->select('users.*')
                         ->whereNotIn('model_has_roles.role_id', $exceptRoles)
-                        ->whereNotIn('model_has_roles.role_id', [4])
                         ->where(function($query) use($queryUrl,$condominio) {
                             $query->where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
                             ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
@@ -37,6 +41,18 @@ class UsersController extends Controller
                         })
                         ->orderBy('id','DESC')
                         ->paginate($pagination);
+        } else {
+            $users = User::join('model_has_roles','model_has_roles.model_id','users.id')
+                        ->select('users.*')
+                        ->whereNotIn('model_has_roles.role_id', $exceptRoles)
+                        ->where(function($query) use($queryUrl,$condominio) {
+                            $query->where([['name', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                            ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]])
+                            ->orWhere([['telefono', 'LIKE', '%'.$queryUrl.'%'],['id_condominio', '=', $condominio]]);
+                        })
+                        ->orderBy('id','DESC')
+                        ->paginate($pagination);
+        }
 
         if (!count($users)) 
         {
