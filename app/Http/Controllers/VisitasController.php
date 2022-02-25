@@ -35,7 +35,7 @@ class VisitasController extends Controller
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([ ['id_usuario_creo', '=', $usuarioId],['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
-        } elseif ($role == 'seguridad' || $role == 'recepcion' || $role == 'contabilidad'){
+        } elseif ($role == 'seguridad' || $role == 'recepcion' || $role == 'contabilidad' || $role == 'operativo'){
             $visitasQuery = Visitas::join('users','users.id','visitas.id_usuario_creo')
                                     ->select('visitas.*')
                                     ->where([['placa_vehiculo','LIKE','%'.$query.'%'],['users.id_condominio', '=', $condominio]]);
