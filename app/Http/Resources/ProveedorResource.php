@@ -31,6 +31,8 @@ class ProveedorResource extends JsonResource
             'pagina_web' => $this->pagina_web,
             'categoria' => $this->categoria,
             'categoria_descripcion' => $this->categoriaProveedor !== null ? $this->categoriaProveedor->descripcion_det : '',
+            'tipo' => $this->tipo,
+            'tipo_descripcion' => $this->tipoProveedor !== null ? $this->tipoProveedor->descripcion_det : '',
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoProveedor !== null ? $this->estadoProveedor->descripcion_det : ''
         ];

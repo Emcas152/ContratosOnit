@@ -33,6 +33,8 @@ class ProveedorFormCreateRequest extends FormRequest
             'id_condominio' => 'required',
             'nombre' => 'required',
             'estado' => 'required',
+            'categoria' => 'required',
+            'tipo' => 'required',
         ];
     }
 
@@ -50,6 +52,8 @@ class ProveedorFormCreateRequest extends FormRequest
             'id_condominio.required' => 'El campo Condominio esta obligatorio',
             'nombre.required' => 'El campo :attribute esta obligatorio',
             'estado.required' => 'El campo :attribute esta obligatorio',
+            'categoria.required' => 'El campo :attribute esta obligatorio',
+            'tipo.required' => 'El campo :attribute esta obligatorio',
         ];
     }
 

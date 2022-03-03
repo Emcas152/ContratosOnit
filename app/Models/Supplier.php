@@ -26,6 +26,7 @@ class Supplier extends Model
         'path_header',
         'pagina_web',
         'categoria',
+        'tipo',
         'estado'
     ];
 
@@ -38,6 +39,12 @@ class Supplier extends Model
     {
         return $this->belongsTo(ViewParametros::class,'categoria','codigo_det')
         ->where('view_parametros.codigo_enc','=','CATPRO');
+    }
+
+    public function tipoProveedor()
+    {
+        return $this->belongsTo(ViewParametros::class,'tipo','codigo_det')
+        ->where('view_parametros.codigo_enc','=','TPRO');
     }
 
     public function estadoProveedor()
