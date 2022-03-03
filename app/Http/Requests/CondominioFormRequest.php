@@ -30,7 +30,8 @@ class CondominioFormRequest extends FormRequest
             'parqueo_general' => 'required|integer',
             'parqueo_visitantes' => 'required|integer',
             'estado' => 'required',
-            'id_usuario' => 'required|integer'
+            'id_usuario' => 'required|integer',
+            'fecha_corte' => 'required',
         ];
     }
 
@@ -45,6 +46,7 @@ class CondominioFormRequest extends FormRequest
             'estado.required' => 'El campo :attribute es obligatorio',
             'id_usuario.required' => 'El campo usuario es obligatorio',
             'id_usuario.integer' => 'El campo usuario debe de ser un numero entero',
+            'fecha_corte.required' => 'El campo Fecha de corte es obligatorio',
         ];
     }
 

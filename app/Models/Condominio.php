@@ -23,7 +23,9 @@ class Condominio extends Model
         'parqueo_general',
         'parqueo_visitantes',
         'estado',
-        'id_usuario'
+        'id_usuario',
+        'fecha_corte',
+        'path_imagen'
     ];
 
     public function edificios()
