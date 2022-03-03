@@ -21,7 +21,9 @@ class CondominioResource extends JsonResource
             'parqueo_visitantes' => $this->parqueo_visitantes,
             'estado' => $this->estado,
             'estado_descripcion' => $this->estadoCondominio !== null ? $this->estadoCondominio->descripcion_det : '',
-            'id_usuario' => $this->id_usuario
+            'id_usuario' => $this->id_usuario,
+            'fecha_corte' => $this->fecha_corte,
+            'path_imagen' => $this->path_imagen
         ];
     }
 }
