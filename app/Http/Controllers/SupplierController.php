@@ -58,7 +58,27 @@ class SupplierController extends Controller
                                     ->orWhere([['proveedores.fecha_creacion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.pagina_web', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.categoria', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                    ->orWhere([['proveedores.tipo', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
                                     ->orWhere([['proveedores.estado', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio]])
+                                    ->orderBy('proveedores.id','DESC')
+                                    ->paginate($pagination);
+        
+        if (!count($proveedores)) {
+            return response(['data' => [],'code'=>204]);  
+        }
+        return response(['data'=> ProveedorResource::collection($proveedores),'per_page' => $proveedores->perPage(),'total' => $proveedores->total()]);
+    }
+
+    public function getProvidersInternal(Request $request)
+    {
+        $queryUrl = trim($request->searchText);
+        $pagination = $request->paginate;
+        $role = $request->role;
+        $usuario = $request->usuario_id;
+        $condominio = $request->id_condominio;
+        $proveedores = Supplier::join('users','users.id','proveedores.id_usuario')
+                                    ->select('proveedores.*')
+                                    ->where([['users.id_condominio', '=', $condominio],['proveedores.estado', '=', 'ACT'],['proveedores.tipo','=','INTER']])
                                     ->orderBy('proveedores.id','DESC')
                                     ->paginate($pagination);
         
@@ -83,14 +103,18 @@ class SupplierController extends Controller
         $condominio = $request->id_condominio;
         $proveedores = Supplier::join('users','users.id','proveedores.id_usuario')
                                     ->select('proveedores.*')
-                                    ->where([['descripcion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['users.telefono', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['users.name', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['proveedores.nombre', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['proveedores.direccion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['proveedores.informacion_general', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['proveedores.fecha_creacion', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
-                                    ->orWhere([['proveedores.pagina_web', 'LIKE', '%'.$queryUrl.'%'],['users.id_condominio', '=', $condominio],['proveedores.categoria', '=', $category], ['proveedores.estado', '=', 'ACT']])
+                                    ->where([['users.id_condominio','=', $condominio],['proveedores.categoria','=', $category],['proveedores.estado','=', 'ACT'],['proveedores.tipo','=', 'EXTER']])
+                                    ->where(function($query) use($queryUrl){
+                                        return $query
+                                        ->where([['descripcion', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['users.telefono', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['users.name', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['proveedores.nombre', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['proveedores.direccion', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['proveedores.informacion_general', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['proveedores.fecha_creacion', 'LIKE', '%'.$queryUrl.'%']])
+                                        ->orWhere([['proveedores.pagina_web', 'LIKE', '%'.$queryUrl.'%']]);
+                                    })
                                     ->orderBy('proveedores.id','DESC')
                                     ->paginate($pagination);
         
@@ -127,17 +151,19 @@ class SupplierController extends Controller
             $proveedor = Supplier::create([
                 'id_usuario' => $newUser->id,
                 'nombre' => $request->nombre,
+                'categoria' => $request->categoria,
+                'tipo' => $request->tipo,
                 'fecha_creacion' => $mytime->format('Y-m-d'),
                 'estado' => 'ACT'
             ]);
 
             DB::commit();
-            return response(['data'=> new ProveedorResource($proveedor), 'access_token' => $accessToken,'code' => 201]);
+            return response(['data'=> new ProveedorResource($proveedor), 'access_token' => $accessToken,'code' => 201], 201);
 
         } catch (\Exception $e) 
         {
             DB::rollBack();
-            return response(['data'=> 'Error al crear Proveedor','code' => 500]);   
+            return response(['data'=> 'Error al crear Proveedor','code' => 500], 500);   
         }
     }
 
@@ -235,6 +261,8 @@ class SupplierController extends Controller
             DB::beginTransaction();
             $proveedor = Supplier::findOrFail($request->id);
             $proveedor->nombre = $request->nombre;
+            $proveedor->categoria = $request->categoria;
+            $proveedor->tipo = trim($request->tipo) == '' ? $proveedor->tipo : $request->tipo;
             $proveedor->save();
 
             $user = User::findOrFail($proveedor->id_usuario);
