@@ -32,7 +32,9 @@ class LoginResource extends JsonResource
             'id_condominio' => $this->condominio !== null ? $this->condominio->id : $this->id_condominio,
             'estado' => $this->estado,
             'path_img' => $this->path_img,
-            'telefono' => $this->telefono
+            'telefono' => $this->telefono,
+            'id_apartamento' => $this->apartamentos !== null ? $this->apartamentos->id : '',
+            'nombre_apartamento' => $this->apartamentos !== null ? $this->apartamentos->nombre : ''
         ];
     }
 }

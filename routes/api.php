@@ -35,6 +35,8 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\DetallePresupuestoController;
 use App\Http\Controllers\GastosPresupuestoController;
+
+use App\Http\Controllers\EstadoCuentaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -220,4 +222,7 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/budgets-expenses/edit/{id}', [GastosPresupuestoController::class, 'update'])->name('budgets-expenses.update');
     Route::delete('/budgets-expenses/delete/{id}', [GastosPresupuestoController::class, 'destroy'])->name('budgets-expenses.destroy');
 
+    Route::post('/account-status', [EstadoCuentaController::class, 'index'])->name('account-status.index');
+    Route::post('/account-status/edit/{id}', [EstadoCuentaController::class, 'update'])->name('account-status.update');
+    Route::post('/account-status/process/{id}', [EstadoCuentaController::class, 'procesar'])->name('account-status.procesar');
 });
