@@ -24,7 +24,7 @@
                 position: absolute;
                 display: block;
                 text-align: right;
-                font-size: 12px;
+                font-size: 11px;
             }
 
             /* .fin {
@@ -38,11 +38,11 @@
             }
 
             p{
-                font-size: 11px;
+                font-size: 10px;
             }
 
             .titulo{
-                font-size: 12px;
+                font-size: 11px;
             }
 
             table, th, td, tr {
