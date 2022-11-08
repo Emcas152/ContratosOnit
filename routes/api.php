@@ -37,6 +37,8 @@ use App\Http\Controllers\DetallePresupuestoController;
 use App\Http\Controllers\GastosPresupuestoController;
 
 use App\Http\Controllers\EstadoCuentaController;
+
+use App\Http\Controllers\ContratosController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -60,6 +62,9 @@ Route::post('forgot', [AuthController::class, 'forgot']);
 Route::post('/condominium/select', [CondominioController::class, 'show'])->name('condominium.show');
 Route::post('/building/select', [EdificioController::class, 'show'])->name('building.show');
 Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('apartment.show');
+
+/* Contratos Publicos */
+Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
 
 Route::middleware(['auth:api'])->group(function () 
 {
@@ -225,4 +230,6 @@ Route::middleware(['auth:api'])->group(function ()
     Route::post('/account-status', [EstadoCuentaController::class, 'index'])->name('account-status.index');
     Route::post('/account-status/edit/{id}', [EstadoCuentaController::class, 'update'])->name('account-status.update');
     Route::post('/account-status/process/{id}', [EstadoCuentaController::class, 'procesar'])->name('account-status.procesar');
+
+    
 });
