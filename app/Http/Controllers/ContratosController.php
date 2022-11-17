@@ -46,6 +46,8 @@ class ContratosController extends Controller
             $dataSave["file_name_contrato"] = $nameFilePlan2;
             $documento = Contratos::create($dataSave);
 
+            $dataSave["id"] = $documento->id;
+
             $urlFile = storage_path("app/public")."/$nameFilePlan2";
 
             $pdf = PDF::loadView("pdf.contrato", $dataSave);

@@ -38,6 +38,7 @@ class Contratos extends Model
         'file_name_contrato',
         'fecha_registro',
         'tipo_proyecto',
-        'tipo_plan'
+        'tipo_plan',
+        'torre'
     ];
 }
