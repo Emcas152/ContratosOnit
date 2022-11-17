@@ -65,6 +65,7 @@ Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('
 
 /* Contratos Publicos */
 Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
+Route::get('/parameters/{codigo}', [ParametrosDetalleController::class, 'show'])->name('menu.show');
 
 Route::middleware(['auth:api'])->group(function () 
 {
