@@ -20,16 +20,18 @@
         }
 
         .pie {
-            right: 50px;
-            bottom: 20px;
             /* position: absolute; */
             display: block;
             text-align: right;
             font-size: 11px;
+            margin-top: 45px;
         }
 
-        .fin {
-                margin-top: 85px;
+        .pie-fin {
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            margin-top: 115px;
         }
 
         .logoImg {
@@ -39,11 +41,11 @@
         }
 
         p {
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .titulo {
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .negrita {
@@ -110,21 +112,22 @@
 
 <body>
     <div class="contenedor">
-        <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg">
+        {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
 
             <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica y agua</p>
             <p class="texto">
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>,
-                {{ $estado_civil }} @if ($sexo == 'MASCULINO')
-                    O
+                @if($sexo == 'MASCULINO')
+                    {{$estado_civil}}{{"O"}}
+                @else 
+                    {{$estado_civil}}{{"A"}}
+                @endif, @if($sexo == 'MASCULINO')
+                    {{$nacionalidad}}{{"O"}}
                 @else
-                    A
-                @endif, {{ $nacionalidad }} @if ($sexo == 'MASCULINO')
-                    O
-                @else
-                    A
+                    {{$nacionalidad}}{{"A"}}
                 @endif, de este domicilio, identificado
                 con @if ($tipo_documento == 'DPI')
                     Documento Personal de identificación (DPI)
@@ -161,7 +164,7 @@
                         <span class="negrita">X</span>
                     @endif</td>
                     <td>10 Mbps</td>
-                    <td>Q. 239.00</td>
+                    <td>Q.  239.00</td>
                 </tr>
                 <tr>
                     <td>@if ($tipo_servicio == 'burst' && $tabla2 == '30')
@@ -174,7 +177,7 @@
                         <span class="negrita">X</span>
                     @endif</td>
                     <td>20 Mbps</td>
-                    <td>Q. 349.00</td>
+                    <td>Q.  349.00</td>
                 </tr>
                 <tr>
                     <td>@if ($tipo_servicio == 'burst' && $tabla2 == '50')
@@ -187,7 +190,7 @@
                         <span class="negrita">X</span>
                     @endif</td>
                     <td>30 Mbps</td>
-                    <td>Q. 399.00</td>
+                    <td>Q.  399.00</td>
                 </tr>
                 <tr>
                     <td>@if ($tipo_servicio == 'burst' && $tabla2 == '100')
@@ -200,7 +203,7 @@
                         <span class="negrita">X</span>
                     @endif</td>
                     <td>50 Mbps</td>
-                    <td>Q. 599.00</td>
+                    <td>Q.  599.00</td>
                 </tr>
                 <tr>
                     <td>@if ($tipo_servicio == 'burst' && $tabla2 == '200')
@@ -306,10 +309,11 @@
         </div>
     </div>
 
-    <!-- <div class="page-break"></div> -->
+    <div class="page-break"></div>
 
     <div class="contenedor">
-        <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg">
+        {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
             <p class="texto">
@@ -337,7 +341,7 @@
                 Q.200.00.
             </p>
             <p class="texto">
-                <span class="negrita">Terminación</span>
+                <span class="negrita">Terminación</span><br>
                 Este contrato terminara por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE,
                 manifestada por escrito un mes antes de cancelar el contrato b) si dentro de los treinta días calendario
                 después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de
@@ -349,7 +353,7 @@
                 indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente Acuerdo.
             </p>
             <p class="texto">
-                <span class="negrita">Otras disposiciones</span>
+                <span class="negrita">Otras disposiciones</span><br>
                 EL PROVEEDOR se obliga a: a) Proveer del servicio contratado de forma continua, las veinticuatro horas
                 del día, todo el año, salvo casos de fuerza mayor y caso fortuito. b) Avisar al CLIENTE con la debida
                 anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento
@@ -358,7 +362,7 @@
                 conexión domiciliar, y/o desconexión temporal.
             </p>
             <p class="texto">
-                <span class="negrita">Cesión y cambio de dirección </span>
+                <span class="negrita">Cesión y cambio de dirección </span><br>
                 El CLIENTE no podrá ceder o traspasar de ninguna manera los derechos y obligaciones que nacen del
                 presente acuerdo, a menos que cuente con autorización previa, expresa y por escrito de EL PROVEEDOR. EL
                 PROVEEDOR podrá ceder total o parcialmente los derechos y obligaciones provenientes de este acuerdo sin
@@ -368,7 +372,7 @@
                 suspender el servicio de manera inmediata.
             </p>
             <p class="texto">
-                <span class="negrita">Efectos procesales</span>
+                <span class="negrita">Efectos procesales</span><br>
                 EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este
                 acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como
                 consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera
@@ -406,7 +410,7 @@
             <p class="texto">
                 F. Cliente_________________________
             </p>
-            <div class="pie fin">Página 2 de 2</div>
+            <div class="pie-fin">Página 2 de 2</div>
         </div>
     </div>
 </body>

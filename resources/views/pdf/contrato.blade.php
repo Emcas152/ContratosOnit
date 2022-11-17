@@ -20,17 +20,19 @@
         }
 
         .pie {
-            right: 50px;
-            bottom: 20px;
             /* position: absolute; */
             display: block;
             text-align: right;
             font-size: 11px;
+            margin-top: 40px;
         }
 
-        .fin {
-                margin-top: 350px;
-            }
+        .pie-fin {
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            margin-top: 220px;
+        }
 
         .logoImg {
             max-width: 100%;
@@ -110,21 +112,22 @@
 
 <body>
     <div class="contenedor">
-        <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg">
+        {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
 
             <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica y agua</p>
             <p class="texto">
-                <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>, {{
-                $estado_civil}} @if ($sexo == 'MASCULINO')
-                    O
+                <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>, 
+                @if($sexo == 'MASCULINO')
+                    {{$estado_civil}}{{"O"}}
+                @else 
+                    {{$estado_civil}}{{"A"}}
+                @endif, @if($sexo == 'MASCULINO')
+                    {{$nacionalidad}}{{"O"}}
                 @else
-                    A
-                @endif, {{ $nacionalidad }} @if ($sexo == 'MASCULINO')
-                    O
-                @else
-                    A
+                    {{$nacionalidad}}{{"A"}}
                 @endif, de este domicilio,
                 identificado con @if ($tipo_documento == 'DPI')
                     Documento Personal de identificación (DPI)
@@ -137,48 +140,75 @@
                 suministrados por HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA, adelante el PROVEEDOR, y que se describen a
                 continuación:
             </p>
-            <table class="sinBorde">
-                <tr>
-                    <th colspan="2">
-                        Precios Servicio de Agua
-                    </th>
-                    <th class="sinBorde"></th>
-                    <th colspan="2">
-                        Precios Energía Eléctrica
-                    </th>
-                </tr>
-                <tr>
-                    <td>10 mts3 mensuales</td>
-                    <td>Q. 75.00</td>
-                    <td class="sinBorde"></td>
-                    <td>Deposito por contador eléctrico</td>
-                    <td>Q. 700</td>
-                </tr>
-                <tr>
-                    <td>1 mt3 adicional (precio por mt3)</td>
-                    <td>Q. 8.50</td>
-                    <td class="sinBorde"></td>
-                    <td>Cargo Fijo</td>
-                    <td>Q. 10.50</td>
-                </tr>
-                @if ($tipo_proyecto == 'VIVO 4')
+            @if ($tipo_proyecto == 'VIAGGIO')
+                <table class="sinBorde">
+                    <tr>
+                        <th colspan="2">
+                            Precios Servicio de Agua
+                        </th>
+                        <th class="sinBorde"></th>
+                        <th colspan="2">
+                            Precios Energía Eléctrica
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>10 mts3 mensuales</td>
+                        <td>Q. 75.00</td>
+                        <td class="sinBorde"></td>
+                        <td>Deposito por contador eléctrico</td>
+                        <td>Q. 700.00</td>
+                    </tr>
+                    <tr>
+                        <td>1 mt3 adicional (precio por mt3)</td>
+                        <td>Q.  8.50</td>
+                        <td class="sinBorde"></td>
+                        <td>Cargo Fijo</td>
+                        <td>Q.  10.50</td>
+                    </tr>
                     <tr>
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
                         <td>kWh (este precio varía según CNEE*)</td>
-                        <td>Q. 1.41</td>
+                        <td>Q.   1.41</td>
                     </tr>
-                @else
+                </table>
+            @endif
+
+            @if ($tipo_proyecto == 'VIVO 4')
+                <table class="sinBorde">
                     <tr>
-                        <td>Precio alcantarillado</td>
+                        <th colspan="2">
+                            Precios Servicio de Agua
+                        </th>
+                        <th class="sinBorde"></th>
+                        <th colspan="2">
+                            Precios Energía Eléctrica
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Cargo fijo</td>
                         <td>Q. 50.00</td>
                         <td class="sinBorde"></td>
-                        <td>kWh (este precio varía según CNEE*)</td>
-                        <td>Q. 1.41</td>
+                        <td>Deposito por contador eléctrico</td>
+                        <td>Q. 700.00</td>
                     </tr>
-                @endif
-            </table>
+                    <tr>
+                        <td>mt3 de consumo</td>
+                        <td>Q.  5.00</td>
+                        <td class="sinBorde"></td>
+                        <td>Cargo Fijo</td>
+                        <td>Q. 10.50</td>
+                    </tr>
+                    <tr>
+                        <td>mt3 de alcantarillado</td>
+                        <td>Q.  2.50</td>
+                        <td class="sinBorde"></td>
+                        <td>kWh (este precio varía según CNEE*)</td>
+                        <td>Q.   1.41</td>
+                    </tr>
+                </table>
+            @endif
 
             <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
@@ -214,20 +244,22 @@
                 <span class="negrita">Suspensión</span><br>
                 EL PROVEEDOR tendrá el derecho de suspender el servicio prestado a EL CLIENTE, sin responsabilidad de su parte sin necesidad de aviso previo ni declaración judicial alguna, en los siguientes casos. i) por falta de pago de la cuota mensual correspondiente durante dos meses consecutivos. ii) por incumplimiento de EL CLIENTE a cualquiera de las prohibiciones contenidas en este contrato. En los casos anteriores EL PROVEEDOR podrá reanudar el servicio contratado una vez EL CLIENTE pague todos los saldos adeudados, subsane los incumplimientos incurridos y pague los gastos de reconexión del servicio por quinientos quetzales exactos (Q500.00).
             </p>
-            <p class="texto">
-                <span class="negrita">Terminación</span><br>
-                Este contrato terminara por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo; por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo de servicios por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y deberá previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente Acuerdo.
-            </p>
+            
             <div class="pie">Página 1 de 2</div>
         </div>
     </div>
 
-    <!-- <div class="page-break"></div> -->
+    <div class="page-break"></div>
 
     <div class="contenedor">
-        <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg">
+        {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
+            <p class="texto">
+                <span class="negrita">Terminación</span><br>
+                Este contrato terminara por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo; por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo de servicios por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y deberá previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente Acuerdo.
+            </p>
             <p class="texo">
                 <span class="negrita">Otras disposiciones</span><br>
                 EL PROVEEDOR se obliga a: a) Proveer del servicio de energía y agua de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito. b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución. c) Mantener las instalaciones internas en buenas condiciones;
@@ -238,8 +270,8 @@
                 El CLIENTE no podrá ceder o traspasar de ninguna manera los derechos y obligaciones que nacen del presente acuerdo, a menos que cuente con autorización previa, expresa y por escrito de EL PROVEEDOR. EL PROVEEDOR podrá ceder total o parcialmente los derechos y obligaciones provenientes de este acuerdo sin necesidad de dar aviso previo ni posterior a EL CLIENTE. Cualquier cambio de la dirección de servicio o dirección de facturación deberá ser informado a EL PROVEEDOR para que esta proceda a realizar los cambios necesarios, en caso no se informe sobre dichos cambios, EL PROVEEDOR tiene el derecho de suspender el servicio de manera inmediata.
             </p>
             <p class="texto">
-                <span class="negrita">Efectos procesales</span>
-                EEL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato.
+                <span class="negrita">Efectos procesales</span><br>
+                EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato.
                 Yo, el CLIENTE, declaro, bajo juramento, que todos los documentos presentados son legítimos y todo lo declarado es veraz.
                 Guatemala 01 de septiembre de 2022.
             </p>
@@ -269,7 +301,7 @@
             <p class="texto">
                 F. Cliente_________________________
             </p>
-            <div class="pie fin">Página 2 de 2</div>
+            <div class="pie-fin">Página 2 de 2</div>
         </div>
     </div>
 </body>
