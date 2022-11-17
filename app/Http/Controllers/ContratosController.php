@@ -33,22 +33,32 @@ class ContratosController extends Controller
         {
             $info = $request->datos;
             $servicio = $request->servicio;
+            $plan = $request->plan;
 
             $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
-            $dataSave = array_merge($info,$servicio);
+            $info["fecha_registro"] = Carbon::now();
+            $dataSave = array_merge($info,$servicio,$plan);
             DB::beginTransaction();
 
-            $nameFile = "contrato-".time().".pdf";
-            $dataSave["file_name"] = $nameFile;
+            $nameFilePlan3 = "contrato-agua-energia-e-internet".time().".pdf";
+            $dataSave["file_name"] = $plan["tipo_plan"] == 'PLAN3' ? $nameFilePlan3 : '';
+            $nameFilePlan2 = "contrato-agua-y-energia-".time().".pdf";
+            $dataSave["file_name_contrato"] = $nameFilePlan2;
             $documento = Contratos::create($dataSave);
 
-            $urlFile = storage_path("app/public")."/$nameFile";
+            $urlFile = storage_path("app/public")."/$nameFilePlan2";
 
             $pdf = PDF::loadView("pdf.contrato", $dataSave);
             $pdf->save($urlFile);
 
+            if ($plan["tipo_plan"] == 'PLAN3') {
+                $urlFile2 = storage_path("app/public")."/$nameFilePlan3";
+                $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
+                $pdf->save($urlFile2);
+            }
+
             DB::commit();
-            return response(['data'=> $documento,'code' => 201], 201);
+            return response(['data'=> $dataSave,'code' => 201], 201);
 
         } catch (\Exception $e) 
         {

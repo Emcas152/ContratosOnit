@@ -28,9 +28,16 @@ class Contratos extends Model
         'nit',
         'numero_apartamento',
         'tipo_apartamento',
+        'tipo_documento',
+        'sexo',
         'tipo_servicio',
         'tabla1',
         'tabla2',
-        'file_name'
+        'file_name',
+        'tipo_documento',
+        'file_name_contrato',
+        'fecha_registro',
+        'tipo_proyecto',
+        'tipo_plan'
     ];
 }
