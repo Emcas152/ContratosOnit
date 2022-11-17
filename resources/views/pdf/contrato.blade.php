@@ -273,7 +273,7 @@
                 <span class="negrita">Efectos procesales</span><br>
                 EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato.
                 Yo, el CLIENTE, declaro, bajo juramento, que todos los documentos presentados son legítimos y todo lo declarado es veraz.
-                Guatemala 01 de septiembre de 2022.
+                Guatemala, {{ $fecha_texto }}.
             </p>
             <br>
             <br>
@@ -282,7 +282,7 @@
             </p>
             <br>
             <p class="texto">
-                En la ciudad de Guatemala el día 01 de septiembre del año 2022, como NOTARIO DOY FE, que la firma que
+                En la ciudad de Guatemala el día {{ $fecha_texto }}, como NOTARIO DOY FE, que la firma que
                 antecede es autentica por haber sido puesta el día de hoy en mi presencia por <span class="negrita">
                     {{ $nombre }}</span> quien se identifica con<span class="negrita"> @if ($tipo_documento == 'DPI') 
                     DPI 

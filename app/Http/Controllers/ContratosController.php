@@ -35,8 +35,17 @@ class ContratosController extends Controller
             $servicio = $request->servicio;
             $plan = $request->plan;
 
+            /* Fecha para la vista */
+
+            $meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+            $fecha = Carbon::now();
+            $mes = $meses[($fecha->format('n')) - 1];
+            $plan['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+
+            /* Fin Fecha para la vista */
+
             $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
-            $info["fecha_registro"] = Carbon::now();
+            $info["fecha_registro"] = $fecha;
             $dataSave = array_merge($info,$servicio,$plan);
             DB::beginTransaction();
 
