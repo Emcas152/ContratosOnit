@@ -385,7 +385,7 @@
                 declarado es veraz.
             </p>
             <p class="texto">
-                Guatemala, 01 de septiembre de 2022
+                Guatemala, {{ $fecha_texto }}
             </p>
             <br>
             <br>
@@ -394,7 +394,7 @@
             </p>
             <br>
             <p class="texto">
-                En la ciudad de <span class="negrita">Guatemala el día 01 de septiembre del año 2022</span>, como NOTARIO DOY FE, que la firma que
+                En la ciudad de <span class="negrita">Guatemala el día {{ $fecha_texto }}</span>, como NOTARIO DOY FE, que la firma que
                 antecede es autentica por haber sido puesta el día de hoy en mi presencia de <span class="negrita">{{ $nombre }}</span>
                 quien se identifica con <span class="negrita"> @if ($tipo_documento == 'DPI') 
                     DPI 
