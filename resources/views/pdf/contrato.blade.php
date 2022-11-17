@@ -22,15 +22,15 @@
         .pie {
             right: 50px;
             bottom: 20px;
-            position: absolute;
+            /* position: absolute; */
             display: block;
             text-align: right;
             font-size: 11px;
         }
 
-        /* .fin {
-                margin-top: 450px;
-            } */
+        .fin {
+                margin-top: 350px;
+            }
 
         .logoImg {
             max-width: 100%;
@@ -116,11 +116,23 @@
 
             <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica y agua</p>
             <p class="texto">
-
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>, {{
-                $estado_civil }}, {{ $nacionalidad }}, de este domicilio,
-                identificado con Documento Personal de identificación (DPI) número <span class="negrita">{{ $identificacion }}</span> extendida por el
-                Registro Nacional de las Personas –RENAP, con numero de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
+                $estado_civil}} @if ($sexo == 'MASCULINO')
+                    O
+                @else
+                    A
+                @endif, {{ $nacionalidad }} @if ($sexo == 'MASCULINO')
+                    O
+                @else
+                    A
+                @endif, de este domicilio,
+                identificado con @if ($tipo_documento == 'DPI')
+                    Documento Personal de identificación (DPI)
+                @else
+                    PASAPORTE
+                @endif número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
+                extendida por el Registro Nacional de las Personas –RENAP
+                @endif, con numero de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
                 <span class="negrita">{{ $email }}</span>; en adelante EL CLIENTE, por este medio contrata los servicios individuales que serán
                 suministrados por HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA, adelante el PROVEEDOR, y que se describen a
                 continuación:
@@ -149,19 +161,32 @@
                     <td>Cargo Fijo</td>
                     <td>Q. 10.50</td>
                 </tr>
-                <tr>
-                    <td class="sinBorde"></td>
-                    <td class="sinBorde"></td>
-                    <td class="sinBorde"></td>
-                    <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q. 1.41</td>
-                </tr>
+                @if ($tipo_proyecto == 'VIVO 4')
+                    <tr>
+                        <td class="sinBorde"></td>
+                        <td class="sinBorde"></td>
+                        <td class="sinBorde"></td>
+                        <td>kWh (este precio varía según CNEE*)</td>
+                        <td>Q. 1.41</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td>Precio alcantarillado</td>
+                        <td>Q. 50.00</td>
+                        <td class="sinBorde"></td>
+                        <td>kWh (este precio varía según CNEE*)</td>
+                        <td>Q. 1.41</td>
+                    </tr>
+                @endif
             </table>
 
             <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
-                Los cuáles serán instalados en edificio <span class="negrita">VIAGGIO, Km 13.8 Carretera Antigua a El
-                    Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
+                Los cuáles serán instalados en edificio <span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
+                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala
+                @else
+                    VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
+                @endif, Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
                 <span class="negrita">{{ $nombre }}</span> con NIT <span class="negrita">{{ $nit }}</span>
             </p>
             <p class="texto">
@@ -197,7 +222,7 @@
         </div>
     </div>
 
-    <div class="page-break"></div>
+    <!-- <div class="page-break"></div> -->
 
     <div class="contenedor">
         <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg">
@@ -227,8 +252,15 @@
             <p class="texto">
                 En la ciudad de Guatemala el día 01 de septiembre del año 2022, como NOTARIO DOY FE, que la firma que
                 antecede es autentica por haber sido puesta el día de hoy en mi presencia por <span class="negrita">
-                    {{ $nombre }}</span> quien se identifica con<span class="negrita">DPI</span> con número <span class="negrita">
-                    {{ $identificacion }}</span> extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP-.
+                    {{ $nombre }}</span> quien se identifica con<span class="negrita"> @if ($tipo_documento == 'DPI') 
+                    DPI 
+                @else 
+                    PASAPORTE
+                @endif
+                </span> con número <span class="negrita">
+                    {{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
+                    extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP- 
+                @endif .
                 La firma calza un contrato de servicios de energía eléctrica y agua. El compareciente, firma nuevamente la presente
                 acta de legalización, junto con el notario autorizante.
             </p>
