@@ -117,26 +117,26 @@
 
         <div class="contenedorTexto">
 
-            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica y agua</p>
+            <p class="textoNegrita">Contrato de prestación de servicios de telecomunicaciones</p>
             <p class="texto">
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>,
                 @if($sexo == 'MASCULINO')
-                    {{$estado_civil}}{{"O"}}
-                @else 
-                    {{$estado_civil}}{{"A"}}
-                @endif, @if($sexo == 'MASCULINO')
-                    {{$nacionalidad}}{{"O"}}
+                {{$estado_civil}}{{"O"}}
                 @else
-                    {{$nacionalidad}}{{"A"}}
+                {{$estado_civil}}{{"A"}}
+                @endif, @if($sexo == 'MASCULINO')
+                {{$nacionalidad}}{{"O"}}
+                @else
+                {{$nacionalidad}}{{"A"}}
                 @endif, de este domicilio, identificado
                 con @if ($tipo_documento == 'DPI')
-                    Documento Personal de identificación (DPI)
+                Documento Personal de identificación (DPI)
                 @else
-                    PASAPORTE
+                PASAPORTE
                 @endif número <span class="negrita">{{ $identificacion }}
-                </span> @if ($tipo_documento == 'DPI') 
-                    extendida por el Registro Nacional de las Personas –RENAP
-                    @endif, con numero de celular 
+                </span> @if ($tipo_documento == 'DPI')
+                extendida por el Registro Nacional de las Personas –RENAP
+                @endif, con numero de celular
                 <span class="negrita">{{ $celular }}</span>
                 y correo electrónico <span class="negrita">{{ $email }}</span>;en adelante EL CLIENTE, por este medio
                 contrata los servicios individuales que
@@ -146,87 +146,96 @@
             <table class="sinBorde">
                 <tr>
                     <th colspan="3">
-                        Servicio de Internet Residencial Burst
+                        Servicio de Internet Residencial Simétrico
                     </th>
                     <th class="sinBorde"></th>
                     <th colspan="3">
-                        Servicio de Internet Residencial Simétrico
+                        Servicio de Internet Residencial Burst
                     </th>
                 </tr>
                 <tr>
-                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '20')
-                        <span class="negrita">X</span>
-                    @endif</td>
-                    <td>20 Mbps</td>
-                    <td>Q. 299.00</td>
-                    <td class="sinBorde"></td>
                     <td>@if ($tipo_servicio == 'simetrico' && $tabla1 == '10')
                         <span class="negrita">X</span>
-                    @endif</td>
+                        @endif
+                    </td>
                     <td>10 Mbps</td>
-                    <td>Q.  239.00</td>
+                    <td>Q. 239.00</td>
+                    <td class="sinBorde"></td>
+                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '20')
+                        <span class="negrita">X</span>
+                        @endif
+                    </td>
+                    <td>20 Mbps</td>
+                    <td>Q. 299.00</td>
                 </tr>
                 <tr>
-                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '30')
-                        <span class="negrita">X</span>
-                    @endif</td>
-                    <td>30 Mbps</td>
-                    <td>Q. 349.00</td>
-                    <td class="sinBorde"></td>
                     <td>@if ($tipo_servicio == 'simetrico' && $tabla1 == '20')
                         <span class="negrita">X</span>
-                    @endif</td>
+                        @endif
+                    </td>
                     <td>20 Mbps</td>
-                    <td>Q.  349.00</td>
+                    <td>Q. 349.00</td>
+                    <td class="sinBorde"></td>
+                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '30')
+                        <span class="negrita">X</span>
+                        @endif
+                    </td>
+                    <td>30 Mbps</td>
+                    <td>Q. 349.00</td>
                 </tr>
                 <tr>
-                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '50')
-                        <span class="negrita">X</span>
-                    @endif</td>
-                    <td>50 Mbps</td>
-                    <td>Q. 399.00</td>
-                    <td class="sinBorde"></td>
                     <td>@if ($tipo_servicio == 'simetrico' && $tabla1 == '30')
                         <span class="negrita">X</span>
-                    @endif</td>
+                        @endif
+                    </td>
                     <td>30 Mbps</td>
-                    <td>Q.  399.00</td>
+                    <td>Q. 399.00</td>
+                    <td class="sinBorde"></td>
+                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '50')
+                        <span class="negrita">X</span>
+                        @endif
+                    </td>
+                    <td>50 Mbps</td>
+                    <td>Q. 399.00</td>
                 </tr>
                 <tr>
-                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '100')
-                        <span class="negrita">X</span>
-                    @endif</td>
-                    <td>100 Mbps</td>
-                    <td>Q. 499.00</td>
-                    <td class="sinBorde"></td>
                     <td>@if ($tipo_servicio == 'simetrico' && $tabla1 == '50')
                         <span class="negrita">X</span>
-                    @endif</td>
+                        @endif
+                    </td>
                     <td>50 Mbps</td>
-                    <td>Q.  599.00</td>
+                    <td>Q. 599.00</td>
+                    <td class="sinBorde"></td>
+                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '100')
+                        <span class="negrita">X</span>
+                        @endif
+                    </td>
+                    <td>100 Mbps</td>
+                    <td>Q. 499.00</td>
                 </tr>
                 <tr>
-                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '200')
-                        <span class="negrita">X</span>
-                    @endif</td>
-                    <td>200 Mbps</td>
-                    <td>Q. 699.00</td>
-                    <td class="sinBorde"></td>
                     <td>@if ($tipo_servicio == 'simetrico' && $tabla1 == '100')
                         <span class="negrita">X</span>
-                    @endif</td>
+                        @endif
+                    </td>
                     <td>100 Mbps</td>
                     <td>Q. 1,099.00</td>
+                    <td class="sinBorde"></td>
+                    <td>@if ($tipo_servicio == 'burst' && $tabla2 == '200')
+                        <span class="negrita">X</span>
+                        @endif
+                    </td>
+                    <td>200 Mbps</td>
+                    <td>Q. 699.00</td>
                 </tr>
             </table>
 
             <p class="texto">
                 Los cuáles serán instalados en edificio <span class="negrita">@if ($tipo_proyecto == 'VIVO 4')
-                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala
-                @else
+                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $torre }}
+                    @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
-                @endif</span> Apto. {{ $numero_apartamento }} y que serán facturados a nombre de <span
-                    class="negrita">{{ $nombre }}</span>
+                    @endif</span> Apto. {{ $numero_apartamento }} y que serán facturados a nombre de <span class="negrita">{{ $nombre }}</span>
                 con NIT <span class="negrita">{{ $nit }}</span>
             </p>
             <p class="texto">
@@ -304,7 +313,7 @@
                 obligación. EL PROVEEDOR no se responsabiliza del contenido que sea transmitido por EL CLIENTE o
                 terceras personas a través del enlace. EL PROVEEDOR se compromete a mantener un SLA de 85%.
             </p>
-            
+
             <div class="pie">Página 1 de 2</div>
         </div>
     </div>
@@ -396,13 +405,13 @@
             <p class="texto">
                 En la ciudad de <span class="negrita">Guatemala el día {{ $fecha_texto }}</span>, como NOTARIO DOY FE, que la firma que
                 antecede es autentica por haber sido puesta el día de hoy en mi presencia de <span class="negrita">{{ $nombre }}</span>
-                quien se identifica con <span class="negrita"> @if ($tipo_documento == 'DPI') 
-                    DPI 
-                @else 
+                quien se identifica con <span class="negrita"> @if ($tipo_documento == 'DPI')
+                    DPI
+                    @else
                     PASAPORTE
-                @endif </span> con número <span class="negrita">3{{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
-                    extendida por el Registro Nacional de las personas -RENAP-
-                @endif . La firma calza un contrato de servicios de telecomunicaciones. El compareciente, 
+                    @endif </span> con número <span class="negrita">3{{ $identificacion }}</span> @if ($tipo_documento == 'DPI')
+                extendida por el Registro Nacional de las personas -RENAP-
+                @endif . La firma calza un contrato de servicios de telecomunicaciones. El compareciente,
                 firma nuevamente la presente acta de legalización, junto con el notario autorizante.
             </p>
             <br>

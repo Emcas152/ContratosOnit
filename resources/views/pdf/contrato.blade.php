@@ -213,7 +213,7 @@
             <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
                 Los cuáles serán instalados en edificio <span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
-                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala
+                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $torre }}
                 @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
                 @endif, Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
