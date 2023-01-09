@@ -121,21 +121,21 @@
             <p class="texto">
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>, 
                 @if($sexo == 'MASCULINO')
-                    {{$estado_civil}}{{"O"}}
+                    {{$estado_civil}}{{"O"}}{{","}}
                 @else 
-                    {{$estado_civil}}{{"A"}}
-                @endif, @if($sexo == 'MASCULINO')
-                    {{$nacionalidad}}{{"O"}}
+                    {{$estado_civil}}{{"A"}}{{","}}
+                @endif @if($sexo == 'MASCULINO')
+                    {{$nacionalidad}}{{"O"}}{{","}}
                 @else
-                    {{$nacionalidad}}{{"A"}}
-                @endif, de este domicilio,
+                    {{$nacionalidad}}{{"A"}}{{","}}
+                @endif de este domicilio,
                 identificado con @if ($tipo_documento == 'DPI')
-                    Documento Personal de identificación (DPI)
+                    Documento Personal de identificación (DPI){{","}}
                 @else
-                    PASAPORTE
+                    PASAPORTE{{","}}
                 @endif número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
-                extendida por el Registro Nacional de las Personas –RENAP
-                @endif, con numero de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
+                extendida por el Registro Nacional de las Personas –RENAP-{{","}}
+                @endif con número de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
                 <span class="negrita">{{ $email }}</span>; en adelante EL CLIENTE, por este medio contrata los servicios individuales que serán
                 suministrados por HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA, adelante el PROVEEDOR, y que se describen a
                 continuación:
@@ -144,31 +144,18 @@
                 <table class="sinBorde">
                     <tr>
                         <th colspan="2">
-                            Precios Servicio de Agua
-                        </th>
-                        <th class="sinBorde"></th>
-                        <th colspan="2">
                             Precios Energía Eléctrica
                         </th>
                     </tr>
                     <tr>
-                        <td>10 mts3 mensuales</td>
-                        <td>Q. 75.00</td>
-                        <td class="sinBorde"></td>
                         <td>Deposito por contador eléctrico</td>
                         <td>Q. 700.00</td>
                     </tr>
                     <tr>
-                        <td>1 mt3 adicional (precio por mt3)</td>
-                        <td>Q.  8.50</td>
-                        <td class="sinBorde"></td>
                         <td>Cargo Fijo</td>
                         <td>Q.  10.50</td>
                     </tr>
                     <tr>
-                        <td class="sinBorde"></td>
-                        <td class="sinBorde"></td>
-                        <td class="sinBorde"></td>
                         <td>kWh (este precio varía según CNEE*)</td>
                         <td>Q.   1.41</td>
                     </tr>
@@ -191,11 +178,11 @@
                         <td>Q. 50.00</td>
                         <td class="sinBorde"></td>
                         <td>Deposito por contador eléctrico</td>
-                        <td>Q. 700.00</td>
+                        <td>Q. 400.00</td>
                     </tr>
                     <tr>
                         <td>mt3 de consumo</td>
-                        <td>Q.  5.00</td>
+                        <td>Q.  7.50</td>
                         <td class="sinBorde"></td>
                         <td>Cargo Fijo</td>
                         <td>Q. 10.50</td>
@@ -204,7 +191,7 @@
                         <td>mt3 de alcantarillado</td>
                         <td>Q.  2.50</td>
                         <td class="sinBorde"></td>
-                        <td>kWh (este precio varía según CNEE*)</td>
+                        <td>kWh según la tabla CNEE*</td>
                         <td>Q.   1.41</td>
                     </tr>
                 </table>
@@ -217,7 +204,7 @@
                 @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
                 @endif, Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
-                <span class="negrita">{{ $nombre }}</span> con NIT <span class="negrita">{{ $nit }}</span>
+                <span class="negrita">{{ $nombre }}</span> con número NIT <span class="negrita">{{ $nit }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
