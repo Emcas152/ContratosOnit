@@ -191,12 +191,12 @@
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
-                        <td colspan="2">kWh según tabla CNEE*</td>
+                        <td colspan="2">Precio varía según tabla CNEE*</td>
                     </tr>
                 </table>
             @endif
 
-            <p class="texto">*Precios varían según tabla de CNEE (Comisión Nacional de Energía Eléctrica).</p>
+            <p class="texto">*CNEE(Comisión Nacional de Energía Eléctrica).</p>
             <p class="texto">
                 Los cuáles serán instalados en edificio <span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
                     VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $torre }}
