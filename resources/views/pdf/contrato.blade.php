@@ -188,11 +188,11 @@
                         <td>Q. 10.50</td>
                     </tr>
                     <tr>
-                        <td>mt3 de alcantarillado</td>
-                        <td>Q.  2.50</td>
+                        <td> ---- </td>
+                        <td> ---- </td>
                         <td class="sinBorde"></td>
                         <td>kWh según la tabla CNEE*</td>
-                        <td>Q.   1.41</td>
+                        <td> ---- </td>
                     </tr>
                 </table>
             @endif
