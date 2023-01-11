@@ -117,7 +117,7 @@
 
         <div class="contenedorTexto">
 
-            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica y agua</p>
+            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica @if($tipo_proyecto == 'VIVO 4') y agua @endif</p>
             <p class="texto">
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>, 
                 @if($sexo == 'MASCULINO')

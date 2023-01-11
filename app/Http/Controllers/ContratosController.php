@@ -49,20 +49,21 @@ class ContratosController extends Controller
             $dataSave = array_merge($info,$servicio,$plan);
             DB::beginTransaction();
 
-            $nameFilePlan3 = "contrato-agua-energia-e-internet".time().".pdf";
-            $dataSave["file_name"] = $plan["tipo_plan"] == 'PLAN3' ? $nameFilePlan3 : '';
+            $nameFilePlan3 = "contrato-internet-".time().".pdf";
+            $dataSave["file_name"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') ? $nameFilePlan3 : '';
             $nameFilePlan2 = "contrato-agua-y-energia-".time().".pdf";
-            $dataSave["file_name_contrato"] = $nameFilePlan2;
+            $dataSave["file_name_contrato"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') ? $nameFilePlan2 : '';
             $documento = Contratos::create($dataSave);
 
             $dataSave["id"] = $documento->id;
 
-            $urlFile = storage_path("app/public")."/$nameFilePlan2";
+            if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
+                $urlFile = storage_path("app/public")."/$nameFilePlan2";
+                $pdf = PDF::loadView("pdf.contrato", $dataSave);
+                $pdf->save($urlFile);
+            }
 
-            $pdf = PDF::loadView("pdf.contrato", $dataSave);
-            $pdf->save($urlFile);
-
-            if ($plan["tipo_plan"] == 'PLAN3') {
+            if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
                 $urlFile2 = storage_path("app/public")."/$nameFilePlan3";
                 $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
                 $pdf->save($urlFile2);
