@@ -57,16 +57,30 @@ class ContratosController extends Controller
 
             $dataSave["id"] = $documento->id;
 
-            if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
-                $urlFile = storage_path("app/public")."/$nameFilePlan2";
-                $pdf = PDF::loadView("pdf.contrato", $dataSave);
-                $pdf->save($urlFile);
-            }
-
-            if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
-                $urlFile2 = storage_path("app/public")."/$nameFilePlan3";
-                $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
-                $pdf->save($urlFile2);
+            if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
+                    $urlFile = storage_path("app/public")."/$nameFilePlan2";
+                    $pdf = PDF::loadView("pdf.contrato", $dataSave);
+                    $pdf->save($urlFile);
+                }
+    
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan3";
+                    $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
+                    $pdf->save($urlFile2);
+                }
+            } else {
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
+                    $urlFile = storage_path("app/public")."/$nameFilePlan2";
+                    $pdf = PDF::loadView("pdf.contrato-viaggio", $dataSave);
+                    $pdf->save($urlFile);
+                }
+    
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan3";
+                    $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
+                    $pdf->save($urlFile2);
+                }
             }
 
             DB::commit();
