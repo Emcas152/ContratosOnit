@@ -130,14 +130,14 @@
                     {{$nacionalidad}}{{"A"}}{{","}}
                 @endif de este domicilio,
                 identificado con @if ($tipo_documento == 'DPI')
-                    Documento Personal de identificación (DPI){{","}}
+                    Documento Personal de identificación (DPI) {{","}}
                 @else
                     PASAPORTE{{","}}
                 @endif número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
-                extendida por el Registro Nacional de las Personas –RENAP-{{","}}
+                extendida por el Registro Nacional de las Personas –RENAP–{{","}}
                 @endif con número de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
                  para facturación <span class="negrita">{{ $email }}</span>; en adelante EL CLIENTE, por este medio contrata los servicios individuales que serán
-                suministrados por HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA, adelante el PROVEEDOR, y que se describen a
+                suministrados por <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, en adelante el PROVEEDOR y que se describen a
                 continuación:
             </p>
             @if ($tipo_proyecto == 'VIAGGIO')
@@ -188,8 +188,8 @@
                         <td>Q. 10.50</td>
                     </tr>
                     <tr>
-                        <td class="sinBorde"></td>
-                        <td class="sinBorde"></td>
+                        <td>mt3 de alcantarillado</td>
+                        <td>Q.  2.50</td>
                         <td class="sinBorde"></td>
                         <td colspan="2">Precio varía según tabla CNEE*</td>
                     </tr>
@@ -199,11 +199,11 @@
             <p class="texto">*CNEE(Comisión Nacional de Energía Eléctrica).</p>
             <p class="texto">
                 Los cuáles serán instalados en edificio <span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
-                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $torre }}
+                    VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $numero_apartamento }}
                 @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
-                @endif, Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
-                <span class="negrita">{{ $nombre }}</span> con número NIT <span class="negrita">{{ $nit }}</span>
+                @endif </span> y que serán facturados a nombre de,
+                <span class="negrita">{{ $nombre }}</span> con número de NIT <span class="negrita">{{ $nit }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
@@ -255,9 +255,9 @@
             </p>
             <p class="texto">
                 <span class="negrita">Efectos procesales</span><br>
-                EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato.
+                EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato. 
                 Yo, el CLIENTE, declaro, bajo juramento, que todos los documentos presentados son legítimos y todo lo declarado es veraz.
-                Guatemala, {{ $fecha_texto }}.
+                Guatemala {{ $fecha_texto }}.
             </p>
             <br>
             <br>
@@ -276,9 +276,8 @@
                 </span> con número <span class="negrita">
                     {{ $identificacion }}</span> @if ($tipo_documento == 'DPI') 
                     extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP- 
-                @endif .
-                La firma calza un contrato de servicios de energía eléctrica y agua. El compareciente, firma nuevamente la presente
-                acta de legalización, junto con el notario autorizante.
+                @endif.
+                La firma calza un contrato de servicios de energía eléctrica y agua. El compareciente, firma nuevamente la presente acta de legalización, junto con el notario autorizante.       
             </p>
             <br>
             <br>
