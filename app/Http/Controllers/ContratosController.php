@@ -60,7 +60,7 @@ class ContratosController extends Controller
             if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
                     $urlFile = storage_path("app/public")."/$nameFilePlan2";
-                    $pdf = PDF::loadView("pdf.contrato", $dataSave);
+                    $pdf = PDF::loadView("pdf.contrato-vivo4", $dataSave);
                     $pdf->save($urlFile);
                 }
     
