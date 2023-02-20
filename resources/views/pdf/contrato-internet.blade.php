@@ -266,7 +266,7 @@
                         <td>30 Mbps</td>
                         <td>Q. 199.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                        <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -435,14 +435,14 @@
                     </th>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla2 == '30')
+                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '30')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>30 Mbps</td>
                     <td>Q. 199.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                    <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -450,7 +450,7 @@
                     <td>Q.   0.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla2 == '50')
+                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '50')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -465,7 +465,7 @@
                     <td>Q. 299.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla2 == '100')
+                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '100')
                         <span class="negrita">X</span>
                         @endif
                     </td>
