@@ -135,7 +135,8 @@
                 PASAPORTE{{","}}
                 @endif número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI')
                 extendida por el Registro Nacional de las Personas –RENAP–{{","}}
-                @endif con número de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
+                @endif  en su calidad de Representante  Legal de la entidad Zentro Sociedad Anónima el cual se hace constar en el nombramiento, con número de Registro 
+                Mercantil  601330 Folio 344 libro 752 y correo electrónico
                 para facturación <span class="negrita">{{ $email }}</span>; en adelante EL CLIENTE, por este medio contrata
                 los servicios individuales que serán suministrados por <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, en adelante el PROVEEDOR y que se describen a
                 continuación:

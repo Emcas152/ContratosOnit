@@ -117,30 +117,31 @@
 
         <div class="contenedorTexto">
 
-            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica @if($tipo_proyecto == 'VIVO 4') y agua @endif</p>
+            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica @if($apartamento["tipo_proyecto"] == 'VIVO 4') y agua @endif</p>
             <p class="texto">
-                <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>,
-                @if($sexo == 'MASCULINO')
-                {{$estado_civil}}{{"O"}}{{","}}
+                <span class="negrita">{{ $empresa["nombre"] }}</span>, de <span class="negrita">{{ $edad }} años</span>,
+                @if($empresa["sexo"] == 'MASCULINO')
+                {{$empresa["estado_civil"]}}{{"O"}}{{","}}
                 @else
-                {{$estado_civil}}{{"A"}}{{","}}
-                @endif @if($sexo == 'MASCULINO')
-                {{$nacionalidad}}{{"O"}}{{","}}
+                {{$empresa["estado_civil"]}}{{"A"}}{{","}}
+                @endif @if($empresa["sexo"] == 'MASCULINO')
+                {{$empresa["nacionalidad"]}}{{"O"}}{{","}}
                 @else
-                {{$nacionalidad}}{{"A"}}{{","}}
+                {{$empresa["nacionalidad"]}}{{"A"}}{{","}}
                 @endif de este domicilio,
-                identificado con @if ($tipo_documento == 'DPI')
+                identificado con @if ($empresa["tipo_documento"] == 'DPI')
                 Documento Personal de identificación (DPI){{","}}
                 @else
                 PASAPORTE{{","}}
-                @endif número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI')
+                @endif número <span class="negrita">{{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
                 extendida por el Registro Nacional de las Personas –RENAP–{{","}}
-                @endif con número de celular <span class="negrita">{{ $celular }}</span> y correo electrónico
-                para facturación <span class="negrita">{{ $email }}</span>; en adelante EL CLIENTE, por este medio contrata los servicios individuales que serán
+                @endif en su calidad de Representante  Legal de la entidad Zentro Sociedad Anónima el cual se hace constar en el nombramiento, con número de Registro 
+                Mercantil  601330 Folio 344 libro 752 y correo electrónico
+                para facturación <span class="negrita">{{ $empresa["email"] }}</span>; en adelante EL CLIENTE, por este medio contrata los servicios individuales que serán
                 suministrados por <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, adelante el PROVEEDOR, y que se describen a
                 continuación:
             </p>
-            @if ($tipo_proyecto == 'VIAGGIO')
+            @if ($apartamento["tipo_proyecto"] == 'VIAGGIO')
             <table class="sinBorde">
                 <tr>
                     <th colspan="2">
@@ -162,7 +163,7 @@
             </table>
             @endif
 
-            @if ($tipo_proyecto == 'VIVO 4')
+            @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
             <table class="sinBorde">
                 <tr>
                     <th colspan="2">
@@ -198,12 +199,12 @@
 
             <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
-                Los cuáles serán instalados en edificio <span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
-                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $torre }}
+                Los cuáles serán instalados en edificio <span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
+                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $apartamento["torre"] }}
                     @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada,
-                    @endif Apto. {{ $numero_apartamento }}</span> y que serán facturados a nombre, de
-                <span class="negrita">{{ $nombre }}</span> con número NIT <span class="negrita">{{ $nit }}</span>
+                    @endif Apto. {{ $apartamento["numero_apartamento"] }}</span> y que serán facturados a nombre, de
+                <span class="negrita">{{ $empresa["nombre"] }}</span> con número NIT <span class="negrita">{{ $empresa["nit"] }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
@@ -270,13 +271,13 @@
             <br>
             <p class="texto">
                 En la ciudad de Guatemala el día {{ $fecha_texto }}, como NOTARIO DOY FE, que la firma que antecede es autentica por haber sido puesta el día de hoy en mi presencia por <span class="negrita">
-                    {{ $nombre }}</span> quien se identifica con<span class="negrita"> @if ($tipo_documento == 'DPI')
+                    {{ $empresa["nombre"] }}</span> quien se identifica con<span class="negrita"> @if ($empresa["tipo_documento"] == 'DPI')
                     DPI
                     @else
                     PASAPORTE
                     @endif
                 </span> con número <span class="negrita">
-                    {{ $identificacion }}</span> @if ($tipo_documento == 'DPI')
+                    {{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
                     extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP-.
                 @endif
                 La firma calza un contrato de servicios de energía eléctrica. El compareciente, firma nuevamente la presente acta de legalización, junto con el notario autorizante.       

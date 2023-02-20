@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Contratos;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
@@ -11,6 +14,31 @@ use DB;
 
 class ContratosController extends Controller
 {
+    private function getB64Image($base64_image){  
+        // Obtener el String base-64 de los datos         
+        $image_service_str = substr($base64_image, strpos($base64_image, ",")+1);
+        // Decodificar ese string y devolver los datos de la imagen        
+        $image = base64_decode($image_service_str);   
+        // Retornamos el string decodificado
+        return $image;
+    }
+
+    private function uploadDocument(Request $request, $info = [], $campo = '')
+    {
+        $estado = false;
+        if (!$request->hasFile("$campo") && trim($request->$campo) != '' && trim(strpos($request->$campo,"storage")) == "") {
+            $image = $this->getB64Image($request->$campo);
+            $extension = 'pdf';
+            $imageName = $campo.rand(1, 100).time().'.'.$extension;
+            Storage::disk('public')->put($imageName, $image);
+            $url = Storage::url($imageName);
+            $info["$campo"] = $url;
+            $estado = true;
+        }
+
+        return $estado ? $url : '';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -93,6 +121,38 @@ class ContratosController extends Controller
         }
     }
 
+    public function register(Request $request)
+    {
+        try {
+            $data = $request->all();
+            DB::beginTransaction();
+
+            $newUser = new User;
+            $newUser->name = $request->nombre;
+            $newUser->password = Hash::make($request->password);
+            $newUser->email = $request->email;
+            $newUser->estado = 'ACT';
+            $newUser->save();
+
+            $newUser->assignRole('client');
+            $accessToken = $newUser->createToken('authToken')->accessToken;
+
+            $data["fecha_nacimiento"] = Carbon::parse($data['fecha_nacimiento'])->format('Y-m-d');
+            $data["path_representacion"] = $this->uploadDocument($request, $data, 'path_representacion');
+
+            $data["path_copia_dpi"] = $this->uploadDocument($request, $data, 'path_copia_dpi');
+
+            $documento = Contratos::create($data);
+
+            DB::commit();
+            return response()->json(['data'=> $documento, 'usuario'=> $newUser, 'access_token' => $accessToken, 'code' => 201], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['data'=> 'Error al registrarse', 'code' => 500], 500);
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -103,27 +163,5 @@ class ContratosController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contratos  $contratos
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Contratos $contratos)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Contratos  $contratos
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Contratos $contratos)
-    {
-        //
-    }
+    
 }
