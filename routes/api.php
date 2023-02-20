@@ -39,6 +39,7 @@ use App\Http\Controllers\GastosPresupuestoController;
 use App\Http\Controllers\EstadoCuentaController;
 
 use App\Http\Controllers\ContratosController;
+use App\Http\Controllers\ContratosApartamentoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,8 +65,15 @@ Route::post('/building/select', [EdificioController::class, 'show'])->name('buil
 Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('apartment.show');
 
 /* Contratos Publicos */
+Route::post('/contratos/register/empresa', [ContratosController::class, 'register'])->name('contratos.register');
 Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
 Route::get('/parameters/{codigo}', [ParametrosDetalleController::class, 'show'])->name('menu.show');
+
+/* Contratos Empresariales */
+Route::get('/contratos-apartamento/{id_empresa}', [ContratosApartamentoController::class, 'index'])->name('contratos-apartamento.index');
+Route::post('/contratos-apartamento/create', [ContratosApartamentoController::class, 'store'])->name('contratos-apartamento.store');
+Route::put('/contratos-apartamento/update/{id}', [ContratosApartamentoController::class, 'update'])->name('contratos-apartamento.update');
+Route::post('/contratos-apartamento/contrato/{tipo}/{id}', [ContratosApartamentoController::class, 'generate'])->name('contratos-apartamento.generate');
 
 Route::middleware(['auth:api'])->group(function () 
 {
