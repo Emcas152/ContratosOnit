@@ -123,7 +123,7 @@ class ContratosApartamentoController extends Controller
             DB::beginTransaction();
 
             /* Nombres Contratos */
-            $nameFilePlan2 = "empresa-contrato-agua-y-energia-".time().".pdf";
+            $nameFilePlan2 = "empresa-contrato-energia-".time().".pdf";
             $dataSave["file_name_contrato"] = $nameFilePlan2;
 
             $contratoEmpresarial = ContratosApartamento::findOrfail($info["id"]);
@@ -156,13 +156,13 @@ class ContratosApartamentoController extends Controller
             if ($request["tipo"] == "ENERGIA") {
                 if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
                     $urlFile = storage_path("app/public")."/$nameFilePlan2";
-                    $pdf = PDF::loadView("pdf.contrato-vivo4-empresa", $dataView);
+                    $pdf = PDF::loadView("pdf.contrato-vivo4-energia-empresa", $dataView);
                     $pdf->save($urlFile);
                 }
 
                 if ($dataSave["tipo_proyecto"] == 'VIAGGIO') {
                     $urlFile = storage_path("app/public")."/$nameFilePlan2";
-                    $pdf = PDF::loadView("pdf.contrato-viaggio-empresa", $dataView);
+                    $pdf = PDF::loadView("pdf.contrato-viaggio-energia-empresa", $dataView);
                     $pdf->save($urlFile);
                 }
             }
