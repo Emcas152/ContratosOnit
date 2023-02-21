@@ -32,7 +32,7 @@ class ContratosController extends Controller
             $imageName = $campo.rand(1, 100).time().'.'.$extension;
             Storage::disk('public')->put($imageName, $image);
             $url = Storage::url($imageName);
-            $info["$campo"] = $url;
+            $info["$campo"] = $imageName;
             $estado = true;
         }
 
