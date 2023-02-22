@@ -108,8 +108,8 @@ class ContratosApartamentoController extends Controller
      */
     public function generate(Request $request)
     {
-        /* try 
-        { */
+        try 
+        {
             $info = $request->all();
             
             /* Fecha para la vista */
@@ -170,11 +170,11 @@ class ContratosApartamentoController extends Controller
             DB::commit();
             return response(['data'=> $dataView,'code' => 200], 200);
 
-        /* } catch (\Exception $e) 
+        } catch (\Exception $e) 
         {
             DB::rollBack();
             return response(['data'=> 'Error al crear el contrato', 'code' => 500], 500);  
-        } */
+        }
     }
 
     /**
