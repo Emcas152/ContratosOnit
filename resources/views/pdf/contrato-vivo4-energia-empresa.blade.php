@@ -107,6 +107,10 @@
         .sinBorde {
             border: none;
         }
+
+        .minusculas{
+            text-transform: lowercase;
+        }
     </style>
 </head>
 
@@ -117,28 +121,30 @@
 
         <div class="contenedorTexto">
 
-            <p class="textoNegrita">Contrato de prestación de servicios de energía eléctrica @if($apartamento["tipo_proyecto"] == 'VIVO 4') y agua @endif</p>
+            <p class="textoNegrita">Contrato de prestación para servicio de energía eléctrica</p>
             <p class="texto">
                 <span class="negrita">{{ $empresa["nombre"] }}</span>, de <span class="negrita">{{ $edad }} años</span>,
-                @if($empresa["sexo"] == 'MASCULINO')
-                {{$empresa["estado_civil"]}}{{"O"}}{{","}}
-                @else
-                {{$empresa["estado_civil"]}}{{"A"}}{{","}}
-                @endif @if($empresa["sexo"] == 'MASCULINO')
-                {{$empresa["nacionalidad"]}}{{"O"}}{{","}}
-                @else
-                {{$empresa["nacionalidad"]}}{{"A"}}{{","}}
-                @endif de este domicilio,
+                <span class="minusculas">
+                    @if($empresa["sexo"] == 'MASCULINO')
+                    {{$empresa["estado_civil"]}}{{"O"}}{{","}}
+                    @else
+                    {{$empresa["estado_civil"]}}{{"A"}}{{","}}
+                    @endif @if($empresa["sexo"] == 'MASCULINO')
+                    {{$empresa["nacionalidad"]}}{{"O"}}{{","}}
+                    @else
+                    {{$empresa["nacionalidad"]}}{{"A"}}{{","}}
+                    @endif de este domicilio,
+                </span>
                 identificado con @if ($empresa["tipo_documento"] == 'DPI')
-                Documento Personal de Identificación (DPI) {{","}}
+                Documento Personal de Identificación (DPI){{","}}
                 @else
                 PASAPORTE{{","}}
                 @endif número <span class="negrita">{{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
                 extendida por el Registro Nacional de las Personas –RENAP–{{","}}
-                @endif  en su calidad de Representante  Legal de la entidad Zentro Sociedad Anónima el cual se hace constar en el nombramiento, con número de Registro 
-                Mercantil  601330 Folio 344 libro 752 y correo electrónico
-                para facturación <span class="negrita">{{ $empresa["email"] }}</span>; en adelante EL CLIENTE, por este medio contrata
-                los servicios individuales que serán suministrados por <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, en adelante el PROVEEDOR y que se describen a
+                @endif en su calidad de <span class="negrita">Representante  Legal</span> de la entidad <span class="negrita">{{ $empresa["nombre_representacion"] }}</span> el cual se hace constar en el nombramiento, 
+                con número de Registro Mercantil {{ $empresa["no_registro_mercantil"] }}, Folio {{ $empresa["folio"] }}, libro {{ $empresa["libro"] }} y correo electrónico
+                para facturación <span class="negrita">{{ $empresa["email"] }}</span>; en adelante EL CLIENTE, por este medio contrata el servicio de energía eléctrica que será suministrado por  
+                <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, adelante el PROVEEDOR y que se describen a
                 continuación:
             </p>
             @if ($apartamento["tipo_proyecto"] == 'VIAGGIO')
@@ -150,15 +156,15 @@
                 </tr>
                 <tr>
                     <td>Deposito por contador eléctrico</td>
-                    <td>Q. 700.00</td>
+                    <td>Q. 400.00</td>
                 </tr>
                 <tr>
                     <td>Cargo Fijo</td>
-                    <td>Q.  10.50</td>
+                    <td>Q.   11.00</td>
                 </tr>
                 <tr>
                     <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q.   1.41</td>
+                    <td>Q.     1.42</td>
                 </tr>
             </table>
             @endif
@@ -167,60 +173,48 @@
             <table class="sinBorde">
                 <tr>
                     <th colspan="2">
-                        Precios Servicio de Agua
-                    </th>
-                    <th class="sinBorde"></th>
-                    <th colspan="2">
                         Precios Energía Eléctrica
                     </th>
                 </tr>
                 <tr>
-                    <td>Cargo fijo</td>
-                    <td>Q. 50.00</td>
-                    <td class="sinBorde"></td>
                     <td>Deposito por contador eléctrico</td>
                     <td>Q. 400.00</td>
                 </tr>
                 <tr>
-                    <td>mt3 de consumo</td>
-                    <td>Q. 7.50</td>
-                    <td class="sinBorde"></td>
                     <td>Cargo Fijo</td>
-                    <td>Q. 10.50</td>
+                    <td>Q.   11.00</td>
                 </tr>
                 <tr>
-                    <td class="sinBorde"></td>
-                    <td class="sinBorde"></td>
-                    <td class="sinBorde"></td>
-                    <td colspan="2">Precio varía según tabla CNEE*</td>
+                    <td>kWh (este precio varía según CNEE*)</td>
+                    <td>Q.     1.42</td>
                 </tr>
             </table>
             @endif
 
-            <p class="texto">*Precios varían según tabla de CNEE (Comisión Nacional de Energía Eléctrica).</p>
+            <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
-                Los cuáles serán instalados en edificio <span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
-                    VIVO 4, Vía 1 1-67 zona 4 Guatemala, Guatemala Torre {{ $apartamento["torre"] }}, 
+                El cuál será instalado en el edificio<span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
+                VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $apartamento["numero_apartamento"] }} 
                     @else
-                    VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada,
-                    @endif </span> Apto. {{ $apartamento["numero_apartamento"] }} y que serán facturados a nombre de,
-                <span class="negrita">{{ $empresa["nombre"] }}</span> con número de NIT <span class="negrita">{{ $empresa["nit"] }}</span>
+                    VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $apartamento["numero_apartamento"] }}
+                    @endif </span> y que serán facturados a nombre, de
+                <span class="negrita">{{ $empresa["nombre"] }}</span> con número NIT <span class="negrita">{{ $empresa["nit"] }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
-                El presente contrato regula el suministro de energía eléctrica y de agua al CLIENTE, exclusivamente para el inmueble, cuya dirección quedo plasmada al inicio del presente. El CLIENTE se adhiere a las estipulaciones contenidas en el presente contrato.
+                El presente contrato regula el suministro de energía eléctrica al CLIENTE, exclusivamente para el inmueble, cuya dirección quedo plasmada al inicio del presente. El CLIENTE se adhiere a las estipulaciones contenidas en el presente contrato.
             </p>
             <p class="texto">
                 <span class="negrita">Instalaciones</span><br>
-                El CLIENTE hace efectivo el costo del depósito del contador. EL PROVEEDOR proveerá e instalará el o los contadores y/o medidores correspondientes. Corresponde al CLIENTE tener disponible la acometida para la energía eléctrica, así como la instalación domiciliar para el suministro de abastecimiento de agua. Todas las instalaciones a partir del punto de entrega serán efectuadas por cuenta del CLIENTE. EL PROVEEDOR no será responsable de los daños y perjuicios causado por desperfectos derivados del uso indebido de las instalaciones internas, aparatos o equipos que el CLIENTE tuviere en uso. El CLIENTE autoriza el ingreso del personal de EL PROVEEDOR, previa identificación, para inspeccionar las instalaciones, reparar, retirar, cambiar equipo de su propiedad, así como tomar lecturas y/o comprobarlas en los equipos de medición instalados, los cuales deben estar siempre accesibles.
+                EL PROVEEDOR instalará y proveerá el contador y/o medidor correspondiente. Corresponde al CLIENTE tener disponible la acometida para la energía eléctrica. Todas las instalaciones a partir del punto de entrega serán efectuadas por cuenta del CLIENTE. EL PROVEEDOR no será responsable de los daños y perjuicios causado por desperfectos derivados del uso indebido de las instalaciones internas, aparatos o equipos que el CLIENTE tuviere en uso. El CLIENTE autoriza el ingreso del personal de EL PROVEEDOR, previa identificación, para inspeccionar las instalaciones, reparar, retirar, cambiar equipo de su propiedad, así como tomar lecturas y/o comprobarlas en los equipos de medición instalados, los cuales deben estar siempre accesibles.
             </p>
             <p class="texto">
                 <span class="negrita">Precio, pago y facturación</span><br>
-                EL PROVEEDOR de manera mensual enviará a la dirección de facturación señalada por EL CLIENTE la respectiva factura por los servicios prestados. La obligación de pago empieza a correr a partir de la fecha de conexión. EL CLIENTE se obliga a pagar los cargos por los servicios brindados antes del día 25 de cada mes, sin necesidad de cobro ni requerimiento alguno en las oficinas de EL PROVEEDOR o en los lugares y formas que EL PROVEEDOR haya designado por cualquier medio, para hacer pagos. No obstante, lo anterior, la no recepción de la factura no exime a EL CLIENTE del pago mensual correspondiente. En caso de atraso en el pago EL CLIENTE se obliga a pagar a EL PROVEEDOR un interés moratorio equivalente al cinco por ciento (5%) mensual sobre el saldo adeudado hasta el efectivo pago de este. Se cobrará un recargo de ciento cincuenta quetzales exactos (Q 150.00) por cheque rechazado. Los precios actuales pueden ser modificadas por EL PROVEEDOR en cualquier momento sin previo aviso y sin responsabilidad de su parte. EL CLIENTE acepta desde ahora cualquier incremento futuro en la tarifa y/o cargos adicionales que EL PROVEEDOR establezca en el futuro, pero se reserva el derecho a solicitar la cancelación del servicio, en cuyo caso deberá estar solvente en todos sus pagos. Para efectos de este acuerdo, se considerará la aceptación de EL CLIENTE de las nuevas tarifas y/o cargos adicionales, el pago de la primera cuenta por servicios que se haga a partir de la aplicación de la nueva tarifa y/o cargos adicionales.
+                EL PROVEEDOR de manera mensual enviará a la dirección de facturación señalada por EL CLIENTE la respectiva factura por el servicio prestado. La obligación de pago empieza a correr a partir de la fecha de conexión. EL CLIENTE se obliga a pagar los cargos por el servicio brindado antes del día 25 de cada mes, sin necesidad de cobro ni requerimiento alguno en las oficinas de EL PROVEEDOR o en los lugares y formas que EL PROVEEDOR haya designado por cualquier medio, para hacer pagos. No obstante, lo anterior, la no recepción de la factura no exime a EL CLIENTE del pago mensual correspondiente. En caso de atraso en el pago EL CLIENTE se obliga a pagar a EL PROVEEDOR un interés moratorio equivalente al cinco por ciento (5%) mensual sobre el saldo adeudado hasta el efectivo pago de este. Se cobrará un recargo de ciento cincuenta quetzales exactos (Q 150.00) por cheque rechazado. Los precios actuales pueden ser modificadas por EL PROVEEDOR en cualquier momento sin previo aviso y sin responsabilidad de su parte. EL CLIENTE acepta desde ahora cualquier incremento en la tarifa y/o cargos adicionales que EL PROVEEDOR establezca en el futuro, pero se reserva el derecho a solicitar la cancelación del servicio, en cuyo caso deberá estar solvente en todos sus pagos. Para efectos de este acuerdo, se considerará la aceptación de EL CLIENTE de las nuevas tarifas y/o cargos adicionales, el pago de la primera cuenta por el servicio prestado que se haga a partir de la aplicación de la nueva tarifa y/o cargos adicionales.
             </p>
             <p class="texto">
                 <span class="negrita">Medición de suministro</span><br>
-                EL PROVEEDOR medirá la energía eléctrica y abastecimiento de agua a través de su equipo de medición (medidos, en el punto de entrega designada) en una fecha en el rango entre el día 1 y 15 de cada mes). El personal designado por EL PROVEEDOR es el único facultado para instalar, remover, sustituir y ajustar los equipos de medición. El CLIENTE es responsable del equipo de medición y le será cobrado el valor de este, por su destrucción parcial o perdida del equipo (En modalidad de depósito anticipado). Al CLIENTE le queda prohibido: a) Tomar energía eléctrica o agua que no haya sido medida; b) Impedir el correcto funcionamiento del equipo de medición; c) Alterar el equipo de medición de cualquier forma; d) Reconectar el servicio por sí mismo o por medio de personas no autorizadas; e) Redistribuir energía eléctrica o agua a otros inmuebles o ramificar la conexión domiciliar sin autorización y/o utilizar los servicios para otros fines que no sean domésticos o comercializarlos; f) EL PROVEEDOR está facultado a cobrar una multa de hasta diez mil quetzales exactos (Q 10,000.00) en caso el cliente altere de cualquier manera el sistema de medición.
+                EL PROVEEDOR medirá el abastecimiento de energía eléctrica a través de su equipo de medición (medidos, en el punto de entrega designada en una fecha en el rango entre el día 1 y 15 de cada mes).  El personal designado por EL PROVEEDOR es el único facultado para instalar, remover, sustituir y ajustar el equipo de medición. El CLIENTE es responsable del equipo de medición y le será cobrado el valor de este, por su destrucción parcial o pérdida del equipo (En modalidad de depósito anticipado). Al CLIENTE le queda prohibido: a) Tomar energía eléctrica que no haya sido medida; b) Impedir el correcto funcionamiento del equipo de medición; c) Alterar el equipo de medición de cualquier forma; d) Reconectar el servicio por sí mismo o por medio de personas no autorizadas; e) Redistribuir energía eléctrica a otros inmuebles o ramificar la conexión domiciliar sin autorización y/o utilizar el servicio para otros fines que no sean domésticos o comercializarlos;  f) EL PROVEEDOR está facultado a cobrar una multa de hasta diez mil quetzales exactos (Q 10,000.00) en caso el cliente altere de cualquier manera el sistema de medición.
             </p>
             <p class="texto">
                 <span class="negrita">Plazo</span><br>
@@ -228,7 +222,7 @@
             </p>
             <p class="texto">
                 <span class="negrita">Suspensión</span><br>
-                EL PROVEEDOR tendrá el derecho de suspender el servicio prestado a EL CLIENTE, sin responsabilidad de su parte sin necesidad de aviso previo ni declaración judicial alguna, en los siguientes casos: a) Por falta de pago de la cuota mensual correspondiente durante dos meses consecutivos; b) Por incumplimiento de EL CLIENTE a cualquiera de las prohibiciones contenidas en este contrato. En los casos anteriores EL PROVEEDOR podrá reanudar el servicio contratado una vez EL CLIENTE pague todos los saldos adeudados, subsane los incumplimientos incurridos y pague los gastos de reconexión del servicio por quinientos quetzales exactos (Q 500.00).
+                EL PROVEEDOR tendrá el derecho de suspender el servicio prestado a EL CLIENTE, sin responsabilidad de su parte sin necesidad de aviso previo ni declaración judicial alguna, en los siguientes casos: a) Por falta de pago de la cuota mensual correspondiente durante dos meses consecutivos; b) Por incumplimiento de EL CLIENTE a cualquiera de las prohibiciones contenidas en este contrato. En los casos anteriores EL PROVEEDOR podrá reanudar el servicio contratado una vez EL CLIENTE pague todos los saldos adeudados, subsane los incumplimientos incurridos y pague los gastos de reconexión del servicio por quinientos quetzales exactos (Q 500.00).  
             </p>
 
             <div class="pie">Página 1 de 2</div>
@@ -244,11 +238,11 @@
         <div class="contenedorTexto">
             <p class="texto">
                 <span class="negrita">Terminación</span><br>
-                Este contrato finalizará por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) Si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo, por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo de servicios por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente acuerdo.
+                Este contrato finalizará por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) Si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo, por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo del servicio por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente acuerdo. 
             </p>
             <p class="texo">
                 <span class="negrita">Otras disposiciones</span><br>
-                EL PROVEEDOR se obliga a: a) Proveer del servicio de energía eléctrica y agua de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal; b) Utilizar la energía eléctrica y agua de forma racional.
+                EL PROVEEDOR se obliga a: a) Proveer del servicio de energía eléctrica de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal; b) Utilizar la energía eléctrica de forma racional.
             </p>
             <p class="texto">
                 <span class="negrita">Cesión y cambio de dirección</span><br>
@@ -256,9 +250,8 @@
             </p>
             <p class="texto">
                 <span class="negrita">Efectos procesales</span><br>
-                EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato.
+                EL CLIENTE acepta desde hoy como buenas y exactas las cuentas que se le presenten con motivo de este acuerdo y como líquido, ejecutivo, de plazo vencido y exigible el saldo que EL PROVEEDOR le reclame como consecuencia de este. Para el efecto EL CLIENTE renuncia al fuero del domicilio que pudiera corresponderle, sometiéndose expresamente a las leyes de la República de Guatemala, del Departamento de Guatemala, sirviéndose como título ejecutivo el presente contrato con firma legalizada y/o el acta notarial en la que conste el saldo que existiere en su contra, de acuerdo con los libros de contabilidad de EL PROVEEDOR. EL CLIENTE señala como lugar para recibir notificaciones la dirección de servicio indicada en el presente contrato. 
                 Yo, el CLIENTE, declaro, bajo juramento, que todos los documentos presentados son legítimos y todo lo declarado es veraz.
-                <br>
                 Guatemala {{ $fecha_texto }}.
             </p>
             <br>
@@ -268,8 +261,7 @@
             </p>
             <br>
             <p class="texto">
-                En la ciudad de Guatemala el día {{ $fecha_texto }}, como NOTARIO DOY FE, que la firma que
-                antecede es autentica por haber sido puesta el día de hoy en mi presencia por <span class="negrita">
+                En la ciudad de Guatemala el día {{ $fecha_texto }}, como NOTARIO DOY FE, que la firma que antecede es autentica por haber sido puesta el día de hoy en mi presencia por <span class="negrita">
                     {{ $empresa["nombre"] }}</span> quien se identifica con<span class="negrita"> @if ($empresa["tipo_documento"] == 'DPI')
                     DPI
                     @else
@@ -277,9 +269,9 @@
                     @endif
                 </span> con número <span class="negrita">
                     {{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
-                extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP-
-                @endif.
-                La firma calza un contrato de servicios de energía eléctrica y agua. El compareciente, firma nuevamente la presente acta de legalización, junto con el notario autorizante.
+                    extendida por el registro nacional de las personas de la Republica de Guatemala -RENAP-.
+                @endif
+                La firma calza un contrato de servicio de energía eléctrica. El compareciente, firma nuevamente la presente acta de legalización, junto con el notario autorizante.       
             </p>
             <br>
             <br>
