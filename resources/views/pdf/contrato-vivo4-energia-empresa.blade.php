@@ -194,7 +194,7 @@
             <p class="texto">*Comisión Nacional de Energía Eléctrica.</p>
             <p class="texto">
                 El cuál será instalado en el edificio<span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
-                VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $apartamento["numero_apartamento"] }} 
+                VIVO 4, Torre {{ $apartamento["torre"]  }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $apartamento["numero_apartamento"] }} 
                     @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $apartamento["numero_apartamento"] }}
                     @endif </span> y que serán facturados a nombre, de
