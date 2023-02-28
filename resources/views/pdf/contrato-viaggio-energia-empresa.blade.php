@@ -198,7 +198,7 @@
                     @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $apartamento["numero_apartamento"] }}
                     @endif </span> y que serán facturados a nombre, de
-                <span class="negrita">{{ $empresa["nombre"] }}</span> con número NIT <span class="negrita">{{ $empresa["nit"] }}</span>
+                <span class="negrita">{{ $empresa["nombre_representacion"] }}</span> con número NIT <span class="negrita">{{ $empresa["nit"] }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
