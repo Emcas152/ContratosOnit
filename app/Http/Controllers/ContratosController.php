@@ -145,7 +145,7 @@ class ContratosController extends Controller
             $documento = Contratos::create($data);
 
             DB::commit();
-            return response()->json(['data'=> $documento, 'usuario'=> $newUser, 'access_token' => $accessToken, 'code' => 201], 201);
+            return response()->json(['data'=> $documento, 'user'=> $newUser, 'access_token' => $accessToken, 'code' => 201], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['data'=> 'Error al registrarse', 'code' => 500], 500);
