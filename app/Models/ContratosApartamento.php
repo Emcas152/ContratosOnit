@@ -21,6 +21,7 @@ class ContratosApartamento extends Model
         'numero_apartamento',
         'torre',
         'tipo_apartamento',
+        'email_facturacion',
         'file_name',
         'file_name_contrato',
         'fecha_traslado',

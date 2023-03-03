@@ -143,7 +143,9 @@
                 extendida por el Registro Nacional de las Personas –RENAP–{{","}}
                 @endif en su calidad de <span class="negrita">Representante  Legal</span> de la entidad <span class="negrita">{{ $empresa["nombre_representacion"] }}</span> el cual se hace constar en el nombramiento, 
                 con número de Registro Mercantil {{ $empresa["no_registro_mercantil"] }}, Folio {{ $empresa["folio"] }}, libro {{ $empresa["libro"] }} y correo electrónico
-                para facturación <span class="negrita">{{ $empresa["email"] }}</span>; en adelante EL CLIENTE, por este medio contrata el servicio de energía eléctrica que será suministrado por  
+                para facturación <span class="negrita"> @if ($apartamento["email_facturacion"] == '') 
+                    {{ $empresa["email"] }} @else {{ $empresa["email_facturacion"] }} @endif
+                </span>; en adelante EL CLIENTE, por este medio contrata el servicio de energía eléctrica que será suministrado por  
                 <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, adelante el PROVEEDOR y que se describen a
                 continuación:
             </p>
