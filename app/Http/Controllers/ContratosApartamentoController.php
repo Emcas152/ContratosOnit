@@ -122,9 +122,21 @@ class ContratosApartamentoController extends Controller
             $dataSave = array_merge($info, $plan);
             DB::beginTransaction();
 
+
+
             /* Nombres Contratos */
             $nameFilePlan2 = "empresa-contrato-energia-".time().".pdf";
-            $dataSave["file_name_contrato"] = $nameFilePlan2;
+            $nameFilePlanAgua = "empresa-contrato-agua-".time().".pdf";
+
+            if ($request["tipo"] == "ENERGIA") {
+                $dataSave["file_name_contrato"] = $nameFilePlan2;
+            } elseif($request["tipo"] == "AGUA" && $dataSave["tipo_proyecto"] == 'VIVO 4') {
+                $dataSave["file_name_agua"] = $nameFilePlanAgua;
+            } else {
+                return response(['data'=> [],'code' => 400], 400);
+            }
+            
+            
 
             $contratoEmpresarial = ContratosApartamento::findOrfail($info["id"]);
 
@@ -165,6 +177,14 @@ class ContratosApartamentoController extends Controller
                     $pdf = PDF::loadView("pdf.contrato-viaggio-energia-empresa", $dataView);
                     $pdf->save($urlFile);
                 }
+            } elseif($request["tipo"] == "AGUA" && $dataSave["tipo_proyecto"] == 'VIVO 4') {
+                if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
+                    $urlFile = storage_path("app/public")."/$nameFilePlanAgua";
+                    $pdf = PDF::loadView("pdf.contrato-agua-empresarial", $dataView);
+                    $pdf->save($urlFile);
+                }
+            } else {
+                return response(['data'=> $dataView,'code' => 400], 400);
             }
 
             DB::commit();
