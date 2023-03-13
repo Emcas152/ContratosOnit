@@ -24,6 +24,7 @@ class ContratosApartamento extends Model
         'email_facturacion',
         'file_name',
         'file_name_contrato',
+        'file_name_agua',
         'fecha_traslado',
         'estado'
     ];
