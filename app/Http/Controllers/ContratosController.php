@@ -81,6 +81,11 @@ class ContratosController extends Controller
             $dataSave["file_name"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') ? $nameFilePlan3 : '';
             $nameFilePlan2 = "contrato-agua-y-energia-".time().".pdf";
             $dataSave["file_name_contrato"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') ? $nameFilePlan2 : '';
+            $nameFilePlan4 = "contrato-agua-".time().".pdf";
+            $dataSave["file_name_agua"] = ($plan["tipo_plan"] == 'PLAN4') ? $nameFilePlan4 : '';
+            $nameFilePlan5 = "contrato-energia-".time().".pdf";
+            $dataSave["file_name_energia"] = ($plan["tipo_plan"] == 'PLAN5') ? $nameFilePlan5 : '';
+
             $documento = Contratos::create($dataSave);
 
             $dataSave["id"] = $documento->id;
@@ -97,7 +102,22 @@ class ContratosController extends Controller
                     $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
                     $pdf->save($urlFile2);
                 }
-            } else {
+
+                if ($plan["tipo_plan"] == 'PLAN4') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan4";
+                    $pdf = PDF::loadView("pdf.contrato-solo-agua", $dataSave);
+                    $pdf->save($urlFile2);
+                }
+
+                if ($plan["tipo_plan"] == 'PLAN5') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan5";
+                    $pdf = PDF::loadView("pdf.contrato-viaggio-solo-energia", $dataSave);
+                    $pdf->save($urlFile2);
+                }
+
+            } else if ( ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') 
+                        || ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') 
+                        || $plan["tipo_plan"] == 'PLAN4' || $plan["tipo_plan"] == 'PLAN5') {
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
                     $urlFile = storage_path("app/public")."/$nameFilePlan2";
                     $pdf = PDF::loadView("pdf.contrato-viaggio", $dataSave);
@@ -109,6 +129,21 @@ class ContratosController extends Controller
                     $pdf = PDF::loadView("pdf.contrato-internet", $dataSave);
                     $pdf->save($urlFile2);
                 }
+
+                if ($plan["tipo_plan"] == 'PLAN4') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan4";
+                    $pdf = PDF::loadView("pdf.contrato-solo-agua", $dataSave);
+                    $pdf->save($urlFile2);
+                }
+
+                if ($plan["tipo_plan"] == 'PLAN5') {
+                    $urlFile2 = storage_path("app/public")."/$nameFilePlan5";
+                    $pdf = PDF::loadView("pdf.contrato-vivo4-solo-energia", $dataSave);
+                    $pdf->save($urlFile2);
+                }
+
+            } else {
+                return response(['data'=> $dataSave,'code' => 400], 400);
             }
 
             DB::commit();

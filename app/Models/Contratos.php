@@ -38,6 +38,8 @@ class Contratos extends Model
         'file_name',
         'tipo_documento',
         'file_name_contrato',
+        'file_name_energia',
+        'file_name_agua',
         'fecha_registro',
         'tipo_proyecto',
         'tipo_plan',
