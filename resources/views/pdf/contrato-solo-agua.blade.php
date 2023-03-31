@@ -235,7 +235,7 @@
             </p>
             <p class="texo">
                 <span class="negrita">Otras disposiciones</span><br>
-                EL PROVEEDOR se obliga a: a) Proveer del servicio de agua de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal; b) Utilizar el agua de forma racional.
+                EL PROVEEDOR se obliga a: a) Proveer del servicio de agua de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal con un costo de trecientos quetzales exactos (Q 300.00); b) Utilizar el agua de forma racional.
             </p>
             <p class="texto">
                 <span class="negrita">Cesión y cambio de dirección</span><br>
