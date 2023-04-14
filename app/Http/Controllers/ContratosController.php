@@ -92,9 +92,10 @@ class ContratosController extends Controller
 
             if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
-                    $urlFile = storage_path("app/public")."/$nameFilePlan2";
+                    /* $urlFile = storage_path("app/public")."/$nameFilePlan2";
                     $pdf = PDF::loadView("pdf.contrato-vivo4", $dataSave);
-                    $pdf->save($urlFile);
+                    $pdf->save($urlFile); */
+
                 }
     
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
@@ -103,15 +104,15 @@ class ContratosController extends Controller
                     $pdf->save($urlFile2);
                 }
 
-                if ($plan["tipo_plan"] == 'PLAN4') {
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2' || $plan["tipo_plan"] == 'PLAN4') {
                     $urlFile2 = storage_path("app/public")."/$nameFilePlan4";
                     $pdf = PDF::loadView("pdf.contrato-solo-agua", $dataSave);
                     $pdf->save($urlFile2);
                 }
 
-                if ($plan["tipo_plan"] == 'PLAN5') {
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2' || $plan["tipo_plan"] == 'PLAN5') {
                     $urlFile2 = storage_path("app/public")."/$nameFilePlan5";
-                    $pdf = PDF::loadView("pdf.contrato-viaggio-solo-energia", $dataSave);
+                    $pdf = PDF::loadView("pdf.contrato-vivo4-solo-energia", $dataSave);
                     $pdf->save($urlFile2);
                 }
 
@@ -119,9 +120,9 @@ class ContratosController extends Controller
                         || ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') 
                         || $plan["tipo_plan"] == 'PLAN4' || $plan["tipo_plan"] == 'PLAN5') {
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') {
-                    $urlFile = storage_path("app/public")."/$nameFilePlan2";
+                    /* $urlFile = storage_path("app/public")."/$nameFilePlan2";
                     $pdf = PDF::loadView("pdf.contrato-viaggio", $dataSave);
-                    $pdf->save($urlFile);
+                    $pdf->save($urlFile); */
                 }
     
                 if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') {
@@ -136,9 +137,9 @@ class ContratosController extends Controller
                     $pdf->save($urlFile2);
                 }
 
-                if ($plan["tipo_plan"] == 'PLAN5') {
+                if ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN5') {
                     $urlFile2 = storage_path("app/public")."/$nameFilePlan5";
-                    $pdf = PDF::loadView("pdf.contrato-vivo4-solo-energia", $dataSave);
+                    $pdf = PDF::loadView("pdf.contrato-viaggio-solo-energia", $dataSave);
                     $pdf->save($urlFile2);
                 }
 
