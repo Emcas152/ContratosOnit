@@ -79,12 +79,20 @@ class ContratosController extends Controller
 
             $nameFilePlan3 = "contrato-internet-".time().".pdf";
             $dataSave["file_name"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN1') ? $nameFilePlan3 : '';
-            $nameFilePlan2 = "contrato-agua-y-energia-".time().".pdf";
-            $dataSave["file_name_contrato"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2') ? $nameFilePlan2 : '';
+
             $nameFilePlan4 = "contrato-agua-".time().".pdf";
-            $dataSave["file_name_agua"] = ($plan["tipo_plan"] == 'PLAN4') ? $nameFilePlan4 : '';
+
             $nameFilePlan5 = "contrato-energia-".time().".pdf";
-            $dataSave["file_name_energia"] = ($plan["tipo_plan"] == 'PLAN5') ? $nameFilePlan5 : '';
+
+            if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
+
+                $dataSave["file_name_agua"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2' || $plan["tipo_plan"] == 'PLAN4') ? $nameFilePlan4 : '';
+                $dataSave["file_name_energia"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN2' || $plan["tipo_plan"] == 'PLAN5') ? $nameFilePlan5 : '';
+
+            } else {
+                $dataSave["file_name_agua"] = ($plan["tipo_plan"] == 'PLAN4') ? $nameFilePlan4 : '';
+                $dataSave["file_name_energia"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN5') ? $nameFilePlan5 : '';
+            }
 
             $documento = Contratos::create($dataSave);
 
