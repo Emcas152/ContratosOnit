@@ -94,6 +94,8 @@ class ContratosController extends Controller
                 $dataSave["file_name_energia"] = ($plan["tipo_plan"] == 'PLAN3' || $plan["tipo_plan"] == 'PLAN5') ? $nameFilePlan5 : '';
             }
 
+            $dataSave["file_name_contrato"] = '';
+
             $documento = Contratos::create($dataSave);
 
             $dataSave["id"] = $documento->id;
