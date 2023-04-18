@@ -25,7 +25,13 @@ class ContratosApartamento extends Model
         'file_name',
         'file_name_contrato',
         'file_name_agua',
+        'file_name_internet',
         'fecha_traslado',
+        'tipo_servicio',
+        'tabla0',
+        'tabla1',
+        'tabla2',
+        'tabla3',
         'estado'
     ];
 }

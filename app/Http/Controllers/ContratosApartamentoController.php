@@ -119,7 +119,13 @@ class ContratosApartamentoController extends Controller
             $plan['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
 
             /* $info["fecha_registro"] = $fecha; */
-            $dataSave = array_merge($info, $plan);
+            $dataSave = [];
+            try {
+                $dataSave = array_merge($info["data"] ? $info["data"] : $info, $plan, $info["servicio"] ? $info["servicio"] : []);
+            } catch (\Throwable $th) {
+                $dataSave = array_merge($info, $plan);
+            }
+            
             DB::beginTransaction();
 
 
@@ -127,18 +133,21 @@ class ContratosApartamentoController extends Controller
             /* Nombres Contratos */
             $nameFilePlan2 = "empresa-contrato-energia-".time().".pdf";
             $nameFilePlanAgua = "empresa-contrato-agua-".time().".pdf";
+            $nameFilePlanInternet = "empresa-contrato-internet".time().".pdf";
 
             if ($request["tipo"] == "ENERGIA") {
                 $dataSave["file_name_contrato"] = $nameFilePlan2;
             } elseif($request["tipo"] == "AGUA" && $dataSave["tipo_proyecto"] == 'VIVO 4') {
                 $dataSave["file_name_agua"] = $nameFilePlanAgua;
+            } elseif($request["tipo"] == "INTERNET") {
+                $dataSave["file_name_internet"] = $nameFilePlanInternet;
             } else {
                 return response(['data'=> [],'code' => 400], 400);
             }
             
             
 
-            $contratoEmpresarial = ContratosApartamento::findOrfail($info["id"]);
+            $contratoEmpresarial = ContratosApartamento::findOrfail($dataSave["id"]);
 
             $usuario = User::findOrfail($contratoEmpresarial->id_empresa);
 
@@ -183,6 +192,10 @@ class ContratosApartamentoController extends Controller
                     $pdf = PDF::loadView("pdf.contrato-agua-empresarial", $dataView);
                     $pdf->save($urlFile);
                 }
+            } elseif($request["tipo"] == "INTERNET") {
+                $urlFile = storage_path("app/public")."/$nameFilePlanInternet";
+                $pdf = PDF::loadView("pdf.contrato-internet-empresarial", $dataView);
+                $pdf->save($urlFile);
             } else {
                 return response(['data'=> $dataView,'code' => 400], 400);
             }
