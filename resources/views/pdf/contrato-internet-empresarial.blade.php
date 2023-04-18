@@ -125,31 +125,32 @@
 
             <p class="textoNegrita">Contrato de prestación de servicios de telecomunicaciones</p>
             <p class="texto">
-                <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>,
-                @if($sexo == 'MASCULINO')
-                {{$estado_civil}}{{"O"}}{{","}}
-                @else
-                {{$estado_civil}}{{"A"}}{{","}}
-                @endif @if($sexo == 'MASCULINO')
-                {{$nacionalidad}}{{"O"}}{{","}}
-                @else
-                {{$nacionalidad}}{{"A"}}{{","}}
-                @endif de este domicilio, identificado
-                con @if ($tipo_documento == 'DPI')
+                <span class="negrita">{{ $empresa["nombre"] }}</span>, de <span class="negrita">{{ $edad }} años</span>,
+                <span class="minusculas">
+                    @if($empresa["sexo"] == 'MASCULINO')
+                    {{$empresa["estado_civil"]}}{{"O"}}{{","}}
+                    @else
+                    {{$empresa["estado_civil"]}}{{"A"}}{{","}}
+                    @endif @if($empresa["sexo"] == 'MASCULINO')
+                    {{$empresa["nacionalidad"]}}{{"O"}}{{","}}
+                    @else
+                    {{$empresa["nacionalidad"]}}{{"A"}}{{","}}
+                    @endif de este domicilio,
+                </span>
+                identificado con @if ($empresa["tipo_documento"] == 'DPI')
                 Documento Personal de Identificación (DPI){{","}}
                 @else
                 PASAPORTE{{","}}
-                @endif número <span class="negrita">{{ $identificacion }}
-                </span> @if ($tipo_documento == 'DPI')
+                @endif número <span class="negrita">{{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
                 extendida por el Registro Nacional de las Personas –RENAP–{{","}}
-                @endif con numero de celular
-                <span class="negrita">{{ $celular }}</span>
-                y correo electrónico <span class="negrita">{{ $email }}</span>;en adelante EL CLIENTE, por este medio
-                contrata los servicios individuales que
-                serán suministrados por HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA, adelante el PROVEEDOR y que se
-                describen a continuación:
+                @endif en su calidad de <span class="negrita">Representante  Legal</span> de la entidad <span class="negrita">{{ $empresa["nombre_representacion"] }}</span> el cual se hace constar en el nombramiento, 
+                con número de Registro Mercantil {{ $empresa["no_registro_mercantil"] }}, Folio {{ $empresa["folio"] }}, libro {{ $empresa["libro"] }} y correo electrónico
+                para facturación <span class="negrita">@if ($apartamento["email_facturacion"] == '') 
+                    {{ $empresa["email"] }} @else {{ $apartamento["email_facturacion"] }} @endif</span>; en adelante EL CLIENTE, por este medio contrata el servicio de agua que será suministrado por
+                <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, adelante el PROVEEDOR y que se describen a
+                continuación:
             </p>
-            @if ($tipo_proyecto == 'VIVO 4')
+            @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
                 <table class="sinBorde">
                     <tr>
                         <th colspan="3">
@@ -162,14 +163,14 @@
                         
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '10')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '10')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>10 Mbps</td>
                         <td>Q. 239.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '20')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '20')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -177,14 +178,14 @@
                         <td>Q. 299.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '20')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '20')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>20 Mbps</td>
                         <td>Q. 349.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '30')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '30')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -192,14 +193,14 @@
                         <td>Q. 349.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '30')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '30')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>30 Mbps</td>
                         <td>Q. 399.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '50')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '50')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -207,14 +208,14 @@
                         <td>Q. 399.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '50')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '50')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>50 Mbps</td>
                         <td>Q. 599.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '100')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '100')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -259,14 +260,14 @@
                         </th>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '30')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '30')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>30 Mbps</td>
                         <td>Q. 199.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                        <td class="seleccion">X @if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '0')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -274,14 +275,14 @@
                         <td>Q. 0.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '50')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '50')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>50 Mbps</td>
                         <td>Q. 299.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && ($tabla3 == '200' || $tabla3 == '500'))
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && ($apartamento["tabla3"] == '200' || $apartamento["tabla3"] == '500'))
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -289,14 +290,14 @@
                         <td>Q. 299.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '100')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '100')
                             <span class="negrita">X</span>
                             @endif
                         </td>
                         <td>100 Mbps</td>
                         <td>Q. 449.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '200')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '200')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -308,7 +309,7 @@
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '500')
+                        <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '500')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -338,14 +339,14 @@
                     
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '10')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '10')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>10 Mbps</td>
                     <td>Q. 239.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '20')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '20')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -353,14 +354,14 @@
                     <td>Q. 299.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '20')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '20')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>20 Mbps</td>
                     <td>Q. 349.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '30')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '30')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -368,14 +369,14 @@
                     <td>Q. 349.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '30')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '30')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>30 Mbps</td>
                     <td>Q. 399.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '50')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '50')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -383,14 +384,14 @@
                     <td>Q. 399.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '50')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'simetrico' && $apartamento["tabla1"]  == '50')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>50 Mbps</td>
                     <td>Q. 599.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '100')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'burst' && $apartamento["tabla2"] == '100')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -435,14 +436,14 @@
                     </th>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '30')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '30')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>30 Mbps</td>
                     <td>Q. 199.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                    <td class="seleccion">X @if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '0')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -450,14 +451,14 @@
                     <td>Q.   0.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '50')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '50')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>50 Mbps</td>
                     <td>Q. 299.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && ($tabla3 == '200' || $tabla3 == '500'))
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && ($apartamento["tabla3"] == '200' || $apartamento["tabla3"] == '500'))
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -465,14 +466,14 @@
                     <td>Q. 299.00</td>
                 </tr>
                 <tr>
-                    <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '100')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'basico' && $apartamento["tabla0"] == '100')
                         <span class="negrita">X</span>
                         @endif
                     </td>
                     <td>100 Mbps</td>
                     <td>Q. 449.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '200')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '200')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -484,7 +485,7 @@
                     <td class="sinBorde"></td>
                     <td class="sinBorde"></td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '500')
+                    <td class="seleccion">@if ($apartamento["tipo_servicio"] == 'telefono' && $apartamento["tabla3"] == '500')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -504,12 +505,12 @@
             @endif
 
             <p class="texto">
-                Los cuáles serán instalados en el edificio <span class="negrita">@if ($tipo_proyecto == 'VIVO 4')
-                        VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala,
+                Los cuales serán instalados en el edificio<span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
+                    VIVO 4, Torre {{ $apartamento["torre"] }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $apartamento["numero_apartamento"] }}
                     @else
-                    VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
-                    @endif</span> Apto. {{ $numero_apartamento }} y que serán facturados a nombre de <span class="negrita">{{ $nombre }}</span>
-                    con número de NIT <span class="negrita">{{ $nit }}</span>
+                    VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $apartamento["numero_apartamento"] }}
+                    @endif </span> y que serán facturados a nombre, de
+                <span class="negrita">{{ $empresa["nombre_representacion"] }}</span> con número NIT <span class="negrita">{{ $empresa["nit"] }}</span>
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
@@ -593,12 +594,12 @@
             <br>
             <p class="texto">
                 En la ciudad de <span class="negrita">Guatemala el día {{ $fecha_texto }}</span>, como NOTARIO DOY FE, que la firma que
-                antecede es autentica por haber sido puesta el día de hoy en mi presencia de <span class="negrita">{{ $nombre }}</span>
-                quien se identifica con <span class="negrita"> @if ($tipo_documento == 'DPI')
+                antecede es autentica por haber sido puesta el día de hoy en mi presencia de <span class="negrita">{{ $empresa["nombre"] }}</span>
+                quien se identifica con <span class="negrita"> @if ($empresa["tipo_documento"] == 'DPI')
                     DPI
                     @else
                     PASAPORTE
-                    @endif </span> con número <span class="negrita">{{ $identificacion }}</span> @if ($tipo_documento == 'DPI')
+                    @endif </span> con número <span class="negrita">{{ $empresa["identificacion"] }}</span> @if ($empresa["tipo_documento"] == 'DPI')
                 extendida por el Registro Nacional de las personas -RENAP-
                 @endif. La firma calza un contrato de servicios de telecomunicaciones. El compareciente, firma nuevamente la presente acta de legalización, junto con el notario autorizante.
             </p>
