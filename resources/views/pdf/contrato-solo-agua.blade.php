@@ -190,8 +190,17 @@
                     VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $numero_apartamento }}
                     @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}
-                    @endif </span> y que serán facturados a nombre, de
-                <span class="negrita">{{ $nombre }}</span> con número NIT <span class="negrita">{{ $nit }}</span>
+                    @endif </span> 
+                    
+                    y que serán facturados a nombre de
+                    @if($nombre_factura == '' && $nit_factura == '')
+                     <span class="negrita">{{ $nombre }}</span>
+                    con número de NIT <span class="negrita">{{ $nit }}</span>
+                    @else
+                    <span class="negrita">{{ $nombre_factura }}</span>
+                    con número de NIT <span class="negrita">{{ $nit_factura }}</span>
+                    @endif
+
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
