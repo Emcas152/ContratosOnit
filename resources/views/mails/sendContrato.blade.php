@@ -320,18 +320,17 @@ color: #035C67;
 				          	<img src="images/person_2.jpg" alt="" style="width: 100px; max-width: 600px; height: auto; margin: auto; display: block;">
 				          	<h3 class="name">Buen día , {{ $data["nombre"] }}</h3>
 				          	
-                                                    @if ($data['file_name_agua'])
-                            <p><a href="https://lifebackend.swarmdesarrollo.com/storage/app/public/{{ $data['file_name_agua'] }}" class="btn btn-primary">Agua</a></p>
-                            @endif
-
-                            @if ($data['file_name_energia'])
-                            <p><a href="https://lifebackend.swarmdesarrollo.com/storage/app/public/{{ $data['file_name_energia'] }}" class="btn btn-primary">Energia</a></p>
-                            @endif
-
-                            @if ($data['file_name'])
-                            <p><a href="https://lifebackend.swarmdesarrollo.com/storage/app/public/{{ $data['file_name'] }}" class="btn btn-primary">Internet</a></p>
-                            @endif
-
+                              @if ($data['file_name_agua'])
+                              <p><a href="{{ url('/storage/' . $data['file_name_agua']) }}" class="btn btn-primary">Agua</a></p>
+                              @endif
+                              
+                              @if ($data['file_name_energia'])
+                              <p><a href="{{ url('/storage/' . $data['file_name_energia']) }}" class="btn btn-primary">Energia</a></p>
+                              @endif
+                              
+                              @if ($data['file_name'])
+                              <p><a href="{{ url('/storage/' . $data['file_name']) }}" class="btn btn-primary">Internet</a></p>
+                              @endif
 				           	<p><b>Tus contratos han sido generados!</b></p>
                             <p class="onit"><b>No olvides realizar tu pago y enviar los contratos firmados al correo indicado (ventas@onit.gt).</b></p>
 			           	</div>
