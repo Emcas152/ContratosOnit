@@ -52,8 +52,6 @@ class Contratos extends Model
         'libro',
         'empresa',
         'fecha_nacimiento',
-        'tabla4',
-        'nombre_factura',
-        'nit_factura'
+        
     ];
 }

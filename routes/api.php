@@ -39,6 +39,7 @@ use App\Http\Controllers\GastosPresupuestoController;
 use App\Http\Controllers\EstadoCuentaController;
 
 use App\Http\Controllers\ContratosController;
+use App\Http\Controllers\NuevosContratosController;
 use App\Http\Controllers\ContratosApartamentoController;
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +67,8 @@ Route::post('/apartment/select', [ApartamentoController::class, 'show'])->name('
 
 /* Contratos Publicos */
 Route::post('/contratos/register/empresa', [ContratosController::class, 'register'])->name('contratos.register');
-Route::post('/contratos', [ContratosController::class, 'store'])->name('contratos.store');
+Route::post('/contratos', [NuevosContratosController::class, 'store'])->name('contratos.store');
+
 Route::get('/parameters/{codigo}', [ParametrosDetalleController::class, 'show'])->name('menu.show');
 
 /* Contratos Empresariales */

@@ -266,7 +266,7 @@
                         <td>30 Mbps</td>
                         <td>Q. 199.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                        <td class="seleccion"> @if ($tabla4 == '')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -296,7 +296,7 @@
                         <td>100 Mbps</td>
                         <td>Q. 329.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '200')
+                        <td class="seleccion">@if ($tabla4 == '200')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -311,7 +311,7 @@
                         <td>200 Mbps</td>
                         <td>Q. 499.00</td>
                         <td class="sinBorde"></td>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '500')
+                        <td class="seleccion">@if ($tabla4 == '500')
                             <span class="negrita">X</span>
                             @endif
                         </td>
@@ -445,7 +445,7 @@
                     <td>30 Mbps</td>
                     <td>Q. 199.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">X @if ($tipo_servicio == 'telefono' && $tabla3 == '0')
+                    <td class="seleccion"> @if ($tabla4 == '')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -475,7 +475,7 @@
                     <td>100 Mbps</td>
                     <td>Q. 329.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '200')
+                    <td class="seleccion">@if ($tabla4 == '200')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -490,7 +490,7 @@
                     <td>200 Mbps</td>
                     <td>Q. 499.00</td>
                     <td class="sinBorde"></td>
-                    <td class="seleccion">@if ($tipo_servicio == 'telefono' && $tabla3 == '500')
+                    <td class="seleccion">@if ($tabla4 == '500')
                         <span class="negrita">X</span>
                         @endif
                     </td>
@@ -509,13 +509,26 @@
             </table>
             @endif
 
+          
+   
+
+
             <p class="texto">
                 Los cuáles serán instalados en el edificio <span class="negrita">@if ($tipo_proyecto == 'VIVO 4')
                         VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala,
                     @else
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada
-                    @endif</span> Apto. {{ $numero_apartamento }} y que serán facturados a nombre de <span class="negrita">{{ $nombre }}</span>
+                    @endif</span> Apto. {{ $numero_apartamento }} 
+
+                    y que serán facturados a nombre de
+                    @if($nombre_factura == '' && $nit_factura == '')
+                     <span class="negrita">{{ $nombre }}</span>
                     con número de NIT <span class="negrita">{{ $nit }}</span>
+                    @else
+                    <span class="negrita">{{ $nombre_factura }}</span>
+                    con número de NIT <span class="negrita">{{ $nit_factura }}</span>
+                    @endif
+
             </p>
             <p class="texto">
                 <span class="negrita">Condiciones generales</span><br>
