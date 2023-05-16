@@ -88,9 +88,9 @@ class NuevosContratosController extends Controller
             $nameAgua = "contrato-agua-".time().".pdf";
             $nameEnergia = "contrato-energia-".time().".pdf";
 
-            $dataSave["file_name"] = ($plan == 'PLAN3' || $plan == 'PLAN1' || $plan == 'PLAN6') ? $nameInternet : '';
+            $dataSave["file_name"] = ($plan == 'PLAN3' || $plan == 'PLAN1' || $plan == 'PLAN6' || $plan == 'PLAN7') ? $nameInternet : '';
             $dataSave["file_name_agua"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN4' || $plan == 'PLAN6') ? $nameAgua : '';
-            $dataSave["file_name_energia"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN5' || $plan == 'PLAN7') ? $nameAgua : '';
+            $dataSave["file_name_energia"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN5' || $plan == 'PLAN7') ? $nameEnergia : '';
 
 
 
