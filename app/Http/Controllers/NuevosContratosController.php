@@ -140,7 +140,7 @@ class NuevosContratosController extends Controller
                 }
           
 
-            //DB::commit();
+            DB::commit();
             return response(['data'=> $dataSave,'code' => 201], 201);
 
           } catch (\Exception $e) 
