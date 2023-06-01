@@ -36,15 +36,14 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('noreply.swarmdesarrollo@gmail.com'),
-            'password' => env('uyxutrutwmmrmnky'),
+            'host' =>  'smtp.gmail.com',
+            'port' => '587',
+            'encryption' => 'tls',
+            'username' => 'noreply.swarmdesarrollo@gmail.com',
+            'password' => 'uyxutrutwmmrmnky',
             'timeout' => null,
             'auth_mode' => null,
         ],
-
         'ses' => [
             'transport' => 'ses',
         ],

@@ -68,6 +68,7 @@ class NuevosContratosController extends Controller
             $torre = $request->torre;
             $tipo_apartamento = $request->tipo_apartamento;
             $facturacion = $request->facturacion;
+            $servicio_agua = $request->servicio_agua;
 
 
             /* Fecha para la vista */
@@ -81,7 +82,7 @@ class NuevosContratosController extends Controller
 
             $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
             $info["fecha_registro"] = $fecha;
-            $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion);
+            $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion,$servicio_agua);
             DB::beginTransaction();
 
             $nameInternet = "contrato-internet-".time().".pdf";

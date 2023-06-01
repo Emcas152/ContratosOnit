@@ -54,6 +54,7 @@ class Contratos extends Model
         'fecha_nacimiento',
         'tabla4',
         'nombre_factura',
-        'nit_factura'
+        'nit_factura',
+        'servicio_agua'
     ];
 }
