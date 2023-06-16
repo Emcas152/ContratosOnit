@@ -142,6 +142,12 @@ Route::middleware(['auth:api'])->group(function ()
     Route::put('/news/edit/{id}', [NoticiaController::class, 'update'])->name('news.update');
     Route::delete('/news/delete/{id}', [NoticiaController::class, 'destroy'])->name('news.destroy');
 
+
+    Route::post('/view-contratos', [NuevosContratosController::class, 'index'])->name('view-contratos.index');
+    Route::delete('/view-contratos/delete/{id}', [NuevosContratosController::class, 'destroy'])->name('view-contratos.destroy');
+
+
+
     Route::post('/accessory-request', [SolicitudAccesorioController::class, 'index'])->name('accessory-request.index');
     Route::post('/accessory-request/create', [SolicitudAccesorioController::class, 'store'])->name('accessory-request.store');
     Route::put('/accessory-request/edit/{id}', [SolicitudAccesorioController::class, 'update'])->name('accessory-request.update');

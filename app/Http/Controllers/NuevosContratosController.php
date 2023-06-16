@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\Models\EstadosProcesos;
 use PDF;
 use App\Mail\sendContrato;
 use DB;
-
+use App\Http\Resources\ContratosNuevosResource;
 class NuevosContratosController extends Controller
 {
     private function getB64Image($base64_image){  
@@ -46,9 +47,42 @@ class NuevosContratosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
+    {   
+        $queryUrl = trim($request->searchText);
+        $pagination = $request->paginate;
+        $contratos = Contratos::where([['nombre', 'LIKE', '%'.$queryUrl.'%'],['empresa', '=', 'N']])
+                    ->orWhere([['tipo_proyecto', 'LIKE', '%'.$queryUrl.'%'],['empresa', '=', 'N']])
+                    ->orWhere([['numero_apartamento', 'LIKE', '%'.$queryUrl.'%'],['empresa', '=', 'N']])
+                    ->orWhere([['email', 'LIKE', '%'.$queryUrl.'%'],['empresa','N']])
+                    ->orWhere([['nit', 'LIKE', '%'.$queryUrl.'%'],['empresa', '=', 'N']]) 
+                    ->orderBy('id','DESC')            
+                    ->paginate($pagination);
+                    if (!count($contratos)) {
+                        return response(['data' => [],'code'=>204]);  
+                        
+                    }
+                    return response(['data'=> ContratosNuevosResource::collection($contratos),'per_page' => $contratos->perPage(),'total' => $contratos->total()]);
+    }
+
+
+    public function destroy(Request $request)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+            $contrato = Contratos::findOrFail($request->id);
+            $estado = EstadosProcesos::where([['sts_inicial',$contrato->status],['tabla','contratos']])->firstOrFail();
+            $contrato->status = $estado->sts_final;
+            $contrato->update();
+            DB::commit();
+            return response(['data'=> new ContratosNuevosResource($contrato),'code' => 200]);
+        }
+        catch (\Exception $e) 
+        {
+            DB::rollBack();
+            return response(['data'=> $e,'code' => 500]); 
+        }
     }
 
     /**
@@ -82,6 +116,7 @@ class NuevosContratosController extends Controller
 
             $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
             $info["fecha_registro"] = $fecha;
+            $info["status"] = "PEN";
             $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion,$servicio_agua);
             DB::beginTransaction();
 
