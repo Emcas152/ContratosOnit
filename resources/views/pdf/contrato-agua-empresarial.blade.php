@@ -170,23 +170,40 @@
             </table>
             @endif
 
-            @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
-            <table class="sinBorde">
-                <tr>
-                    <th colspan="2">
-                        Precios Servicio de Agua
-                    </th>
-                </tr>
-                <tr>
-                    <td>Cargo fijo</td>
-                    <td>Q. 50.00</td>
-                </tr>
-                <tr>
-                    <td>mt3 de consumo</td>
-                    <td>Q. 7.50</td>
-                </tr>
-            </table>
+            @if ($apartamento["servicio_agua"] == 'opcion1')
+                <table class="sinBorde">
+                    <tr>
+                        <th colspan="2">
+                            Opción 1 (Incluye 0  mt<sup>3</sup>)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Cargo fijo</td>
+                        <td>Q. 50.00</td>
+                    </tr>
+                    <tr>
+                        <td>mt<sup>3</sup> de consumo</td>
+                        <td>Q. 7.50</td>
+                    </tr>
+                </table>
+            @else
+                <table class="sinBorde">
+                    <tr>
+                        <th colspan="2">
+                            Opción 2 (Incluye 30 mt<sup>3</sup>)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Cargo fijo</td>
+                        <td>Q. 150.00</td>
+                    </tr>
+                    <tr>
+                        <td>mt<sup>3</sup> de consumo</td>
+                        <td>Q. 11.50</td>
+                    </tr>
+                </table>
             @endif
+
             <p class="texto">
                 El cuál será instalado en el edificio<span class="negrita"> @if ($apartamento["tipo_proyecto"] == 'VIVO 4')
                     VIVO 4, Torre {{ $apartamento["torre"] }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $apartamento["numero_apartamento"] }}

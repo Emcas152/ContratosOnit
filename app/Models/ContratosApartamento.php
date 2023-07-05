@@ -13,7 +13,7 @@ class ContratosApartamento extends Model
 
     protected $primaryKey = 'id';
     
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'id_empresa',
@@ -32,6 +32,8 @@ class ContratosApartamento extends Model
         'tabla1',
         'tabla2',
         'tabla3',
+        'tabla4',
+        'servicio_agua',
         'estado'
     ];
 }
