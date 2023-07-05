@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Contratos;
 use App\Models\ContratosApartamento;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use PDF;
