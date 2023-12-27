@@ -55,6 +55,7 @@ class Contratos extends Model
         'tabla4',
         'nombre_factura',
         'nit_factura',
-        'servicio_agua'
+        'servicio_agua',
+        'status',
     ];
 }

@@ -93,8 +93,8 @@ class NuevosContratosController extends Controller
      */
     public function store(Request $request)
     {
-          try 
-        {  
+         try 
+        { 
             $info = $request->datos;
             $servicio = $request->servicio;
             $plan = $request->tipo_plan;
@@ -113,10 +113,10 @@ class NuevosContratosController extends Controller
             $servicio['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
             $servicio['tipo_plan'] = $plan;
             /* Fin Fecha para la vista */
-
+            $info["status"] = "PEN";
             $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
             $info["fecha_registro"] = $fecha;
-            $info["status"] = "PEN";
+           
             $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion,$servicio_agua);
             DB::beginTransaction();
 
@@ -179,11 +179,11 @@ class NuevosContratosController extends Controller
             DB::commit();
             return response(['data'=> $dataSave,'code' => 201], 201);
 
-          } catch (\Exception $e) 
+           } catch (\Exception $e) 
         {
             DB::rollBack();
             return response(['data'=> 'Error al crear el documento','code' => 500], 500);   
-        }  
+        }   
     }
 
     public function register(Request $request)
