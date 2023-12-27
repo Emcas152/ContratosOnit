@@ -210,12 +210,17 @@
 
 
             <p class="texto">
-                El cuál será instalado en el edificio<span class="negrita"> @if ($tipo_proyecto == 'VIVO 4')
-                    VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{ $numero_apartamento }}
-                    @else
+                El cuál será instalado en el edificio<span class="negrita">
+                    @if ($tipo_proyecto == 'VIVO 4')
+                    VIVO 4, Torre {{$torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{$numero_apartamento  }}
+                    @endif
+                    @if ($tipo_proyecto == 'VILLA LUZ')
+                    VILLA LUZ, Torre {{ $torre }} 2 avenida 1-50 aldea Sana Arriba, zona 17, Guatemala, Guatemala,  Apto. {{$numero_apartamento  }}
+                    @endif
+                    @if  ($tipo_proyecto == 'VIAGGIO')
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}
-                    @endif </span> 
-                    
+                    @endif
+                    </span> 
                     y que serán facturados a nombre de
                     @if($nombre_factura == '' && $nit_factura == '')
                      <span class="negrita">{{ $nombre }}</span>
