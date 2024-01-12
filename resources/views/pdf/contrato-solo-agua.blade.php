@@ -215,7 +215,7 @@
                     VIVO 4, Torre {{$torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{$numero_apartamento  }}
                     @endif
                     @if ($tipo_proyecto == 'VILLA LUZ')
-                    VILLA LUZ, Torre {{ $torre }} 2 avenida 1-50 aldea Sana Arriba, zona 17, Guatemala, Guatemala,  Apto. {{$numero_apartamento  }}
+                    VILLA LUZ, Torre {{ $torre }}, 2da avenida 1-50 aldea Sabana Arriba, zona 17, Guatemala, Guatemala,  Apto. {{$numero_apartamento }}
                     @endif
                     @if  ($tipo_proyecto == 'VIAGGIO')
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}
