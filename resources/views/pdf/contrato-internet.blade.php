@@ -263,7 +263,7 @@
                             <span class="negrita">X</span>
                             @endif
                         </td>
-                        <td>30 Mbps</td>
+                        <td>50 Mbps</td>
                         <td>Q. 199.00</td>
                         <td class="sinBorde"></td>
                         <td class="seleccion"> @if ($tabla4 == '')
@@ -278,7 +278,7 @@
                             <span class="negrita">X</span>
                             @endif
                         </td>
-                        <td>50 Mbps</td>
+                        <td>75 Mbps</td>
                         <td>Q. 249.00</td>
                         <td class="sinBorde"></td>
                         <td class="seleccion">@if ($tipo_servicio == 'telefono' && ($tabla3 == '200' || $tabla3 == '500'))
@@ -293,7 +293,7 @@
                             <span class="negrita">X</span>
                             @endif
                         </td>
-                        <td>100 Mbps</td>
+                        <td>150 Mbps</td>
                         <td>Q. 329.00</td>
                         <td class="sinBorde"></td>
                         <td class="seleccion">@if ($tabla4 == '200')
@@ -308,8 +308,8 @@
                             <span class="negrita">X</span>
                             @endif
                         </td>
-                        <td>200 Mbps</td>
-                        <td>Q. 499.00</td>
+                        <td>250 Mbps</td>
+                        <td>Q. 529.00</td>
                         <td class="sinBorde"></td>
                         <td class="seleccion">@if ($tabla4 == '500')
                             <span class="negrita">X</span>
@@ -519,7 +519,7 @@
                     VIVO 4, Torre {{ $torre }} Vía 1, 1-67 ZONA 4, Guatemala, Guatemala, Apto. {{$numero_apartamento  }}
                     @endif
                     @if ($tipo_proyecto == 'VILLA LUZ')
-                    VILLA LUZ, Torre {{ $torre }} 2 avenida 1-50 aldea Sana Arriba, zona 17, Guatemala, Guatemala,  Apto. {{$numero_apartamento  }}
+                    VILLA LUZ, Torre {{ $torre }}, 2da avenida 1-50 aldea Sabana Arriba, zona 17, Guatemala, Guatemala,  Apto. {{$numero_apartamento  }}
                     @endif
                     @if  ($tipo_proyecto == 'VIAGGIO')
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}
@@ -531,7 +531,7 @@
                     con número de NIT <span class="negrita">{{ $nit }}</span>
                     @else
                     <span class="negrita">{{ $nombre_factura }}</span>
-                    con número de NIT <span class="negrita">{{ $nit_factura }}</span>
+                    con número de NIT <span class="negrita">{{ $nit_factura }}.</span>
                     @endif
 
             </p>
