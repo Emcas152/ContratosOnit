@@ -166,7 +166,7 @@
                 </tr>
                 <tr>
                     <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q.     1.42</td>
+                    <td>Q.     1.50</td>
                 </tr>
             </table>
             @endif
