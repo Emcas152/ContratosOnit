@@ -121,7 +121,7 @@
 
         <div class="contenedorTexto">
 
-            <p class="textoNegrita">Contrato de prestación para servicio de energía eléctrica @if($tipo_proyecto == 'VIVO 4') @endif</p>
+            <p class="textoNegrita">Contrato de Suministro de Energía Eléctrica @if($tipo_proyecto == 'VIVO 4') @endif</p>
             <p class="texto">
                 <span class="negrita">{{ $nombre }}</span>, de <span class="negrita">{{ $edad }} años</span>,
                 <span class="minusculas">
@@ -159,11 +159,11 @@
                 </tr>
                 <tr>
                     <td>Cargo Fijo</td>
-                    <td>Q.   11.00</td>
+                    <td>Q.&nbsp;&nbsp;&nbsp;11.00</td>
                 </tr>
                 <tr>
                     <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q.     1.50</td>
+                    <td>Q.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.50</td>
                 </tr>
             </table>
             @endif
@@ -181,12 +181,12 @@
                 </tr>
                 <tr>
                     <td>Cargo Fijo</td>
-                    <td>Q.   11.00</td>
+                    <td>Q.&nbsp;&nbsp;&nbsp;11.00</td>
                 </tr>
                 <tr>
                     <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q.     1.50</td>
-                </tr>
+                    <td>Q.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.50</td>
+                </tr>&nbsp;&nbsp;&nbsp;&nbsp;
             </table>
             @endif
 
@@ -247,7 +247,7 @@
                 <span class="negrita">Terminación</span><br>
                 Este contrato finalizará por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) Si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo, por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo del servicio por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente acuerdo. 
             </p>
-            <p class="texo">
+            <p class="texto">
                 <span class="negrita">Otras disposiciones</span><br>
                 EL PROVEEDOR se obliga a: a) Proveer del servicio de energía eléctrica de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal; b) Utilizar la energía eléctrica de forma racional.
             </p>
