@@ -93,8 +93,8 @@ class NuevosContratosController extends Controller
      */
     public function store(Request $request)
     {
-         try 
-        { 
+          try 
+        {  
             $info = $request->datos;
             $servicio = $request->servicio;
             $plan = $request->tipo_plan;
@@ -128,18 +128,6 @@ class NuevosContratosController extends Controller
             $dataSave["file_name_agua"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN4' || $plan == 'PLAN6') ? $nameAgua : '';
             $dataSave["file_name_energia"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN5' || $plan == 'PLAN7') ? $nameEnergia : '';
 
-
-
-          /*   if ($dataSave["tipo_proyecto"] == 'VIVO 4') {
-
-                $dataSave["file_name_agua"] = ($plan == 'PLAN3' || $plan == 'PLAN2' || $plan == 'PLAN4') ? $nameFilePlan4 : '';
-                $dataSave["file_name_energia"] = ($plan == 'PLAN3' || $plan == 'PLAN2' || $plan == 'PLAN5') ? $nameFilePlan5 : '';
-
-            } else {
-                $dataSave["file_name_agua"] = ($plan == 'PLAN4') ? $nameFilePlan4 : '';
-                $dataSave["file_name_energia"] = ($plan == 'PLAN3' || $plan == 'PLAN5') ? $nameFilePlan5 : '';
-            }
- */
             $dataSave["file_name_contrato"] = '';
 
             $documento = Contratos::create($dataSave);
@@ -179,11 +167,11 @@ class NuevosContratosController extends Controller
             DB::commit();
             return response(['data'=> $dataSave,'code' => 201], 201);
 
-           } catch (\Exception $e) 
+            } catch (\Exception $e) 
         {
             DB::rollBack();
             return response(['data'=> 'Error al crear el documento','code' => 500], 500);   
-        }   
+        }    
     }
 
     public function register(Request $request)
