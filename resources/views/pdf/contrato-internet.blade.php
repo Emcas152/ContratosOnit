@@ -299,9 +299,9 @@
                         <td>Q. 0.00</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'telefono' && ($tabla3 == '200' || $tabla3 == '500'))
+                        <td class="seleccion">
                             <span class="negrita">X</span>
-                            @endif
+                            
                         </td>
                         <td>Instalación aparato</td>
                         <td>Q. 299.00</td>
