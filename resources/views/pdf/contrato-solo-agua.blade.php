@@ -193,7 +193,7 @@
                 </tr>
                 <tr>
                     <td>Cargo fijo</td>
-                    <td>Q. 125.00</td>
+                    <td>Q. 150.00</td>
                 </tr>
                 <tr>
                     <td>mt<sup>3</sup> de consumo</td>
