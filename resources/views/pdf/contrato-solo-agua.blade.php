@@ -188,12 +188,12 @@
             <table class="sinBorde">
                 <tr>
                     <th colspan="2">
-                        Media paja de agua (Incluye 30 mt<sup>3</sup>)
+                      Plan de 30 mt<sup>3</sup>
                     </th>
                 </tr>
                 <tr>
                     <td>Cargo fijo</td>
-                    <td>Q. 150.00</td>
+                    <td>Q. 125.00</td>
                 </tr>
                 <tr>
                     <td>mt<sup>3</sup> de consumo</td>
