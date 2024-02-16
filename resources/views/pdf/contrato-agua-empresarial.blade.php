@@ -111,12 +111,21 @@
         .minusculas {
             text-transform: lowercase;
         }
+        .correlativo {
+            max-width: 100%;
+            margin-left: 2%;
+            text-align: left;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="contenedor">
-        {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+
+        <p class="correlativo">EMP-AGU-{{ str_pad($apartamento["correlativo_agua"], 4, '0', STR_PAD_LEFT) }}</p>
+
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">

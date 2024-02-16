@@ -125,8 +125,7 @@
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
 
-      <p class="correlativo">ENE-{{ $correlativoEnergia  }}</p> 
-
+        <p class="correlativo">ENE-{{ str_pad($correlativoEnergia, 4, '0', STR_PAD_LEFT) }}</p>
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">

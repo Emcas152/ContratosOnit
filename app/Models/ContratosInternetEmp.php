@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContratosApartamento extends Model
+class ContratosInternetEmp extends Model
 {
     use HasFactory;
 
-    protected $table = 'contratos_apartamentos';
+    protected $table = 'view_internet_empresas';
 
     protected $primaryKey = 'id';
     
@@ -35,8 +35,6 @@ class ContratosApartamento extends Model
         'tabla4',
         'servicio_agua',
         'estado',
-        'correlativo_energia',
-        'correlativo_agua',
         'correlativo_internet'
         
     ];

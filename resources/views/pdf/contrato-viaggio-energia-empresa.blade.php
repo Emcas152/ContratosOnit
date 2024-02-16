@@ -111,12 +111,21 @@
         .minusculas{
             text-transform: lowercase;
         }
+        .correlativo {
+            max-width: 100%;
+            margin-left: 2%;
+            text-align: left;
+            font-weight: 700;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <p class="correlativo">EMP-ENE-{{ str_pad($apartamento["correlativo_energia"], 4, '0', STR_PAD_LEFT) }}</p>
+
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
@@ -242,7 +251,7 @@
                 <span class="negrita">Terminación</span><br>
                 Este contrato finalizará por cualquiera de las siguientes causas: a) Por voluntad del CLIENTE, manifestada por escrito; b) Si dentro de los treinta días calendario después de la suspensión del servicio por falta de pago, el CLIENTE mantiene sin pagar el costo de reconexión o cualquier otro cargo, por reincidencia en el incumplimiento de las prohibiciones establecidas en este contrato. En el caso que EL CLIENTE desee dar por terminado el presente acuerdo del servicio por cualquier motivo deberá previamente enviar aviso escrito a EL PROVEEDOR con treinta días de anticipación y previamente pagar a EL PROVEEDOR el monto adeudado por los meses de prestación del servicio que se encuentran pendiente de pago, siendo necesario e indispensable el cumplimiento de estos dos requisitos para dar por terminado el presente acuerdo. 
             </p>
-            <p class="texo">
+            <p class="texto">
                 <span class="negrita">Otras disposiciones</span><br>
                 EL PROVEEDOR se obliga a: a) Proveer del servicio de energía eléctrica de forma continua, las veinticuatro horas del día, todo el año, salvo casos de fuerza mayor y caso fortuito; b) Avisar al CLIENTE con la debida anticipación los cortes del servicio que deban realizarse para efectos de reparaciones o mantenimiento de las redes de distribución; c) Mantener las instalaciones internas en buenas condiciones. El CLIENTE se obliga a: a) Notificar por escrito a EL PROVEEDOR en el caso se requiera un cambio de lugar para la conexión domiciliar y/o desconexión temporal; b) Utilizar la energía eléctrica de forma racional.
             </p>

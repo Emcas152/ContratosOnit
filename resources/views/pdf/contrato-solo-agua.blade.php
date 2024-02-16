@@ -123,7 +123,8 @@
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
-        <p class="correlativo">AGU-{{ $correlativoAgua  }}</p> 
+        <p class="correlativo">AGU-{{ str_pad($correlativoAgua, 4, '0', STR_PAD_LEFT) }}</p>
+ 
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
