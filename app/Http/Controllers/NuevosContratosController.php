@@ -111,7 +111,7 @@ class NuevosContratosController extends Controller
             $condicion2 = !empty($servicio_agua['servicio_agua']);
             $condicion3 = $plan == 'PLAN3' || $plan == 'PLAN2' || $plan == 'PLAN5' || $plan == 'PLAN7'; 
             
-            if ($condicion1 || $condicion2 ) {
+            if ($condicion1 || $condicion2 || $condicion3) {
                 if ($condicion1) {
                     $contratoInternet = ContratosInternet::orderBy('id', 'desc')->first();
                     $correlativoInternet = $contratoInternet->correlativo_internet; 
