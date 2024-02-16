@@ -18,6 +18,12 @@
             width: 100%;
             max-width: 800px;
         }
+        .correlativo {
+            max-width: 100%;
+            margin-left: 2%;
+            text-align: left;
+            font-weight: 700;
+        }
 
         .pie {
             /* position: absolute; */
@@ -117,6 +123,7 @@
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+        <p class="correlativo">AGU-{{ $correlativoAgua  }}</p> 
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
@@ -146,28 +153,7 @@
                 <span class="negrita">HOGARES INTELIGENTES, SOCIEDAD ANÓNIMA</span>, adelante el PROVEEDOR y que se describen a
                 continuación:
             </p>
-            @if ($tipo_proyecto == 'VIAGGIO')
-            <table class="sinBorde">
-                <tr>
-                    <th colspan="2">
-                        Precios Energía Eléctrica
-                    </th>
-                </tr>
-                <tr>
-                    <td>Deposito por contador eléctrico</td>
-                    <td>Q. 400.00</td>
-                </tr>
-                <tr>
-                    <td>Cargo Fijo</td>
-                    <td>Q. 11.00</td>
-                </tr>
-                <tr>
-                    <td>kWh (este precio varía según CNEE*)</td>
-                    <td>Q. 1.42</td>
-                </tr>
-            </table>
-            @endif
-
+          
             @if ($servicio_agua == 'opcion1')
             <table class="sinBorde">
                 <tr>

@@ -18,6 +18,13 @@
             width: 100%;
             max-width: 800px;
         }
+        
+        .correlativo {
+            max-width: 100%;
+            margin-left: 2%;
+            text-align: left;
+            font-weight: 700;
+        }
 
         .pie {
             /* position: absolute; */
@@ -119,6 +126,8 @@
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+         <p class="correlativo">TEL-{{ $correlativoInternet  }}</p> 
+
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">
