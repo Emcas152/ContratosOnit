@@ -126,7 +126,7 @@
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
-         <p class="correlativo">TEL-{{ $correlativoInternet  }}</p> 
+        <p class="correlativo">TEL-{{ str_pad($correlativoInternet, 4, '0', STR_PAD_LEFT) }}</p>
 
         <img src="storage/logo_onit.png" class="logoImg">
 
