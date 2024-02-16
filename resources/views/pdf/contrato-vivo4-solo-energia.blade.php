@@ -40,6 +40,13 @@
             margin-left: 83%;
         }
 
+        .correlativo {
+            max-width: 100%;
+            margin-left: 2%;
+            text-align: left;
+            font-weight: 700;
+        }
+
         p {
             font-size: 11px;
         }
@@ -117,6 +124,9 @@
 <body>
     <div class="contenedor">
         {{-- <img src="https://lifebackend.swarmdesarrollo.com/storage/logo_onit.png" class="logoImg"> --}}
+
+      <p class="correlativo">ENE-{{ $correlativoEnergia  }}</p> 
+
         <img src="storage/logo_onit.png" class="logoImg">
 
         <div class="contenedorTexto">

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Contratos;
+use App\Models\ContratosInternet;
+use App\Models\ContratosEnergia;
+use App\Models\ContratosAgua;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -93,8 +96,8 @@ class NuevosContratosController extends Controller
      */
     public function store(Request $request)
     {
-          try 
-        {  
+            try 
+        {   
             $info = $request->datos;
             $servicio = $request->servicio;
             $plan = $request->tipo_plan;
@@ -104,7 +107,34 @@ class NuevosContratosController extends Controller
             $facturacion = $request->facturacion;
             $servicio_agua = $request->servicio_agua;
 
-
+            $condicion1 = !empty($servicio['tipo_servicio']);
+            $condicion2 = !empty($servicio_agua['servicio_agua']);
+            $condicion3 = $plan == 'PLAN3' || $plan == 'PLAN2' || $plan == 'PLAN5' || $plan == 'PLAN7'; 
+            
+            if ($condicion1 || $condicion2 || $condicion3) {
+                if ($condicion1) {
+                    $contratoInternet = ContratosInternet::orderBy('id', 'desc')->first();
+                    $correlativoInternet = $contratoInternet->correlativo_internet; 
+                    $nuevoValor = $correlativoInternet + 1;
+                    $info["correlativo_internet"] = $nuevoValor;
+                }
+            
+                if ($condicion2) {
+                    $contratoAgua = ContratosAgua::orderBy('id', 'desc')->first();
+                    $correlativoAgua = $contratoAgua->correlativo_agua; 
+                    $nuevoValor1 = $correlativoAgua + 1;
+                    $info["correlativo_agua"] = $nuevoValor1;
+                }
+            
+                 if ($condicion3) {
+                    $contratoEnergia = ContratosEnergia::orderBy('id', 'desc')->first();
+                    $correlativoEnergia = $contratoEnergia->correlativo_energia; 
+                    $nuevoValors = $correlativoEnergia + 1;
+                    $info["correlativo_energia"] = $nuevoValors;
+                } 
+            }
+           
+              
             /* Fecha para la vista */
 
             $meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
@@ -128,11 +158,16 @@ class NuevosContratosController extends Controller
             $dataSave["file_name_agua"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN4' || $plan == 'PLAN6') ? $nameAgua : '';
             $dataSave["file_name_energia"] = ($plan == 'PLAN2' || $plan == 'PLAN3' || $plan == 'PLAN5' || $plan == 'PLAN7') ? $nameEnergia : '';
 
+
+            
             $dataSave["file_name_contrato"] = '';
 
             $documento = Contratos::create($dataSave);
 
             $dataSave["id"] = $documento->id;
+            $dataSave["correlativoInternet"] = $documento->correlativo_internet;
+            $dataSave["correlativoAgua"] = $documento->correlativo_agua;
+            $dataSave["correlativoEnergia"] = $documento->correlativo_energia;
     
                 if ($plan == 'PLAN3' || $plan == 'PLAN1' || $plan == 'PLAN6' || $plan == 'PLAN7') {
                     $urlFile2 = storage_path("app/public")."/$nameInternet";
@@ -167,11 +202,11 @@ class NuevosContratosController extends Controller
             DB::commit();
             return response(['data'=> $dataSave,'code' => 201], 201);
 
-            } catch (\Exception $e) 
+              } catch (\Exception $e) 
         {
             DB::rollBack();
             return response(['data'=> 'Error al crear el documento','code' => 500], 500);   
-        }    
+        }      
     }
 
     public function register(Request $request)
