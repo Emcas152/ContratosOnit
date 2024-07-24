@@ -353,6 +353,9 @@
                     @if  ($tipo_proyecto == 'VIAGGIO')
                     VIAGGIO, Km 13.8 Carretera Antigua a El Salvador, Muxbal Puerta Parada, Apto. {{ $numero_apartamento }}
                     @endif
+                    @if  ($tipo_proyecto == 'GEMINIS 10')
+                    GEMINIS 10, 12 calle, 1-25, zona 10,Ciudad de Guatemala, Oficina {{ $numero_apartamento }}
+                    @endif
                     </span>
                     y que serán facturados a nombre de
                     @if($nombre_factura == '' && $nit_factura == '')
