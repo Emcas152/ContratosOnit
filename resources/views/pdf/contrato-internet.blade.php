@@ -356,6 +356,9 @@
                     @if  ($tipo_proyecto == 'GEMINIS 10')
                     GEMINIS 10, 12 calle, 1-25, zona 10,Ciudad de Guatemala, Oficina {{ $numero_apartamento }}
                     @endif
+                    @if  ($tipo_proyecto == 'CANADAS')
+                    10 avenida 37-15 zona 11 Condominio Cañada de las Charcas Casa {{ $numero_apartamento }}
+                    @endif
                     </span>
                     y que serán facturados a nombre de
                     @if($nombre_factura == '' && $nit_factura == '')
