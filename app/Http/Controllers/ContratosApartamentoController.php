@@ -9,6 +9,7 @@ use App\Models\ContratosAguaEm;
 use App\Models\ContratosEnergiaEmp;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use PDF;
 use DB;
@@ -40,7 +41,15 @@ class ContratosApartamentoController extends Controller
             $info = $request->all();
            
 
-            $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+            if (!empty($info['fecha_traslado'])) {
+                try {
+                    $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+                } catch (\Exception $ex) {
+                    $info["fecha_traslado"] = null;
+                }
+            } else {
+                $info["fecha_traslado"] = null;
+            }
 
          
 
@@ -53,8 +62,9 @@ class ContratosApartamentoController extends Controller
 
         } catch (\Exception $e) 
         {
+            Log::error($e);
             DB::rollBack();
-            return response(['data'=> 'Error al crear el contrato', 'code' => 500], 500);  
+            return response(['data'=> $e->getMessage(), 'code' => 500], 500);  
         }
     }
 
@@ -190,8 +200,9 @@ class ContratosApartamentoController extends Controller
 
          } catch (\Exception $e) 
         {
+            Log::error($e);
             DB::rollBack();
-            return response(['data'=> 'Error al crear el contrato', 'code' => 500], 500);  
+            return response(['data'=> $e->getMessage(), 'code' => 500], 500);  
         } 
     }
 
@@ -228,8 +239,9 @@ class ContratosApartamentoController extends Controller
 
         } catch (\Exception $e) 
         {
+            Log::error($e);
             DB::rollBack();
-            return response(['data'=> 'Error al actualizar el contrato', 'code' => 500], 500);  
+            return response(['data'=> $e->getMessage(), 'code' => 500], 500);  
         }
     }
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Models\EstadosProcesos;
@@ -107,6 +108,29 @@ class NuevosContratosController extends Controller
             $facturacion = $request->facturacion;
             $servicio_agua = $request->servicio_agua;
 
+            // Normalizar inputs que a veces vienen como JSON strings o valores simples
+            $normalize = function ($v) {
+                if (is_array($v)) return $v;
+                if (is_string($v)) {
+                    $decoded = json_decode($v, true);
+                    return is_array($decoded) ? $decoded : [$v];
+                }
+                return is_null($v) ? [] : (is_object($v) ? (array) $v : [$v]);
+            };
+
+            $info = is_array($info) ? $info : (is_object($info) ? (array)$info : (is_string($info) ? json_decode($info, true) ?? [] : []));
+            $servicio = $normalize($servicio);
+            $tipo_proyecto = $normalize($tipo_proyecto);
+            $torre = $normalize($torre);
+            $tipo_apartamento = $normalize($tipo_apartamento);
+            $facturacion = $normalize($facturacion);
+            $servicio_agua = $normalize($servicio_agua);
+
+            // Asegurar que $plan sea un string (algunas requests lo envían como array)
+            if (is_array($plan)) {
+                $plan = isset($plan['tipo_plan']) ? $plan['tipo_plan'] : (count($plan) ? reset($plan) : '');
+            }
+
             $condicion1 = !empty($servicio['tipo_servicio']);
             $condicion2 = !empty($servicio_agua['servicio_agua']);
             $condicion3 = $plan == 'PLAN3' || $plan == 'PLAN2' || $plan == 'PLAN5' || $plan == 'PLAN7'; 
@@ -143,8 +167,17 @@ class NuevosContratosController extends Controller
             $servicio['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
             $servicio['tipo_plan'] = $plan;
             /* Fin Fecha para la vista */
+            log::info($info);
             $info["status"] = "PEN";
-            $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+            if (!empty($info['fecha_traslado'])) {
+                try {
+                    $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+                } catch (\Exception $ex) {
+                    $info["fecha_traslado"] = null;
+                }
+            } else {
+                $info["fecha_traslado"] = null;
+            }
             $info["fecha_registro"] = $fecha;
            
             $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion,$servicio_agua);
@@ -204,8 +237,9 @@ class NuevosContratosController extends Controller
 
               } catch (\Exception $e) 
         {
+            Log::error($e);
             DB::rollBack();
-            return response(['data'=> 'Error al crear el documento','code' => 500], 500);   
+            return response(['data'=> $e->getMessage(),'code' => 500], 500);   
         }      
     }
 

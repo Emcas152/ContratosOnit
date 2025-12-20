@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use PDF;
 use DB;
@@ -72,7 +73,15 @@ class ContratosController extends Controller
 
             /* Fin Fecha para la vista */
 
-            $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+            if (!empty($info['fecha_traslado'])) {
+                try {
+                    $info["fecha_traslado"] = Carbon::parse($info['fecha_traslado'])->format('Y-m-d');
+                } catch (\Exception $ex) {
+                    $info["fecha_traslado"] = null;
+                }
+            } else {
+                $info["fecha_traslado"] = null;
+            }
             $info["fecha_registro"] = $fecha;
             $dataSave = array_merge($info,$servicio,$plan);
             DB::beginTransaction();
@@ -162,8 +171,9 @@ class ContratosController extends Controller
 
         } catch (\Exception $e) 
         {
+            Log::error($e);
             DB::rollBack();
-            return response(['data'=> 'Error al crear el documento','code' => 500], 500);   
+            return response(['data'=> $e->getMessage(), 'code' => 500], 500);
         }
     }
 
