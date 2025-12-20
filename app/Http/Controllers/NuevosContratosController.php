@@ -214,6 +214,25 @@ class NuevosContratosController extends Controller
             
             $dataSave["file_name_contrato"] = '';
 
+            // Asegurar valores por defecto que usan las vistas PDF
+            $defaults = [
+                'tabla0' => '',
+                'tabla1' => '',
+                'tabla2' => '',
+                'tabla3' => '',
+                'tabla4' => '',
+                'nombre_factura' => '',
+                'nit_factura' => '',
+                'numero_apartamento' => $dataSave['numero_apartamento'] ?? '',
+                'tipo_servicio' => $dataSave['tipo_servicio'] ?? '',
+                'tipo_plan' => $dataSave['tipo_plan'] ?? $plan,
+                'nacionalidad' => $dataSave['nacionalidad'] ?? '',
+                'sexo' => $dataSave['sexo'] ?? '',
+                'edad' => $dataSave['edad'] ?? '',
+            ];
+
+            $dataSave = array_merge($defaults, $dataSave);
+
             $documento = Contratos::create($dataSave);
 
             $dataSave["id"] = $documento->id;
