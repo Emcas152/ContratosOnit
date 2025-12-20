@@ -58,12 +58,16 @@ class ParametrosDetalleController extends Controller
         $parametros = Parametros::where('codigo','=',$request->input('codigo'))
         ->get();
 
+        if ($parametros->isEmpty()) {
+            return response(['data' => [], 'code' => 204]);
+        }
+
         $parametros_det = $parametros->first()->parametros_det;
 
-        if (!count($parametros_det)) 
-        {
-           return response(['data' => [],'code'=>204]);   
+        if (empty($parametros_det) || !count($parametros_det)) {
+            return response(['data' => [], 'code' => 204]);
         }
+
         return response(['data'=> ParametrosDetalleResource::collection($parametros_det),'code' => 200]);
     }
 
