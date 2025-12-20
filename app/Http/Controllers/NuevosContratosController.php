@@ -181,6 +181,25 @@ class NuevosContratosController extends Controller
             $info["fecha_registro"] = $fecha;
            
             $dataSave = array_merge($info,$servicio,$tipo_proyecto,$tipo_apartamento,$torre,$facturacion,$servicio_agua);
+
+            // Sanitizar $dataSave: convertir arrays simples de un solo valor a scalars
+            $flatten = function ($value) {
+                if (!is_array($value)) return $value;
+                // associative single-key arrays: ['key' => 'val']
+                if (count($value) === 1) {
+                    $first = reset($value);
+                    if (!is_array($first)) return $first;
+                }
+                // numeric single-element arrays: ['val']
+                if (count($value) === 1 && isset($value[0]) && !is_array($value[0])) {
+                    return $value[0];
+                }
+                return $value;
+            };
+
+            foreach ($dataSave as $k => $v) {
+                $dataSave[$k] = $flatten($v);
+            }
             DB::beginTransaction();
 
             $nameInternet = "contrato-internet-".time().".pdf";
