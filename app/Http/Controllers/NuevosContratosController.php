@@ -229,6 +229,8 @@ class NuevosContratosController extends Controller
                 'nacionalidad' => $dataSave['nacionalidad'] ?? '',
                 'sexo' => $dataSave['sexo'] ?? '',
                 'edad' => $dataSave['edad'] ?? '',
+                'velocidad' => $dataSave['velocidad'] ?? '',
+                'precio' => $dataSave['precio'] ?? '',
             ];
 
             $dataSave = array_merge($defaults, $dataSave);

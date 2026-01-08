@@ -59,6 +59,8 @@ class Contratos extends Model
         'status',
         'correlativo_internet',
         'correlativo_agua',
-        'correlativo_energia'
+        'correlativo_energia',
+        'velocidad',
+        'precio'
     ];
 }

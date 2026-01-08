@@ -161,129 +161,19 @@
 
             <div class="row">
             {{-- empiezan tablas --}}
-            @if ($tipo_servicio == 'simetrico')
-            <table >
-                <tbody>
-                    <tr>
-                        <td colspan="3" style="text-align: center;  font-weight: bold;">Servicio de Internet Residencial Simétrico</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '20')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>20 Mbps</td>
-                        <td>$. 90.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '30')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>30 Mbps</td>
-                        <td>$. 110.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '50')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>50 Mbps</td>
-                        <td>$. 130.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'simetrico' && $tabla1  == '100')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>100 Mbps</td>
-                        <td>$. 250.00</td>
-                    </tr>
-                </tbody>
-            </table>
-            @endif
-
-
-            @if ($tipo_servicio == 'burst')
-            <table class="sinBorde">
-                <tbody>
-                    <tr>
-                        <td colspan="3" style="text-align: center;  font-weight: bold;">Servicio de Internet Residencial FTTH Plus</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '30')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>30 Mbps</td>
-                        <td>Q. 299.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '50')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>50 Mbps</td>
-                        <td>Q. 349.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '100')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>100 Mbps</td>
-                        <td>Q. 429.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'burst' && $tabla2 == '200')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>200 Mbps</td>
-                        <td>Q. 599.00</td>
-                    </tr>
-                </tbody>
-            </table>
-            @endif
-
-
-            @if ($tipo_servicio == 'basico')
+            @if ($tipo_servicio == 'INTERNET')
             <table>
                 <tbody>
                     <tr>
-                        <td colspan="3" style="text-align: center;  font-weight: bold;">Servicio de Internet Residencial Básico</td>
+                        <td colspan="2" style="text-align: center;  font-weight: bold;">{{ $tipo_plan ?? 'Servicio de Internet' }}</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '30')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>50 Mbps</td>
-                        <td>Q. 199.00</td>
+                        <td style="font-weight: bold;">Velocidad:</td>
+                        <td>{{ $velocidad ?? 'N/A' }}</td>
                     </tr>
                     <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '50')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>75 Mbps</td>
-                        <td>Q. 249.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '100')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>150 Mbps</td>
-                        <td>Q. 329.00</td>
-                    </tr>
-                    <tr>
-                        <td class="seleccion">@if ($tipo_servicio == 'basico' && $tabla0 == '200')
-                            <span class="negrita">X</span>
-                            @endif
-                        </td>
-                        <td>250 Mbps</td>
-                        <td>Q. 529.00</td>
+                        <td style="font-weight: bold;">Precio:</td>
+                        <td>{{ $precio ?? 'N/A' }}</td>
                     </tr>
                 </tbody>
             </table>
