@@ -170,6 +170,7 @@ class NuevosContratosController extends Controller
             $mes = $meses[($fecha->format('n')) - 1];
             $servicio['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
             $servicio['tipo_plan'] = $plan;
+            $info['tipo_plan'] = $plan;
             /* Fin Fecha para la vista */
             log::info($info);
             $info["status"] = "PEN";
