@@ -229,11 +229,19 @@ class NuevosContratosController extends Controller
                 'nacionalidad' => $dataSave['nacionalidad'] ?? '',
                 'sexo' => $dataSave['sexo'] ?? '',
                 'edad' => $dataSave['edad'] ?? '',
-                'velocidad' => $dataSave['velocidad'] ?? '',
-                'precio' => $dataSave['precio'] ?? '',
+                'velocidad' => !empty($dataSave['velocidad']) ? $dataSave['velocidad'] : ($servicio['velocidad'] ?? ''),
+                'precio' => !empty($dataSave['precio']) ? $dataSave['precio'] : ($servicio['precio'] ?? ''),
             ];
 
             $dataSave = array_merge($defaults, $dataSave);
+            
+            // Asegurar que velocidad y precio se pasen a las vistas PDF
+            if (!empty($servicio['velocidad'])) {
+                $dataSave['velocidad'] = $servicio['velocidad'];
+            }
+            if (!empty($servicio['precio'])) {
+                $dataSave['precio'] = $servicio['precio'];
+            }
 
             $documento = Contratos::create($dataSave);
 

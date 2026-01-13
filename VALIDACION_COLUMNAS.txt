@@ -1,0 +1,135 @@
+VALIDACIÓN DE COLUMNAS - PAYLOAD vs MODELO CONTRATOS
+====================================================
+
+CAMPOS DEL PAYLOAD ENVIADO:
+----------------------------
+Desde "datos":
+✓ nombre
+✓ nacionalidad
+✓ identificacion
+✓ sexo
+✓ tipo_documento
+✓ edad
+✓ nit
+✓ celular
+✓ estado_civil
+✓ email
+✓ fecha_traslado
+✓ estado
+  incluir_facturacion (NO ESTÁ EN EL MODELO)
+✓ numero_apartamento
+
+Desde "servicio":
+✓ tipo_servicio
+  velocidad (FALTA EN BD)
+  precio (FALTA EN BD)
+✓ tipo_plan
+
+Desde "tipo_proyecto":
+✓ tipo_proyecto
+
+Desde "torre":
+✓ torre
+
+Desde "tipo_apartamento":
+✓ tipo_apartamento
+
+Desde "facturacion":
+✓ nombre_factura
+✓ nit_factura
+
+Desde "servicio_agua":
+✓ servicio_agua
+
+
+CAMPOS DEL MODELO CONTRATOS (fillable):
+----------------------------------------
+✓ nombre
+✓ celular
+✓ edad
+✓ email
+✓ estado
+✓ estado_civil
+✓ fecha_traslado
+✓ identificacion
+✓ nacionalidad
+✓ nit
+✓ numero_apartamento
+✓ tipo_apartamento
+✓ tipo_documento
+✓ sexo
+✓ tipo_servicio
+✓ tabla0
+✓ tabla1
+✓ tabla2
+✓ tabla3
+✓ file_name
+✓ file_name_contrato
+✓ file_name_energia
+✓ file_name_agua
+✓ fecha_registro
+✓ tipo_proyecto
+✓ tipo_plan
+✓ torre
+✓ path_copia_dpi
+✓ path_representacion
+✓ nombre_representacion
+✓ no_registro_mercantil
+✓ folio
+✓ libro
+✓ empresa
+✓ fecha_nacimiento
+✓ tabla4
+✓ nombre_factura
+✓ nit_factura
+✓ servicio_agua
+✓ status
+✓ correlativo_internet
+✓ correlativo_agua
+✓ correlativo_energia
+✓ velocidad (¡EXISTE EN MODELO PERO NO EN BD!)
+✓ precio (¡EXISTE EN MODELO PERO NO EN BD!)
+
+
+RESUMEN DE PROBLEMAS:
+---------------------
+
+1. COLUMNAS QUE FALTAN EN LA BASE DE DATOS:
+   - velocidad
+   - precio
+
+2. COLUMNAS QUE FALTAN EN EL PAYLOAD PERO EXISTEN EN EL MODELO:
+   - tabla0, tabla1, tabla2, tabla3, tabla4 (valores por defecto: '')
+   - file_name (se asigna dinámicamente)
+   - file_name_contrato (valor por defecto: '')
+   - file_name_energia (se asigna dinámicamente)
+   - file_name_agua (se asigna dinámicamente)
+   - fecha_registro (se asigna dinámicamente)
+   - status (se asigna como "PEN")
+   - correlativo_internet (se asigna dinámicamente)
+   - correlativo_agua (se asigna dinámicamente)
+   - correlativo_energia (se asigna dinámicamente)
+   - path_copia_dpi
+   - path_representacion
+   - nombre_representacion
+   - no_registro_mercantil
+   - folio
+   - libro
+   - empresa
+   - fecha_nacimiento
+
+3. CAMPOS EN EL PAYLOAD QUE NO ESTÁN EN EL MODELO:
+   - incluir_facturacion (se envía pero NO se usa)
+
+ACCIONES REQUERIDAS:
+--------------------
+
+✅ HECHO: Crear migration para agregar columna "velocidad"
+✅ HECHO: Crear migration para agregar columna "precio"
+
+⚠️ NECESARIO: Ejecutar en la BD estos comandos SQL:
+   ALTER TABLE contratos ADD COLUMN velocidad VARCHAR(255) NULL AFTER correlativo_energia;
+   ALTER TABLE contratos ADD COLUMN precio VARCHAR(255) NULL AFTER velocidad;
+
+✓ El resto de columnas están bien. Las que no están en el payload se asignan
+  dinámicamente en el controlador.
