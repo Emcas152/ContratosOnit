@@ -129,6 +129,7 @@ class NuevosContratosController extends Controller
             // Capturar velocidad y precio antes de que se procesen
             $velocidad_original = isset($servicio['velocidad']) ? trim($servicio['velocidad']) : '';
             $precio_original = isset($servicio['precio']) ? trim($servicio['precio']) : '';
+            $nombre_plan = isset($servicio['tipo_plan']) ? trim($servicio['tipo_plan']) : $plan;
 
             // Asegurar que $plan sea un string (algunas requests lo envían como array)
             if (is_array($plan)) {
@@ -169,8 +170,8 @@ class NuevosContratosController extends Controller
             $fecha = Carbon::now();
             $mes = $meses[($fecha->format('n')) - 1];
             $servicio['fecha_texto'] = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-            $servicio['tipo_plan'] = $plan;
-            $info['tipo_plan'] = $plan;
+            $servicio['tipo_plan'] = $nombre_plan;
+            $info['tipo_plan'] = $nombre_plan;
             /* Fin Fecha para la vista */
             log::info($info);
             $info["status"] = "PEN";
@@ -206,8 +207,8 @@ class NuevosContratosController extends Controller
                 $dataSave[$k] = $flatten($v);
             }
             
-            // Asegurar que tipo_plan se mantiene correcto
-            $dataSave['tipo_plan'] = $plan;
+            // Asegurar que tipo_plan se mantiene correcto (usar el nombre descriptivo del plan)
+            $dataSave['tipo_plan'] = $nombre_plan;
             
             DB::beginTransaction();
 
@@ -244,7 +245,7 @@ class NuevosContratosController extends Controller
             $dataSave = array_merge($defaults, $dataSave);
             
             // Reafirmar tipo_plan después del merge de defaults
-            $dataSave['tipo_plan'] = $plan;
+            $dataSave['tipo_plan'] = $nombre_plan;
 
             $documento = Contratos::create($dataSave);
 
