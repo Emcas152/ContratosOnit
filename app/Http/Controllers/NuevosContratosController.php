@@ -205,6 +205,10 @@ class NuevosContratosController extends Controller
             foreach ($dataSave as $k => $v) {
                 $dataSave[$k] = $flatten($v);
             }
+            
+            // Asegurar que tipo_plan se mantiene correcto
+            $dataSave['tipo_plan'] = $plan;
+            
             DB::beginTransaction();
 
             $nameInternet = "contrato-internet-".time().".pdf";
@@ -230,7 +234,6 @@ class NuevosContratosController extends Controller
                 'nit_factura' => '',
                 'numero_apartamento' => $dataSave['numero_apartamento'] ?? '',
                 'tipo_servicio' => $dataSave['tipo_servicio'] ?? '',
-                'tipo_plan' => $dataSave['tipo_plan'] ?? $plan,
                 'nacionalidad' => $dataSave['nacionalidad'] ?? '',
                 'sexo' => $dataSave['sexo'] ?? '',
                 'edad' => $dataSave['edad'] ?? '',
@@ -239,6 +242,9 @@ class NuevosContratosController extends Controller
             ];
 
             $dataSave = array_merge($defaults, $dataSave);
+            
+            // Reafirmar tipo_plan después del merge de defaults
+            $dataSave['tipo_plan'] = $plan;
 
             $documento = Contratos::create($dataSave);
 
