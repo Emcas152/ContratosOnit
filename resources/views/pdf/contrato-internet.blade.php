@@ -169,11 +169,11 @@
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Velocidad:</td>
-                        <td>{{ $velocidad ?? 'N/A' }}</td>
+                        <td>{{ !empty($velocidad) ? $velocidad : 'N/A' }}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">Precio:</td>
-                        <td>{{ $precio ?? 'N/A' }}</td>
+                        <td>{{ !empty($precio) ? $precio : 'N/A' }}</td>
                     </tr>
                 </tbody>
             </table>

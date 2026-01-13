@@ -126,6 +126,10 @@ class NuevosContratosController extends Controller
             $facturacion = $normalize($facturacion);
             $servicio_agua = $normalize($servicio_agua);
 
+            // Capturar velocidad y precio antes de que se procesen
+            $velocidad_original = isset($servicio['velocidad']) ? trim($servicio['velocidad']) : '';
+            $precio_original = isset($servicio['precio']) ? trim($servicio['precio']) : '';
+
             // Asegurar que $plan sea un string (algunas requests lo envían como array)
             if (is_array($plan)) {
                 $plan = isset($plan['tipo_plan']) ? $plan['tipo_plan'] : (count($plan) ? reset($plan) : '');
@@ -229,19 +233,11 @@ class NuevosContratosController extends Controller
                 'nacionalidad' => $dataSave['nacionalidad'] ?? '',
                 'sexo' => $dataSave['sexo'] ?? '',
                 'edad' => $dataSave['edad'] ?? '',
-                'velocidad' => !empty($dataSave['velocidad']) ? $dataSave['velocidad'] : ($servicio['velocidad'] ?? ''),
-                'precio' => !empty($dataSave['precio']) ? $dataSave['precio'] : ($servicio['precio'] ?? ''),
+                'velocidad' => $velocidad_original,
+                'precio' => $precio_original,
             ];
 
             $dataSave = array_merge($defaults, $dataSave);
-            
-            // Asegurar que velocidad y precio se pasen a las vistas PDF
-            if (!empty($servicio['velocidad'])) {
-                $dataSave['velocidad'] = $servicio['velocidad'];
-            }
-            if (!empty($servicio['precio'])) {
-                $dataSave['precio'] = $servicio['precio'];
-            }
 
             $documento = Contratos::create($dataSave);
 
